@@ -1,6 +1,6 @@
 <#PSScriptInfo
 
-.VERSION 2.0.1
+.VERSION 2.0.2
 
 .GUID 883af802-166c-4708-f4d1-352686c02f01
 
@@ -48,10 +48,11 @@ This script permit to export Information Protection configuration
 HISTORY
 	Script      : MSPurviewIPCollector.ps1
 	Author      : S. Zamorano
-	Version     : 2.0.1
+	Version     : 2.0.2
 	Description : Export Activity Explorer activities to CSV or Json format.
 	17-04-2024		S. Zamorano		- Public release
 	12-08-2024		S. Zamorano		- Version 2 Public release
+	16-08-2024		S. Zamorano		- Conditions field added to the query
 #>
 
 [CmdletBinding(DefaultParameterSetName = "None")]
@@ -431,7 +432,7 @@ function GetInformationProtectionData($ExportFormat, $ExportFolder, $ExportOptio
 		$results = New-Object PSObject
 		$TotalResults = @()
 		$Query = "SensitivityLabels"
-		$results = Get-Label | select DisplayName,Name,Guid,ParentLabelDisplayName,ParentId,IsParent,IsLabelGroup,Tooltip,DefaultContentLabel,ContentType,LocaleSettings,SchematizedDataCondition,ColumnAssetCondition,LabelActions,Settings,Priority,Workload,Policy,CreatedBy,LastModifiedBy,WhenChangedUTC,WhenCreatedUTC,Comment
+		$results = Get-Label | select DisplayName,Name,Guid,ParentLabelDisplayName,ParentId,IsParent,IsLabelGroup,Tooltip,DefaultContentLabel,ContentType,LocaleSettings,SchematizedDataCondition,ColumnAssetCondition,LabelActions,Settings,Priority,Workload,Policy,CreatedBy,LastModifiedBy,WhenChangedUTC,WhenCreatedUTC,Comment,Conditions
 		$TotalResults += $results
 		if($results.TotalResultCount -eq "0")
 			{
@@ -575,7 +576,7 @@ function MainFunction
 	Write-Host "`n`nYou will be prompted for your credentials, remember that you need Compliance Administrator role"
 	Write-Host "Press any key to continue..."
     $key = ([System.Console]::ReadKey($true))
-	connect2service
+	#connect2service
 	
 	Write-Host "Calling script..."
 	
