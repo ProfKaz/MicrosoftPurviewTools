@@ -1,6 +1,6 @@
 <#PSScriptInfo
 
-.VERSION 2.0.3
+.VERSION 2.0.4
 
 .GUID 883af802-166c-4708-f4d1-352686c02f01
 
@@ -48,11 +48,12 @@ This script permit to export Information Protection configuration
 HISTORY
 	Script      : MSPurviewIPCollector.ps1
 	Author      : S. Zamorano
-	Version     : 2.0.2
+	Version     : 2.0.4
 	Description : Export Activity Explorer activities to CSV or Json format.
 	17-04-2024		S. Zamorano		- Public release
 	12-08-2024		S. Zamorano		- Version 2 Public release
 	16-08-2024		S. Zamorano		- Conditions field added to the query
+	19-08-2024		S. Zamorano		- Added field to identify users scope for policies
 #>
 
 [CmdletBinding(DefaultParameterSetName = "None")]
@@ -402,7 +403,7 @@ function GetInformationProtectionData($ExportFormat, $ExportFolder, $ExportOptio
 		$results = New-Object PSObject
 		$TotalResults = @()
 		$Query = "LabelsPolicies"
-		$results = Get-LabelPolicy | select Name,Guid,WhenChangedUTC,WhenCreatedUTC,Enabled,Mode,DistributionStatus,Type,Settings,Labels,ScopedLabels,PolicySettingsBlob,Workload,CreatedBy,LastModifiedBy
+		$results = Get-LabelPolicy | select Name,Guid,WhenChangedUTC,WhenCreatedUTC,Enabled,Mode,DistributionStatus,Type,Settings,Labels,ScopedLabels,PolicySettingsBlob,Workload,CreatedBy,LastModifiedBy,ExchangeLocation
 		$TotalResults += $results
 		if($results.TotalResultCount -eq "0")
 			{
@@ -462,7 +463,7 @@ function GetInformationProtectionData($ExportFormat, $ExportFolder, $ExportOptio
 		$results = New-Object PSObject
 		$TotalResults = @()
 		$Query = "LabelsPolicies"
-		$results = Get-LabelPolicy | select Name,Guid,WhenChangedUTC,WhenCreatedUTC,Enabled,Mode,DistributionStatus,Type,Settings,Labels,ScopedLabels,PolicySettingsBlob,Workload,CreatedBy,LastModifiedBy
+		$results = Get-LabelPolicy | select Name,Guid,WhenChangedUTC,WhenCreatedUTC,Enabled,Mode,DistributionStatus,Type,Settings,Labels,ScopedLabels,PolicySettingsBlob,Workload,CreatedBy,LastModifiedBy,ExchangeLocation
 		$TotalResults += $results
 		if($results.TotalResultCount -eq "0")
 			{
