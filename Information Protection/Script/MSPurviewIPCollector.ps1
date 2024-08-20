@@ -1,6 +1,6 @@
 <#PSScriptInfo
 
-.VERSION 2.0.4
+.VERSION 2.0.5
 
 .GUID 883af802-166c-4708-f4d1-352686c02f01
 
@@ -48,12 +48,13 @@ This script permit to export Information Protection configuration
 HISTORY
 	Script      : MSPurviewIPCollector.ps1
 	Author      : S. Zamorano
-	Version     : 2.0.4
+	Version     : 2.0.5
 	Description : Export Activity Explorer activities to CSV or Json format.
 	17-04-2024		S. Zamorano		- Public release
 	12-08-2024		S. Zamorano		- Version 2 Public release
 	16-08-2024		S. Zamorano		- Conditions field added to the query
 	19-08-2024		S. Zamorano		- Added field to identify users scope for policies
+	20-08-2024		S. Zamorano		- Fix export name
 #>
 
 [CmdletBinding(DefaultParameterSetName = "None")]
@@ -294,7 +295,7 @@ function WriteToJson($results, $ExportFolder, $QueryType, $date)
 		$json_array += $item
 	}
 	$json = $json_array | ConvertTo-Json -Depth 6
-	$FileName = "ActivityExplorer export - "+"$QueryType"+" - "+"$date"+".Json"
+	$FileName = "Microsoft Purview IP export - "+"$QueryType"+" - "+"$date"+".Json"
 	$pathJson = $PSScriptRoot+"\"+$ExportFolder+"\"+$FileName
 	$path = $pathJson
 	$json | Add-Content -Path $path
@@ -311,7 +312,7 @@ function WriteToCsv($results, $ExportFolder, $QueryType, $date)
 	$TotalResults = $results
 	foreach($item in $TotalResults)
 	{
-		$FileName = "ActivityExplorer export - "+"$QueryType"+" - "+"$date"+".Csv"
+		$FileName = "Microsoft Purview IP export - "+"$QueryType"+" - "+"$date"+".Csv"
 		$pathCsv = $PSScriptRoot+"\"+$ExportFolder+"\"+$FileName
 		$path = $pathCsv
 		$parse_array = $item
