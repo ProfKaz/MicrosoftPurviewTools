@@ -1,0 +1,209 @@
+{
+  "metadata": {
+    "packName": "Synthetic KQL Samples for Banking and Finance E5 Scenarios",
+    "version": "1.0",
+    "language": "en-US",
+    "industry": "Banking and Financial Services",
+    "fictionalDataOnly": true,
+    "purpose": "Provide synthetic KQL-style hunting and reporting examples for Purview, Defender XDR, endpoint DLP, AI, Power BI, and insider-risk-style banking/finance demo scenarios.",
+    "importantNote": "These queries are schema-agnostic samples. Codex must adapt table names and field names to the target environment, such as Advanced Hunting, Microsoft Purview exports, OfficeActivity, UnifiedAuditLog, Log Analytics, ADX, or custom ingestion tables."
+  },
+  "queryConventions": {
+    "placeholderTables": [
+      "M365Activity_CL",
+      "PurviewDlpEvents_CL",
+      "SensitivityLabelEvents_CL",
+      "DefenderCloudAppEvents_CL",
+      "EndpointDlpEvents_CL",
+      "CopilotInteractionEvents_CL",
+      "PowerBIActivity_CL",
+      "IdentitySignInEvents_CL",
+      "InsiderRiskSignals_CL"
+    ],
+    "commonFields": [
+      "TimeGenerated",
+      "UserPrincipalName",
+      "UserRole",
+      "Workload",
+      "Operation",
+      "FileName",
+      "FilePath",
+      "SiteUrl",
+      "SensitivityLabel",
+      "TargetDomain",
+      "Recipient",
+      "DeviceId",
+      "PolicyName",
+      "RiskScore",
+      "ScenarioId",
+      "CorrelationId"
+    ],
+    "adaptationGuidance": [
+      "Replace placeholder table names with the actual target tables.",
+      "Normalize field names before joining across workloads.",
+      "Use ScenarioId or CorrelationId if synthetic telemetry generation includes those fields.",
+      "If using Microsoft 365 unified audit logs, map Operation to workload-specific event names.",
+      "If using Defender Advanced Hunting, split identity, device, cloud app, and email events into their native tables."
+    ]
+  },
+  "queries": [
+    {
+      "queryId": "KQL-0001",
+      "title": "External Sharing of Regulated Financial Data",
+      "category": "DLP and External Sharing",
+      "linkedScenarioIds": ["BF-SCEN-0001", "BF-SCEN-0008", "BF-SCEN-0029"],
+      "businessQuestion": "Which regulated financial files were shared or emailed externally?",
+      "query": "let regulatedLabels = dynamic(['Highly Confidential - Regulated Financial Data','Highly Confidential']);\nPurviewDlpEvents_CL\n| where TimeGenerated > ago(14d)\n| where Operation in ('FileShared','ExternalEmailSent','DLPPolicyMatch')\n| where SensitivityLabel in (regulatedLabels) or FileName has_any ('KYC','AML','SAR','Loan','Credit','Treasury','Customer')\n| summarize FirstSeen=min(TimeGenerated), LastSeen=max(TimeGenerated), Operations=make_set(Operation), Files=make_set(FileName), Recipients=make_set(Recipient), Domains=make_set(TargetDomain) by UserPrincipalName, ScenarioId\n| extend Severity = iff(array_length(Domains) > 0, 'High', 'Medium')\n| order by LastSeen desc",
+      "expectedUse": "Detect outbound sharing or email involving regulated financial documents.",
+      "expectedResultFields": ["UserPrincipalName", "ScenarioId", "Files", "Recipients", "Domains", "Severity"]
+    },
+    {
+      "queryId": "KQL-0002",
+      "title": "Label Downgrade Followed by External Email",
+      "category": "Sensitivity Labels",
+      "linkedScenarioIds": ["BF-SCEN-0013"],
+      "businessQuestion": "Did a user downgrade a sensitive file label before emailing it broadly or externally?",
+      "query": "let labelChanges = SensitivityLabelEvents_CL\n| where TimeGenerated > ago(14d)\n| where Operation in ('SensitivityLabelChanged','LabelDowngrade')\n| project LabelTime=TimeGenerated, UserPrincipalName, FileName, OldLabel, NewLabel, ScenarioId, CorrelationId;\nlet sends = M365Activity_CL\n| where TimeGenerated > ago(14d)\n| where Operation in ('EmailSent','ExternalEmailSent','FileShared')\n| project SendTime=TimeGenerated, UserPrincipalName, FileName, Recipient, TargetDomain, Operation, CorrelationId;\nlabelChanges\n| join kind=innerunique sends on UserPrincipalName, FileName\n| where SendTime between (LabelTime .. LabelTime + 2h)\n| project LabelTime, SendTime, UserPrincipalName, FileName, OldLabel, NewLabel, Operation, Recipient, TargetDomain, ScenarioId\n| order by SendTime desc",
+      "expectedUse": "Correlate suspicious label changes with subsequent sharing activity.",
+      "expectedResultFields": ["LabelTime", "SendTime", "UserPrincipalName", "FileName", "OldLabel", "NewLabel", "Recipient"]
+    },
+    {
+      "queryId": "KQL-0003",
+      "title": "External AI Usage with Sensitive Banking Patterns",
+      "category": "AI and Shadow AI",
+      "linkedScenarioIds": ["BF-SCEN-0002", "BF-SCEN-0030"],
+      "businessQuestion": "Which users pasted or uploaded regulated banking data into unmanaged AI apps?",
+      "query": "DefenderCloudAppEvents_CL\n| where TimeGenerated > ago(30d)\n| where Operation in ('AIAppInteraction','UnmanagedAppUpload')\n| where PromptText has_any ('CUST-BNK','ACCT-FIC','AML-CASE','SAR-DRAFT','KYC-FIC','LOAN-FIC') or FileName has_any ('AML','KYC','SAR','Customer','Treasury')\n| extend SensitivePatternCount = countof(PromptText, 'CUST-BNK') + countof(PromptText, 'ACCT-FIC') + countof(PromptText, 'AML-CASE') + countof(PromptText, 'SAR-DRAFT')\n| project TimeGenerated, UserPrincipalName, AppName, Operation, FileName, SensitivePatternCount, RiskScore, ScenarioId\n| order by TimeGenerated desc",
+      "expectedUse": "Identify Shadow AI or unmanaged AI usage involving sensitive-looking banking data.",
+      "expectedResultFields": ["TimeGenerated", "UserPrincipalName", "AppName", "Operation", "SensitivePatternCount", "RiskScore"]
+    },
+    {
+      "queryId": "KQL-0004",
+      "title": "Copilot References Sensitive HR or Banking Files",
+      "category": "Copilot Governance",
+      "linkedScenarioIds": ["BF-SCEN-0007", "BF-SCEN-0015", "BF-SCEN-0027"],
+      "businessQuestion": "Which Copilot interactions referenced sensitive source files?",
+      "query": "CopilotInteractionEvents_CL\n| where TimeGenerated > ago(30d)\n| where Operation == 'CopilotInteraction'\n| mv-expand SourceFile = SourceFiles\n| extend SourceFileName = tostring(SourceFile.FileName), SourceLabel = tostring(SourceFile.SensitivityLabel)\n| where SourceLabel has_any ('Highly Confidential','HR Restricted','Regulated Financial Data','Legal Privileged') or SourceFileName has_any ('Compensation','KYC','AML','Board','Acquisition','Legal')\n| summarize SourceFiles=make_set(SourceFileName), Labels=make_set(SourceLabel), PromptSamples=make_set(substring(PromptText,0,120)) by UserPrincipalName, bin(TimeGenerated, 1h), ScenarioId\n| order by TimeGenerated desc",
+      "expectedUse": "Support DSPM for AI and Copilot source exposure review.",
+      "expectedResultFields": ["UserPrincipalName", "TimeGenerated", "SourceFiles", "Labels", "PromptSamples"]
+    },
+    {
+      "queryId": "KQL-0005",
+      "title": "Endpoint Print or Network Copy of Sensitive Files",
+      "category": "Endpoint DLP",
+      "linkedScenarioIds": ["BF-SCEN-0005", "BF-SCEN-0025", "BF-SCEN-0030"],
+      "businessQuestion": "Which users printed or copied sensitive banking files to network shares or USB?",
+      "query": "EndpointDlpEvents_CL\n| where TimeGenerated > ago(14d)\n| where Operation in ('FilePrinted','FileCopiedToNetworkShare','FileCopiedToUSB','EndpointDLPPolicyMatch')\n| where SensitivityLabel has_any ('Highly Confidential','Regulated Financial Data') or FileName has_any ('Treasury','SAR','KYC','AML','Audit','Evidence')\n| summarize Operations=make_set(Operation), Files=make_set(FileName), Devices=make_set(DeviceId), FirstSeen=min(TimeGenerated), LastSeen=max(TimeGenerated), EventCount=count() by UserPrincipalName, ScenarioId\n| extend Severity = case(EventCount >= 5, 'Critical', array_length(Operations) >= 2, 'High', 'Medium')\n| order by LastSeen desc",
+      "expectedUse": "Detect endpoint movement of regulated financial or investigation files.",
+      "expectedResultFields": ["UserPrincipalName", "Operations", "Files", "Devices", "EventCount", "Severity"]
+    },
+    {
+      "queryId": "KQL-0006",
+      "title": "Risky Sign-In Followed by Sensitive File Download",
+      "category": "Identity and Data Correlation",
+      "linkedScenarioIds": ["BF-SCEN-0022"],
+      "businessQuestion": "Did risky sign-ins precede sensitive file downloads?",
+      "query": "let riskySignIns = IdentitySignInEvents_CL\n| where TimeGenerated > ago(14d)\n| where Operation in ('RiskySignIn','ConditionalAccessTriggered')\n| project SignInTime=TimeGenerated, UserPrincipalName, RiskDetail, Location, DeviceId, ScenarioId;\nlet downloads = M365Activity_CL\n| where TimeGenerated > ago(14d)\n| where Operation == 'FileDownloaded'\n| where SensitivityLabel has_any ('Highly Confidential','Regulated Financial Data') or FileName has_any ('KYC','AML','SAR','Treasury','Audit')\n| project DownloadTime=TimeGenerated, UserPrincipalName, FileName, SensitivityLabel, SiteUrl, ScenarioId;\nriskySignIns\n| join kind=inner downloads on UserPrincipalName\n| where DownloadTime between (SignInTime .. SignInTime + 4h)\n| project SignInTime, DownloadTime, UserPrincipalName, RiskDetail, Location, DeviceId, FileName, SensitivityLabel, SiteUrl, ScenarioId\n| order by DownloadTime desc",
+      "expectedUse": "Correlate identity risk with sensitive data access.",
+      "expectedResultFields": ["SignInTime", "DownloadTime", "UserPrincipalName", "RiskDetail", "FileName", "SensitivityLabel"]
+    },
+    {
+      "queryId": "KQL-0007",
+      "title": "Guest Access to Sensitive Teams or SharePoint Content",
+      "category": "External Collaboration",
+      "linkedScenarioIds": ["BF-SCEN-0010", "BF-SCEN-0019"],
+      "businessQuestion": "Were guests added to collaboration spaces containing sensitive banking files?",
+      "query": "let guestEvents = M365Activity_CL\n| where TimeGenerated > ago(30d)\n| where Operation == 'GuestUserAdded'\n| project GuestAddTime=TimeGenerated, TeamOrSiteId, UserPrincipalName, GuestUser=TargetUser, ScenarioId;\nlet sensitiveFileEvents = M365Activity_CL\n| where TimeGenerated > ago(30d)\n| where Operation in ('FileAccessed','TeamsFileShared','FileShared')\n| where SensitivityLabel has_any ('Confidential','Highly Confidential','Regulated Financial Data','Legal Privileged') or FileName has_any ('Risk','KYC','AML','Legal','Committee','Due_Diligence')\n| project FileEventTime=TimeGenerated, TeamOrSiteId, FileName, SensitivityLabel, Actor=UserPrincipalName, ScenarioId;\nguestEvents\n| join kind=inner sensitiveFileEvents on TeamOrSiteId\n| where FileEventTime between (GuestAddTime .. GuestAddTime + 7d)\n| summarize SensitiveFiles=make_set(FileName), Labels=make_set(SensitivityLabel), Actors=make_set(Actor) by GuestAddTime, UserPrincipalName, GuestUser, TeamOrSiteId, ScenarioId\n| order by GuestAddTime desc",
+      "expectedUse": "Identify risky guest collaboration exposure.",
+      "expectedResultFields": ["GuestAddTime", "UserPrincipalName", "GuestUser", "TeamOrSiteId", "SensitiveFiles", "Labels"]
+    },
+    {
+      "queryId": "KQL-0008",
+      "title": "Role Change Followed by Mass Download",
+      "category": "Insider Risk",
+      "linkedScenarioIds": ["BF-SCEN-0025", "BF-SCEN-0030"],
+      "businessQuestion": "Did a user download many sensitive files after an HR role-change signal?",
+      "query": "let hrSignals = InsiderRiskSignals_CL\n| where TimeGenerated > ago(30d)\n| where SignalType == 'HRSignal'\n| project HRSignalTime=TimeGenerated, UserPrincipalName, HRSignalType, ScenarioId;\nlet downloads = M365Activity_CL\n| where TimeGenerated > ago(30d)\n| where Operation == 'FileDownloaded'\n| where SensitivityLabel has_any ('Confidential','Highly Confidential','Regulated Financial Data','Legal Privileged','HR Restricted')\n| summarize DownloadCount=count(), Files=make_set(FileName), FirstDownload=min(TimeGenerated), LastDownload=max(TimeGenerated) by UserPrincipalName, bin(TimeGenerated, 1d), ScenarioId;\nhrSignals\n| join kind=inner downloads on UserPrincipalName\n| where FirstDownload between (HRSignalTime .. HRSignalTime + 3d)\n| where DownloadCount >= 5\n| project HRSignalTime, FirstDownload, LastDownload, UserPrincipalName, HRSignalType, DownloadCount, Files, ScenarioId\n| order by DownloadCount desc",
+      "expectedUse": "Find insider-risk-style sequences after HR context appears.",
+      "expectedResultFields": ["HRSignalTime", "UserPrincipalName", "HRSignalType", "DownloadCount", "Files"]
+    },
+    {
+      "queryId": "KQL-0009",
+      "title": "Power BI Underlying Data Export Followed by Email",
+      "category": "Power BI and Data Exfiltration",
+      "linkedScenarioIds": ["BF-SCEN-0004", "BF-SCEN-0011"],
+      "businessQuestion": "Was customer-level Power BI data exported and then emailed or shared?",
+      "query": "let exports = PowerBIActivity_CL\n| where TimeGenerated > ago(14d)\n| where Operation in ('PowerBIExport','UnderlyingDataExport')\n| project ExportTime=TimeGenerated, UserPrincipalName, ReportName, ExportFileName=FileName, ScenarioId;\nlet sharing = M365Activity_CL\n| where TimeGenerated > ago(14d)\n| where Operation in ('EmailSent','ExternalEmailSent','FileShared')\n| project ShareTime=TimeGenerated, UserPrincipalName, FileName, Recipient, TargetDomain, Operation, ScenarioId;\nexports\n| join kind=inner sharing on UserPrincipalName\n| where ShareTime between (ExportTime .. ExportTime + 6h)\n| where FileName == ExportFileName or FileName has_any ('Credit','Branch','Customer','Risk','Export')\n| project ExportTime, ShareTime, UserPrincipalName, ReportName, ExportFileName, Operation, Recipient, TargetDomain, ScenarioId\n| order by ShareTime desc",
+      "expectedUse": "Correlate Power BI exports with downstream sharing behavior.",
+      "expectedResultFields": ["ExportTime", "ShareTime", "UserPrincipalName", "ReportName", "ExportFileName", "Recipient"]
+    },
+    {
+      "queryId": "KQL-0010",
+      "title": "Teams Messages Containing Sensitive Banking Patterns",
+      "category": "Teams DLP and Communication Compliance",
+      "linkedScenarioIds": ["BF-SCEN-0014"],
+      "businessQuestion": "Which Teams messages included account-like, customer-like, or collections-sensitive patterns?",
+      "query": "M365Activity_CL\n| where TimeGenerated > ago(14d)\n| where Workload == 'Teams' and Operation == 'TeamsMessageSent'\n| where MessageText has_any ('CUST-BNK','ACCT-FIC','COLL-FIC','HARDSHIP-FIC','TXN-FIC','SAR-DRAFT')\n| extend MatchedPattern = case(MessageText has 'ACCT-FIC', 'Account-like value', MessageText has 'CUST-BNK', 'Customer ID', MessageText has 'HARDSHIP-FIC', 'Hardship note', 'Other sensitive pattern')\n| project TimeGenerated, UserPrincipalName, ChannelName, MessagePreview=substring(MessageText,0,160), MatchedPattern, ScenarioId\n| order by TimeGenerated desc",
+      "expectedUse": "Support Teams DLP and Communication Compliance demonstrations.",
+      "expectedResultFields": ["TimeGenerated", "UserPrincipalName", "ChannelName", "MessagePreview", "MatchedPattern"]
+    },
+    {
+      "queryId": "KQL-0011",
+      "title": "Forms Export with Sensitive Customer Values",
+      "category": "Forms and Data Collection",
+      "linkedScenarioIds": ["BF-SCEN-0020"],
+      "businessQuestion": "Did a Forms export contain sensitive banking patterns or get shared externally?",
+      "query": "M365Activity_CL\n| where TimeGenerated > ago(14d)\n| where Operation in ('FormCreated','FormResponseSubmitted','FormExported','FileShared','ExternalEmailSent')\n| where FileName has_any ('Form','Complaint','Responses') or MessageText has_any ('CUST-BNK','ACCT-FIC','TXN-FIC')\n| summarize Operations=make_set(Operation), Files=make_set(FileName), Recipients=make_set(Recipient), FirstSeen=min(TimeGenerated), LastSeen=max(TimeGenerated) by UserPrincipalName, ScenarioId\n| extend Severity = iff(set_has_element(Operations, 'ExternalEmailSent') or set_has_element(Operations, 'FileShared'), 'High', 'Medium')\n| order by LastSeen desc",
+      "expectedUse": "Identify sensitive form response collection and risky sharing of exports.",
+      "expectedResultFields": ["UserPrincipalName", "Operations", "Files", "Recipients", "Severity"]
+    },
+    {
+      "queryId": "KQL-0012",
+      "title": "Synthetic Devon Risk Chain Timeline",
+      "category": "Insider Risk Timeline",
+      "linkedScenarioIds": ["BF-SCEN-0030"],
+      "businessQuestion": "What is the chronological risk timeline for Devon Reyes?",
+      "query": "union isfuzzy=true M365Activity_CL, PurviewDlpEvents_CL, EndpointDlpEvents_CL, DefenderCloudAppEvents_CL, CopilotInteractionEvents_CL, IdentitySignInEvents_CL, InsiderRiskSignals_CL\n| where TimeGenerated > ago(30d)\n| where UserPrincipalName has 'devon.reyes' or UserPrincipalName == 'devon.reyes@mhdemos.com'\n| where Operation in ('RiskySignIn','FileAccessed','FileDownloaded','MassDownloadActivity','CopilotInteraction','AIAppInteraction','ExternalEmailSent','DLPPolicyMatch','DLPOverride','FilePrinted','FileCopiedToNetworkShare','SensitivityLabelChanged','InsiderRiskSequence','HRSignal')\n| project TimeGenerated, Workload, Operation, UserPrincipalName, FileName, SensitivityLabel, Recipient, TargetDomain, DeviceId, RiskScore, ScenarioId\n| order by TimeGenerated asc",
+      "expectedUse": "Build an investigation timeline for the multi-day Devon risk chain.",
+      "expectedResultFields": ["TimeGenerated", "Workload", "Operation", "FileName", "SensitivityLabel", "Recipient", "DeviceId", "RiskScore"]
+    },
+    {
+      "queryId": "KQL-0013",
+      "title": "Top Sensitive Files by Risky Activity Count",
+      "category": "Executive Reporting",
+      "linkedScenarioIds": ["BF-SCEN-0001", "BF-SCEN-0002", "BF-SCEN-0005", "BF-SCEN-0030"],
+      "businessQuestion": "Which sensitive files generated the most risky activity?",
+      "query": "union isfuzzy=true M365Activity_CL, PurviewDlpEvents_CL, EndpointDlpEvents_CL, DefenderCloudAppEvents_CL\n| where TimeGenerated > ago(30d)\n| where SensitivityLabel has_any ('Confidential','Highly Confidential','Regulated Financial Data','Legal Privileged','HR Restricted')\n| extend RiskyOperation = Operation in ('FileDownloaded','FileShared','ExternalEmailSent','DLPPolicyMatch','DLPOverride','FilePrinted','FileCopiedToNetworkShare','FileCopiedToUSB','AIAppInteraction','UnmanagedAppUpload')\n| where RiskyOperation\n| summarize RiskyEventCount=count(), Users=make_set(UserPrincipalName), Operations=make_set(Operation), LastSeen=max(TimeGenerated) by FileName, SensitivityLabel\n| top 20 by RiskyEventCount desc",
+      "expectedUse": "Create executive-friendly sensitive data exposure dashboards.",
+      "expectedResultFields": ["FileName", "SensitivityLabel", "RiskyEventCount", "Users", "Operations", "LastSeen"]
+    },
+    {
+      "queryId": "KQL-0014",
+      "title": "DLP Overrides by User and Scenario",
+      "category": "DLP Governance",
+      "linkedScenarioIds": ["BF-SCEN-0030", "BF-SCEN-0013"],
+      "businessQuestion": "Which users are overriding DLP warnings and why?",
+      "query": "PurviewDlpEvents_CL\n| where TimeGenerated > ago(30d)\n| where Operation == 'DLPOverride'\n| summarize OverrideCount=count(), Files=make_set(FileName), Justifications=make_set(OverrideJustification), Policies=make_set(PolicyName), LastOverride=max(TimeGenerated) by UserPrincipalName, ScenarioId\n| extend Severity = case(OverrideCount >= 3, 'High', OverrideCount == 2, 'Medium', 'Low')\n| order by OverrideCount desc, LastOverride desc",
+      "expectedUse": "Review user behavior and DLP override governance.",
+      "expectedResultFields": ["UserPrincipalName", "OverrideCount", "Files", "Justifications", "Policies", "Severity"]
+    },
+    {
+      "queryId": "KQL-0015",
+      "title": "Sensitive Label Removal or Downgrade by Devon Reyes",
+      "category": "Sensitivity Label Governance",
+      "linkedScenarioIds": ["BF-SCEN-0013", "BF-SCEN-0030"],
+      "businessQuestion": "Did Devon remove or downgrade labels on sensitive files?",
+      "query": "SensitivityLabelEvents_CL\n| where TimeGenerated > ago(30d)\n| where UserPrincipalName has 'devon.reyes' or UserPrincipalName == 'devon.reyes@mhdemos.com'\n| where Operation in ('SensitivityLabelChanged','SensitivityLabelRemoved','LabelDowngrade')\n| project TimeGenerated, UserPrincipalName, FileName, OldLabel, NewLabel, Operation, Justification, ScenarioId\n| order by TimeGenerated desc",
+      "expectedUse": "Focus an investigation on risky label behavior by the primary risk persona.",
+      "expectedResultFields": ["TimeGenerated", "UserPrincipalName", "FileName", "OldLabel", "NewLabel", "Operation", "Justification"]
+    }
+  ],
+  "codexUsageGuidance": [
+    "Use these KQL samples as templates, not exact production queries.",
+    "Codex should generate environment-specific versions by replacing placeholder tables and fields.",
+    "If the demo telemetry is stored in Azure Data Explorer, keep the field names consistent with this file to reduce adaptation effort.",
+    "If using Microsoft Defender Advanced Hunting, map these events to native tables such as DeviceFileEvents, CloudAppEvents, EmailEvents, IdentityLogonEvents, and related tables.",
+    "If using Purview exports or Unified Audit Log, normalize Operation and Workload values before running correlation logic.",
+    "Queries that reference PromptText should only use synthetic prompt content. Do not ingest real sensitive prompts into a demo dataset."
+  ]
+}
