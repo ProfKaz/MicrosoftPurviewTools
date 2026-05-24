@@ -1,0 +1,188 @@
+{
+  "metadata": {
+    "packName": "Synthetic Data Pattern Library for Banking Finance DLP Simulations",
+    "version": "1.0",
+    "language": "en-US",
+    "industry": "Banking and Financial Services",
+    "fictionalDataOnly": true,
+    "purpose": "Define fictional sensitive-looking data patterns for Microsoft Purview DLP, SIT tuning, synthetic content generation, classifier demos, KQL hunting, and browser-agent telemetry simulations."
+  },
+  "safetyPrinciples": [
+    "All patterns are fictional and must remain fictional.",
+    "Do not use real account numbers, real customer IDs, real government IDs, real payment references, real addresses, real credentials, or real banking data.",
+    "Use clear fictional prefixes such as FIC, CUST-BNK, ACCT-FIC, AML-CASE, SAR-DRAFT, and LOAN-FIC.",
+    "Prefer synthetic formats that look plausible for DLP testing but are not valid real-world identifiers.",
+    "Use false-positive and false-negative examples to test policy tuning and exception handling."
+  ],
+  "patternCategories": [
+    {
+      "categoryId": "PAT-001",
+      "categoryName": "Fictional Customer Identifiers",
+      "businessUse": "Customer onboarding, KYC, support, complaints, credit risk, and analytics.",
+      "exampleValues": ["CUST-BNK-204919", "CUST-BNK-88420", "CUST-BNK-771903", "CUST-BNK-559102", "CUST-BNK-193044"],
+      "regexLikePattern": "CUST-BNK-[0-9]{5,6}",
+      "recommendedSensitivity": "Confidential or Highly Confidential - Regulated Financial Data when combined with account, loan, AML, or transaction data.",
+      "purviewSitMappingGuidance": "Create a custom SIT using regex plus keyword evidence such as customer, client, account, KYC, complaint, onboarding, or risk score.",
+      "truePositiveExamples": ["Customer CUST-BNK-204919 has pending KYC review.", "CUST-BNK-559102 appears in AML-CASE-2026-0519."],
+      "falsePositiveExamples": ["Training slide shows sample format CUST-BNK-000000 only.", "Documentation explains the fictional ID format without linking to a case."]
+    },
+    {
+      "categoryId": "PAT-002",
+      "categoryName": "Fictional Account-Like Numbers",
+      "businessUse": "Treasury, customer operations, transaction review, AML, reconciliation, and loan servicing.",
+      "exampleValues": ["ACCT-FIC-7721-0044-9081", "ACCT-FIC-1902-7781-0044", "ACCT-FIC-9920-4417-0038", "ACCT-FIC-8830-4412-9001", "ACCT-FIC-4418-2290-7711"],
+      "regexLikePattern": "ACCT-FIC-[0-9]{4}-[0-9]{4}-[0-9]{4}",
+      "recommendedSensitivity": "Highly Confidential - Regulated Financial Data.",
+      "purviewSitMappingGuidance": "High-confidence SIT when account-like pattern appears near banking keywords such as account, payment, transfer, reconciliation, treasury, transaction, AML, or SAR.",
+      "truePositiveExamples": ["ACCT-FIC-7721-0044-9081 is linked to dispute DISPUTE-FIC-60392.", "Treasury reconciliation exception for ACCT-FIC-9920-4417-0038 remains unresolved."],
+      "falsePositiveExamples": ["ACCT-FIC-0000-0000-0000 appears in developer documentation.", "Regex test string ACCT-FIC-1234-5678-9012 is shown without customer context."]
+    },
+    {
+      "categoryId": "PAT-003",
+      "categoryName": "Fictional Loan Identifiers",
+      "businessUse": "Loan committee, underwriting, credit review, exception tracking, and risk reporting.",
+      "exampleValues": ["LOAN-FIC-2026-1187", "LOAN-FIC-2026-3310", "LOAN-FIC-2026-5519", "LOAN-EXC-FIC-44012", "DOC-MISS-FIC-3320"],
+      "regexLikePattern": "LOAN(-EXC)?-FIC-[0-9]{4}-[0-9]{4,5}|DOC-MISS-FIC-[0-9]{4}",
+      "recommendedSensitivity": "Confidential; Highly Confidential - Regulated Financial Data when paired with customer or account values.",
+      "purviewSitMappingGuidance": "Use supporting keywords such as underwriting, exposure, collateral, loan committee, exception, delinquency, or approval status.",
+      "truePositiveExamples": ["LOAN-FIC-2026-1187 requires committee approval for CUST-BNK-204919.", "LOAN-EXC-FIC-44012 is missing documentation."],
+      "falsePositiveExamples": ["Loan training sample LOAN-FIC-2026-0000 does not contain real case details.", "A project code includes LOAN in a non-financial context."
+      ]
+    },
+    {
+      "categoryId": "PAT-004",
+      "categoryName": "Fictional AML and SAR Identifiers",
+      "businessUse": "AML review, suspicious activity review, fraud investigations, compliance reporting, and security investigations.",
+      "exampleValues": ["AML-CASE-2026-0519", "SAR-DRAFT-FIC-2044", "SAR-CASE-FIC-5501", "FRAUD-FIC-2026-0901", "TXN-MON-FIC-7712"],
+      "regexLikePattern": "AML-CASE-[0-9]{4}-[0-9]{4}|SAR-(DRAFT|CASE)-FIC-[0-9]{4}|FRAUD-FIC-[0-9]{4}-[0-9]{4}|TXN-MON-FIC-[0-9]{4}",
+      "recommendedSensitivity": "Highly Confidential - Regulated Financial Data.",
+      "purviewSitMappingGuidance": "Use high confidence when these values appear near SAR, AML, suspicious activity, fraud, escalation, compliance, monitoring, or regulator keywords.",
+      "truePositiveExamples": ["AML-CASE-2026-0519 contains SAR-DRAFT-FIC-2044 references.", "FRAUD-FIC-2026-0901 timeline includes ACCT-FIC-5520-7701-4498."],
+      "falsePositiveExamples": ["A security awareness slide lists SAR-DRAFT-FIC-0000 as an example only.", "A synthetic demo README explains AML-CASE format without business context."]
+    },
+    {
+      "categoryId": "PAT-005",
+      "categoryName": "Fictional Transaction and Payment References",
+      "businessUse": "Transaction monitoring, treasury reconciliation, disputes, payment investigations, and operations support.",
+      "exampleValues": ["TXN-FIC-771-902", "TXN-FIC-5519", "PAY-FIC-8842", "RECON-FIC-1187", "TREAS-FIC-2026-0524"],
+      "regexLikePattern": "TXN-FIC-[0-9]{3}-[0-9]{3}|TXN-FIC-[0-9]{4}|PAY-FIC-[0-9]{4}|RECON-FIC-[0-9]{4}|TREAS-FIC-[0-9]{4}-[0-9]{4}",
+      "recommendedSensitivity": "Confidential; Highly Confidential when paired with customer, account, AML, or treasury data.",
+      "purviewSitMappingGuidance": "Use medium confidence for standalone transaction-like references and high confidence when combined with account or customer patterns.",
+      "truePositiveExamples": ["TXN-FIC-771-902 is disputed by CUST-BNK-88420.", "TREAS-FIC-2026-0524 contains unresolved PAY-FIC-8842."],
+      "falsePositiveExamples": ["TXN-FIC-0000 appears in test documentation.", "A synthetic training example lists payment reference formats only."]
+    },
+    {
+      "categoryId": "PAT-006",
+      "categoryName": "Fictional HR and Employee Identifiers",
+      "businessUse": "HR records, compensation planning, workforce planning, onboarding, and role-change events.",
+      "exampleValues": ["EMP-785511", "EMP-782143", "CND-90441", "ROLE-CHANGE-FIC-2026-05", "SAL-BAND-FIC-09"],
+      "regexLikePattern": "EMP-[0-9]{6}|CND-[0-9]{5}|ROLE-CHANGE-FIC-[0-9]{4}-[0-9]{2}|SAL-BAND-FIC-[0-9]{2}",
+      "recommendedSensitivity": "Highly Confidential - HR Restricted.",
+      "purviewSitMappingGuidance": "Use supporting keywords such as compensation, salary, merit, employee, candidate, benefits, payroll, role change, performance, or HR plan.",
+      "truePositiveExamples": ["EMP-785511 is listed in Monthly_Workforce_Compensation_Planning_HR.xlsx.", "ROLE-CHANGE-FIC-2026-05 appears before a mass download sequence."],
+      "falsePositiveExamples": ["EMP-000000 appears in sample schema documentation.", "A test candidate ID CND-00000 is shown without HR data."]
+    },
+    {
+      "categoryId": "PAT-007",
+      "categoryName": "Fictional Legal and Regulatory Matter IDs",
+      "businessUse": "Legal review, regulator response, privileged memos, evidence packages, and contract analysis.",
+      "exampleValues": ["LEGAL-FIC-2044", "REG-REQ-FIC-2026-2044", "PRIV-NOTE-FIC-771", "CTRL-GAP-FIC-1187", "EVID-FIC-3319"],
+      "regexLikePattern": "LEGAL-FIC-[0-9]{4}|REG-REQ-FIC-[0-9]{4}-[0-9]{4}|PRIV-NOTE-FIC-[0-9]{3}|CTRL-GAP-FIC-[0-9]{3,4}|EVID-FIC-[0-9]{4}",
+      "recommendedSensitivity": "Highly Confidential - Legal Privileged when legal analysis or privileged context is present.",
+      "purviewSitMappingGuidance": "Use keyword evidence such as privileged, counsel, regulator, response, evidence, legal memo, control gap, settlement, or investigation.",
+      "truePositiveExamples": ["Privileged memo LEGAL-FIC-2044 includes CTRL-GAP-FIC-1187.", "REG-REQ-FIC-2026-2044 evidence package includes EVID-FIC-3319."],
+      "falsePositiveExamples": ["A PMO tracker references REG-REQ as a generic project code without legal content.", "A training guide lists LEGAL-FIC-0000 as a sample pattern."]
+    },
+    {
+      "categoryId": "PAT-008",
+      "categoryName": "Fictional Invoice and Vendor References",
+      "businessUse": "Accounts payable, procurement, vendor due diligence, finance close, and audit evidence.",
+      "exampleValues": ["INV-FAK-2026-004817", "VENDOR-FIC-7701", "DDQ-FIC-2026-05", "SUPPLIER-FIC-3310", "AP-CTRL-FIC-5521"],
+      "regexLikePattern": "INV-FAK-[0-9]{4}-[0-9]{6}|VENDOR-FIC-[0-9]{4}|DDQ-FIC-[0-9]{4}-[0-9]{2}|SUPPLIER-FIC-[0-9]{4}|AP-CTRL-FIC-[0-9]{4}",
+      "recommendedSensitivity": "Internal or Confidential; higher sensitivity when payment-like or banking details are included.",
+      "purviewSitMappingGuidance": "Combine with keywords such as invoice, remittance, vendor, due diligence, payment, bank details, or accrual.",
+      "truePositiveExamples": ["INV-FAK-2026-004817 contains payment review notes.", "VENDOR-FIC-7701 due diligence package includes internal risk notes."],
+      "falsePositiveExamples": ["A sample invoice template uses INV-FAK-0000-000000 only.", "Vendor demo instructions include VENDOR-FIC-0000 without payment details."]
+    },
+    {
+      "categoryId": "PAT-009",
+      "categoryName": "Fictional Support and Complaint Case IDs",
+      "businessUse": "Customer support, disputes, complaint handling, case escalation, and operations remediation.",
+      "exampleValues": ["SUP-60392", "DISPUTE-FIC-60392", "COMPLAINT-FIC-7721", "SUPPORT-QA-FIC-2210", "CASE-FIC-8842"],
+      "regexLikePattern": "SUP-[0-9]{5}|DISPUTE-FIC-[0-9]{5}|COMPLAINT-FIC-[0-9]{4}|SUPPORT-QA-FIC-[0-9]{4}|CASE-FIC-[0-9]{4}",
+      "recommendedSensitivity": "Confidential; Highly Confidential when paired with customer, account, transaction, hardship, or legal values.",
+      "purviewSitMappingGuidance": "Use supporting keywords such as dispute, complaint, support, escalation, hardship, transaction, customer, or case notes.",
+      "truePositiveExamples": ["DISPUTE-FIC-60392 references TXN-FIC-771-902 and CUST-BNK-88420.", "COMPLAINT-FIC-7721 includes account-like values."],
+      "falsePositiveExamples": ["Support training examples list SUP-00000 only.", "A test case in a QA script uses CASE-FIC-0000 without customer data."]
+    },
+    {
+      "categoryId": "PAT-010",
+      "categoryName": "Fictional Device, Session, and Security Event IDs",
+      "businessUse": "Endpoint DLP, Defender investigations, sign-in reviews, and synthetic telemetry correlation.",
+      "exampleValues": ["DEV-FIC-2219", "SIGNIN-FIC-8841", "IR-91827", "SEC-2026-0519", "CORR-DEVON-20260524-001"],
+      "regexLikePattern": "DEV-FIC-[0-9]{4}|SIGNIN-FIC-[0-9]{4}|IR-[0-9]{5}|SEC-[0-9]{4}-[0-9]{4}|CORR-[A-Z]+-[0-9]{8}-[0-9]{3}",
+      "recommendedSensitivity": "Internal or Confidential depending on investigation context.",
+      "purviewSitMappingGuidance": "Use these as investigation metadata, not primary sensitive identifiers, unless paired with regulated content.",
+      "truePositiveExamples": ["DEV-FIC-2219 copied SAR-DRAFT-FIC-2044 to a network share.", "SEC-2026-0519 includes DLP override evidence."],
+      "falsePositiveExamples": ["A synthetic event schema includes DEV-FIC-0000 only as a placeholder.", "CORR-TEST-00000000-000 appears in testing notes."]
+    }
+  ],
+  "combinedDetectionScenarios": [
+    {
+      "scenarioName": "High-confidence regulated financial record",
+      "requiredPatterns": ["Fictional Customer Identifier", "Fictional Account-Like Number"],
+      "supportingKeywords": ["KYC", "AML", "loan", "treasury", "transaction", "suspicious activity"],
+      "recommendedLabel": "Highly Confidential - Regulated Financial Data",
+      "recommendedDlpAction": "Block external sharing or require strong justification."
+    },
+    {
+      "scenarioName": "HR compensation record",
+      "requiredPatterns": ["Fictional HR and Employee Identifier"],
+      "supportingKeywords": ["salary", "compensation", "merit", "payroll", "benefits", "role change"],
+      "recommendedLabel": "Highly Confidential - HR Restricted",
+      "recommendedDlpAction": "Restrict sharing to HR and approved leadership groups."
+    },
+    {
+      "scenarioName": "Legal privileged regulatory response",
+      "requiredPatterns": ["Fictional Legal and Regulatory Matter ID"],
+      "supportingKeywords": ["privileged", "counsel", "regulator", "evidence", "control gap", "legal memo"],
+      "recommendedLabel": "Highly Confidential - Legal Privileged",
+      "recommendedDlpAction": "Encrypt and restrict external sharing to approved legal domains only."
+    },
+    {
+      "scenarioName": "Unsafe AI prompt content",
+      "requiredPatterns": ["Any regulated financial pattern"],
+      "supportingKeywords": ["summarize", "analyze", "rewrite", "explain", "make shorter", "prompt"],
+      "recommendedLabel": "Highly Confidential when saved as transcript",
+      "recommendedDlpAction": "Block or audit unmanaged AI upload; route to approved Copilot workflow."
+    }
+  ],
+  "syntheticContentGuidelines": {
+    "recommendedDensity": [
+      {"documentType": "Training or awareness document", "patternCount": "0-3 examples", "notes": "Use obvious sample-only values."},
+      {"documentType": "Customer operations file", "patternCount": "5-20 values", "notes": "Mix customer, account, dispute, and transaction references."},
+      {"documentType": "AML or SAR workbook", "patternCount": "15-50 values", "notes": "Use AML, SAR, customer, account, and risk score patterns."},
+      {"documentType": "HR compensation workbook", "patternCount": "10-40 values", "notes": "Use employee, salary band, merit, and role-change references."},
+      {"documentType": "Legal privileged memo", "patternCount": "3-12 values", "notes": "Use legal matter, regulator, evidence, and control-gap references."}
+    ],
+    "recommendedFalsePositiveStrategy": [
+      "Create training documents that include sample formats but no business context.",
+      "Create README files explaining patterns for Codex without linking them to customer or account narratives.",
+      "Create sanitized files that include only aggregate categories and remove row-level identifiers.",
+      "Use these examples to demonstrate DLP tuning rather than blanket blocking."
+    ],
+    "recommendedFalseNegativeStrategy": [
+      "Create files where sensitive meaning is implied through context but no exact regex pattern appears.",
+      "Use misspelled or partial identifiers to test classifier limitations.",
+      "Use screenshots, PDFs, or comments to discuss why OCR or content extraction coverage matters.",
+      "Use trainable classifier scenarios for legal, HR, and support notes that are sensitive by context."
+    ]
+  },
+  "codexUsageGuidance": [
+    "Use patternCategories to generate fictional sensitive content in documents, emails, Teams messages, AI prompts, and telemetry events.",
+    "Use regexLikePattern as guidance, not as final production regex syntax.",
+    "Use combinedDetectionScenarios to design DLP rule logic, sensitivity label recommendations, and demo storylines.",
+    "Use truePositiveExamples and falsePositiveExamples to generate classifier tuning datasets.",
+    "Do not replace synthetic patterns with real identifiers or real banking data."
+  ]
+}
