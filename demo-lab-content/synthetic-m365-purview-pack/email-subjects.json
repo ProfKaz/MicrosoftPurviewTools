@@ -1,0 +1,417 @@
+{
+  "emailSubjects": [
+    {
+      "department": "Executive Leadership",
+      "scenario": "Normal business operations",
+      "subjects": [
+        "Weekly leadership priorities for Project Northstar",
+        "Board briefing draft for Q3 operating rhythm",
+        "Follow-up actions from executive checkpoint",
+        "Updated agenda for regional strategy session",
+        "Leadership review: market expansion assumptions",
+        "Decision log for executive operating committee"
+      ]
+    },
+    {
+      "department": "Executive Leadership",
+      "scenario": "Sensitive data handling",
+      "subjects": [
+        "Confidential review: acquisition readiness summary",
+        "Restricted notes from succession planning discussion",
+        "Executive compensation benchmark packet for review",
+        "Private: customer concentration risk assessment",
+        "Leadership-only summary of restructuring options",
+        "Board materials containing forecast variance details"
+      ]
+    },
+    {
+      "department": "Executive Leadership",
+      "scenario": "Accidental oversharing risk",
+      "subjects": [
+        "Please confirm who received the investor appendix",
+        "Wrong audience? Draft board deck shared broadly",
+        "External calendar invite included internal strategy file",
+        "Review permissions on leadership planning workspace",
+        "Remove non-leadership attendees from confidential thread",
+        "Potential overshare: regional margin assumptions attached"
+      ]
+    },
+    {
+      "department": "HR",
+      "scenario": "HR compensation planning",
+      "subjects": [
+        "Compensation calibration worksheet for fictional employee group HR-2247",
+        "Salary band review for Operations and Support roles",
+        "Private merit increase planning file for Q4",
+        "HR-only: bonus eligibility assumptions for pilot team",
+        "Draft promotion slate with proposed salary ranges",
+        "Review required: compensation exceptions for onboarding cohort"
+      ]
+    },
+    {
+      "department": "HR",
+      "scenario": "Sensitive data handling",
+      "subjects": [
+        "Employee records packet for case HR-INC-48392",
+        "Benefits enrollment correction for EMP-782143",
+        "Confidential: leave accommodation documentation review",
+        "Background verification status for candidate CND-90441",
+        "Payroll correction file includes bank-like routing references",
+        "Restricted HR case notes for manager review"
+      ]
+    },
+    {
+      "department": "HR",
+      "scenario": "Accidental oversharing risk",
+      "subjects": [
+        "Please delete prior attachment: incorrect HR roster sent",
+        "Do not forward: compensation file included in error",
+        "Wrong version of performance review packet attached",
+        "External recruiter received internal interview notes",
+        "Check sharing link on HR onboarding workbook",
+        "Recall request: candidate file sent to broad distribution list"
+      ]
+    },
+    {
+      "department": "Finance",
+      "scenario": "Finance forecast and invoice review",
+      "subjects": [
+        "Monthly forecast refresh for cost center FIN-4108",
+        "Invoice INV-FAK-2026-004817 pending approval",
+        "Q3 revenue bridge with updated variance explanations",
+        "Vendor accrual review for fictional supplier ledger",
+        "Cash flow scenario model for Project Granite",
+        "Budget owner sign-off required for forecast revision"
+      ]
+    },
+    {
+      "department": "Finance",
+      "scenario": "Sensitive data handling",
+      "subjects": [
+        "Confidential: bank-like account validation for test vendor",
+        "Restricted finance pack with customer payment references",
+        "Treasury worksheet includes simulated account numbers",
+        "Finance control review for payment exception PAY-77318",
+        "Internal audit sample with invoice and tax-like IDs",
+        "Do not distribute: margin model with customer-level revenue"
+      ]
+    },
+    {
+      "department": "Finance",
+      "scenario": "Accidental oversharing risk",
+      "subjects": [
+        "Incorrect invoice detail sent to external mailbox",
+        "Remove attachment from previous finance email",
+        "Potential overshare: forecast workbook link is public",
+        "Vendor copied on internal pricing assumptions",
+        "Please confirm recipients for payment exception file",
+        "Finance workbook shared without expiration date"
+      ]
+    },
+    {
+      "department": "Legal",
+      "scenario": "Contract review",
+      "subjects": [
+        "Contract review requested for MSA-FIC-2026-1187",
+        "Redline summary for fictional services agreement",
+        "Legal comments on renewal clause and liability cap",
+        "Signature routing for NDA-NOVA-88421",
+        "Contract exception log for customer Aurora Vale Systems",
+        "Draft amendment for statement of work SOW-72914"
+      ]
+    },
+    {
+      "department": "Legal",
+      "scenario": "Sensitive data handling",
+      "subjects": [
+        "Privileged and confidential: litigation hold notes",
+        "Attorney review: data processing addendum risks",
+        "Restricted clause analysis for regulated-data scenario",
+        "Legal-only memo on fictional investigation file LEG-2044",
+        "Confidential settlement range discussion for test matter",
+        "Do not forward: counsel comments on breach notification draft"
+      ]
+    },
+    {
+      "department": "Legal",
+      "scenario": "External recipient review",
+      "subjects": [
+        "Confirm external counsel access to contract workspace",
+        "Vendor legal team requesting redline package",
+        "Review before sending NDA to outside advisor",
+        "External sharing approval for litigation binder excerpt",
+        "Check recipient domain before releasing amendment draft",
+        "Outside counsel link expiration for privileged documents"
+      ]
+    },
+    {
+      "department": "Sales",
+      "scenario": "Normal business operations",
+      "subjects": [
+        "Account plan refresh for Contoso-like fictional prospect",
+        "Pipeline review: opportunity OPP-59371 next steps",
+        "Sales forecast notes for regional leadership call",
+        "Customer meeting recap for Blue Harbor Retail demo",
+        "Proposal checklist for Project Meadow customer session",
+        "Pricing assumptions for upcoming renewal discussion"
+      ]
+    },
+    {
+      "department": "Sales",
+      "scenario": "Customer escalation",
+      "subjects": [
+        "Customer escalation: delayed delivery on case CUST-88420",
+        "Executive sponsor requested for dissatisfied pilot account",
+        "Urgent: customer claims incorrect renewal quote",
+        "Escalation notes for Northwind-style demo customer",
+        "Customer risk summary before tomorrow's retention call",
+        "Action plan required for account health downgrade"
+      ]
+    },
+    {
+      "department": "Sales",
+      "scenario": "Accidental oversharing risk",
+      "subjects": [
+        "Proposal draft includes internal discount guidance",
+        "Wrong customer copied on pricing comparison file",
+        "Please revoke link to competitor analysis deck",
+        "External recipient received account strategy notes",
+        "Check whether quote workbook can be shared externally",
+        "Sensitive customer list attached to broad sales thread"
+      ]
+    },
+    {
+      "department": "Engineering",
+      "scenario": "Normal business operations",
+      "subjects": [
+        "Sprint review notes for release ENG-26.05",
+        "Architecture decision record for telemetry pipeline",
+        "Bug triage summary for build 8.14.2-demo",
+        "Feature readiness checklist for Project Atlas",
+        "Engineering dependency update for platform services",
+        "Code freeze reminder for simulated production release"
+      ]
+    },
+    {
+      "department": "Engineering",
+      "scenario": "Sensitive data handling",
+      "subjects": [
+        "Test dataset contains fictional customer identifiers",
+        "Restricted design notes for encryption key rotation workflow",
+        "Engineering review: simulated secrets found in sample config",
+        "Data handling checklist for synthetic telemetry export",
+        "Internal-only API trace with fake session identifiers",
+        "Secure storage review for integration test artifacts"
+      ]
+    },
+    {
+      "department": "Engineering",
+      "scenario": "Accidental oversharing risk",
+      "subjects": [
+        "Do not upload debug bundle to external portal yet",
+        "Wrong file attached: internal architecture notes included",
+        "Please remove customer-like test data from shared log",
+        "External vendor received diagnostic package by mistake",
+        "Confirm sanitization before sharing stack trace archive",
+        "Repository export may include sensitive configuration comments"
+      ]
+    },
+    {
+      "department": "Data Science",
+      "scenario": "AI/Copilot-assisted analysis",
+      "subjects": [
+        "Copilot summary requested for churn model findings",
+        "AI-assisted analysis of synthetic customer segments",
+        "Prompt review for revenue anomaly explanation",
+        "Model interpretation notes generated from support dataset",
+        "Copilot draft: executive summary for forecast drivers",
+        "AI worksheet review for Project Helix insights"
+      ]
+    },
+    {
+      "department": "Data Science",
+      "scenario": "Sensitive data handling",
+      "subjects": [
+        "Restricted dataset sample with fake PII-like values",
+        "Data minimization review for customer feature table",
+        "Synthetic training set contains payroll-like attributes",
+        "Confidential: model output with account-level predictions",
+        "Access request for curated dataset DS-77419",
+        "Privacy review required before exporting feature matrix"
+      ]
+    },
+    {
+      "department": "Data Science",
+      "scenario": "Accidental oversharing risk",
+      "subjects": [
+        "Notebook output includes sensitive sample columns",
+        "Wrong CSV uploaded to shared project channel",
+        "External consultant received unmasked feature extract",
+        "Please delete model comparison file from public folder",
+        "Confirm if anonymized dataset is safe to send",
+        "Potential leak: customer-like identifiers in AI prompt transcript"
+      ]
+    },
+    {
+      "department": "IT Security",
+      "scenario": "Security incident follow-up",
+      "subjects": [
+        "Follow-up required for incident SEC-2026-0519",
+        "Containment summary for suspicious sharing activity",
+        "DLP alert review: external transfer attempt detected",
+        "Incident timeline for endpoint copy event",
+        "Security operations handoff for account risk investigation",
+        "Post-incident action items from Purview alert review"
+      ]
+    },
+    {
+      "department": "IT Security",
+      "scenario": "Sensitive data handling",
+      "subjects": [
+        "Restricted evidence package for investigation IR-91827",
+        "Confidential: insider risk signal review notes",
+        "Security-only export of Activity Explorer events",
+        "Access governance findings for privileged workspace",
+        "Do not distribute: investigation workbook with user activity",
+        "Forensics packet includes simulated endpoint file paths"
+      ]
+    },
+    {
+      "department": "IT Security",
+      "scenario": "External recipient review",
+      "subjects": [
+        "Vendor request for sanitized incident evidence",
+        "Confirm external SOC access to alert export",
+        "Review before sending logs to support provider",
+        "Security approval needed for third-party diagnostic upload",
+        "External mailbox validation for incident response partner",
+        "Limit sharing link scope for remediation evidence"
+      ]
+    },
+    {
+      "department": "Customer Support",
+      "scenario": "Customer escalation",
+      "subjects": [
+        "Escalated support case SUP-60392 requires manager review",
+        "Customer reports incorrect invoice reference in portal",
+        "Priority response needed for Blue Ridge demo account",
+        "Case handoff: customer shared sensitive attachment",
+        "Support escalation summary for service disruption claim",
+        "Urgent customer callback requested for ticket CS-11748"
+      ]
+    },
+    {
+      "department": "Customer Support",
+      "scenario": "Sensitive data handling",
+      "subjects": [
+        "Case notes contain fake ID and account verification data",
+        "Do not forward customer attachment until reviewed",
+        "Support transcript includes payment-like reference numbers",
+        "Restricted case bundle for quality audit",
+        "Customer identity verification sample for training",
+        "Sensitive support log export for supervisor approval"
+      ]
+    },
+    {
+      "department": "Customer Support",
+      "scenario": "Accidental oversharing risk",
+      "subjects": [
+        "Wrong support transcript attached to customer reply",
+        "Please retract previous email with another account's case notes",
+        "External customer copied on internal troubleshooting comments",
+        "Shared folder includes multiple customer case exports",
+        "Confirm attachment before sending escalation packet",
+        "Potential overshare: support queue CSV sent externally"
+      ]
+    },
+    {
+      "department": "PMO",
+      "scenario": "Normal business operations",
+      "subjects": [
+        "Project status update for PMO-Redwood implementation",
+        "RAID log refresh before steering committee",
+        "Milestone tracker for cross-functional rollout",
+        "Dependency review for Project HarborWave",
+        "Updated delivery plan for customer onboarding workstream",
+        "PMO dashboard notes for weekly governance call"
+      ]
+    },
+    {
+      "department": "PMO",
+      "scenario": "Contract review",
+      "subjects": [
+        "SOW dependency review before legal approval",
+        "Contract milestone mapping for delivery plan",
+        "Change request CR-44012 requires commercial review",
+        "Project scope variance tied to amendment draft",
+        "PMO comments on acceptance criteria in SOW",
+        "Customer deliverable matrix for contract alignment"
+      ]
+    },
+    {
+      "department": "PMO",
+      "scenario": "Accidental oversharing risk",
+      "subjects": [
+        "External vendor added to internal RAID log thread",
+        "Please restrict access to project finance tracker",
+        "Wrong steering committee deck sent to customer team",
+        "Delivery workspace contains confidential contract appendix",
+        "Check if milestone tracker link is organization-wide",
+        "PMO file copied to unmanaged shared folder"
+      ]
+    },
+    {
+      "department": "Cross-Functional",
+      "scenario": "External recipient review",
+      "subjects": [
+        "External sharing request for sanitized project package",
+        "Please verify recipient domain before sending attachment",
+        "Review link permissions for vendor collaboration folder",
+        "Partner mailbox added to confidential planning thread",
+        "Can this file be sent outside the tenant?",
+        "External recipient warning triggered on draft email"
+      ]
+    },
+    {
+      "department": "Cross-Functional",
+      "scenario": "AI/Copilot-assisted analysis",
+      "subjects": [
+        "Copilot-generated summary needs sensitivity review",
+        "AI prompt transcript includes internal planning details",
+        "Please validate AI-assisted draft before external send",
+        "Copilot found compensation terms in shared files",
+        "AI-generated customer summary may include restricted notes",
+        "Review source files used for AI-assisted response"
+      ]
+    }
+  ],
+  "metadata": {
+    "totalSubjects": 192,
+    "departmentsCovered": [
+      "Executive Leadership",
+      "HR",
+      "Finance",
+      "Legal",
+      "Sales",
+      "Engineering",
+      "Data Science",
+      "IT Security",
+      "Customer Support",
+      "PMO",
+      "Cross-Functional"
+    ],
+    "scenarioCoverage": [
+      "Normal business operations",
+      "Sensitive data handling",
+      "Accidental oversharing risk",
+      "External recipient review",
+      "Customer escalation",
+      "Contract review",
+      "HR compensation planning",
+      "Security incident follow-up",
+      "AI/Copilot-assisted analysis",
+      "Finance forecast and invoice review"
+    ],
+    "fictionalDataNotice": "All organizations, customers, identifiers, incidents, projects, invoices, employees, and data references are fictional and intended only for Microsoft 365 / Purview demo lab simulations."
+  }
+}
