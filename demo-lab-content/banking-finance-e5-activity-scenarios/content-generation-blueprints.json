@@ -1,0 +1,242 @@
+{
+  "metadata": {
+    "packName": "Content Generation Blueprints for Banking Finance E5 Simulations",
+    "version": "1.0",
+    "language": "en-US",
+    "industry": "Banking and Financial Services",
+    "fictionalDataOnly": true,
+    "purpose": "Provide reusable blueprints that Codex and browser-based agents can use to generate realistic synthetic banking/finance emails, documents, Teams messages, AI prompts, spreadsheet rows, and investigation artifacts."
+  },
+  "generationPrinciples": [
+    "Every generated artifact must use fictional data patterns only.",
+    "Content should sound operationally realistic but must not refer to real customers, real banks, real account numbers, real employees, or real incidents.",
+    "Generated artifacts should include enough business context to support Purview, DLP, Copilot, Defender, and Insider Risk demos.",
+    "Use sanitized and raw variants intentionally to support oversharing, DLP, and remediation scenarios.",
+    "When generating sensitive content, include a suggested sensitivity label and expected telemetry outcome."
+  ],
+  "documentBlueprints": [
+    {
+      "blueprintId": "DOC-BP-001",
+      "name": "KYC Customer Onboarding Packet",
+      "fileTypes": ["docx", "pdf", "xlsx"],
+      "recommendedLabel": "Highly Confidential - Regulated Financial Data",
+      "patternCategories": ["Fictional Customer Identifiers", "Fictional Account-Like Numbers", "Fictional Loan Identifiers"],
+      "sections": ["Customer Summary", "KYC Review Status", "Required Documentation", "Risk Flags", "Operations Notes", "Approval Status"],
+      "sampleRows": [
+        {"CustomerId": "CUST-BNK-204919", "KycCaseId": "KYC-FIC-88421", "AccountRef": "ACCT-FIC-7721-0044-9081", "Status": "Pending documentation", "RiskFlag": "Enhanced review required"},
+        {"CustomerId": "CUST-BNK-771903", "KycCaseId": "KYC-FIC-55102", "AccountRef": "ACCT-FIC-5520-1147-8810", "Status": "Ready for review", "RiskFlag": "Address verification pending"}
+      ],
+      "activityScenarios": ["FileCreated", "FileModified", "SensitivityLabelApplied", "FileShared", "DLPPolicyMatch"],
+      "safeVariantGuidance": "Create a sanitized checklist that removes customer IDs and account-like values before vendor sharing."
+    },
+    {
+      "blueprintId": "DOC-BP-002",
+      "name": "AML Monthly Review Workbook",
+      "fileTypes": ["xlsx", "csv"],
+      "recommendedLabel": "Highly Confidential - Regulated Financial Data",
+      "patternCategories": ["Fictional AML and SAR Identifiers", "Fictional Customer Identifiers", "Fictional Account-Like Numbers", "Fictional Transaction and Payment References"],
+      "sections": ["Case ID", "Customer ID", "Account Reference", "Transaction Reference", "Risk Score", "Review Status", "Owner", "Next Action"],
+      "sampleRows": [
+        {"AmlCaseId": "AML-CASE-2026-0519", "SarDraftId": "SAR-DRAFT-FIC-2044", "CustomerId": "CUST-BNK-559102", "AccountRef": "ACCT-FIC-1902-7781-0044", "RiskScore": "High", "NextAction": "Escalate to compliance review"},
+        {"AmlCaseId": "AML-CASE-2026-0520", "SarDraftId": "SAR-DRAFT-FIC-2045", "CustomerId": "CUST-BNK-204919", "AccountRef": "ACCT-FIC-7721-0044-9081", "RiskScore": "Medium", "NextAction": "Request supporting documentation"}
+      ],
+      "activityScenarios": ["FileCreated", "FileDownloaded", "CopilotInteraction", "AIAppInteraction", "UnmanagedAppUpload", "DLPPolicyMatch"],
+      "safeVariantGuidance": "Create an aggregate trend summary grouped by risk tier without row-level identifiers."
+    },
+    {
+      "blueprintId": "DOC-BP-003",
+      "name": "Treasury Reconciliation Workbook",
+      "fileTypes": ["xlsx", "csv"],
+      "recommendedLabel": "Highly Confidential - Regulated Financial Data",
+      "patternCategories": ["Fictional Account-Like Numbers", "Fictional Transaction and Payment References"],
+      "sections": ["Reconciliation ID", "Account Reference", "Payment Reference", "Exception Type", "Owner", "Status", "Aging Days"],
+      "sampleRows": [
+        {"ReconciliationId": "RECON-FIC-1187", "AccountRef": "ACCT-FIC-9920-4417-0038", "PaymentRef": "PAY-FIC-8842", "ExceptionType": "Unmatched payment", "Owner": "Treasury Ops", "Status": "Open", "AgingDays": 4},
+        {"ReconciliationId": "RECON-FIC-1190", "AccountRef": "ACCT-FIC-4418-2290-7711", "PaymentRef": "PAY-FIC-5519", "ExceptionType": "Timing difference", "Owner": "Finance Ops", "Status": "Pending validation", "AgingDays": 2}
+      ],
+      "activityScenarios": ["FileDownloaded", "FilePrinted", "FileCopiedToNetworkShare", "EndpointDLPPolicyMatch"],
+      "safeVariantGuidance": "Create a manager summary with exception counts and aging buckets only."
+    },
+    {
+      "blueprintId": "DOC-BP-004",
+      "name": "HR Compensation Planning Workbook",
+      "fileTypes": ["xlsx"],
+      "recommendedLabel": "Highly Confidential - HR Restricted",
+      "patternCategories": ["Fictional HR and Employee Identifiers"],
+      "sections": ["Employee ID", "Role Family", "Current Salary Band", "Proposed Salary Band", "Merit Percent", "Manager Note", "Approval Status"],
+      "sampleRows": [
+        {"EmployeeId": "EMP-785511", "RoleFamily": "Customer Operations", "CurrentBand": "SAL-BAND-FIC-07", "ProposedBand": "SAL-BAND-FIC-08", "MeritPercent": "6%", "ApprovalStatus": "Pending"},
+        {"EmployeeId": "EMP-782143", "RoleFamily": "Risk Analytics", "CurrentBand": "SAL-BAND-FIC-09", "ProposedBand": "SAL-BAND-FIC-09", "MeritPercent": "3%", "ApprovalStatus": "Approved"}
+      ],
+      "activityScenarios": ["FileCreated", "SensitivityLabelApplied", "CopilotInteraction", "SensitiveContentAccessed", "AccessReviewRequired"],
+      "safeVariantGuidance": "Create an executive workforce summary with aggregated headcount and no employee-level compensation data."
+    },
+    {
+      "blueprintId": "DOC-BP-005",
+      "name": "Regulatory Response Legal Memo",
+      "fileTypes": ["docx", "pdf"],
+      "recommendedLabel": "Highly Confidential - Legal Privileged",
+      "patternCategories": ["Fictional Legal and Regulatory Matter IDs", "Fictional AML and SAR Identifiers", "Fictional Device, Session, and Security Event IDs"],
+      "sections": ["Privileged Legal Analysis", "Regulatory Request Summary", "Evidence Status", "Control Gap Discussion", "Recommended Response", "External Disclosure Restrictions"],
+      "sampleRows": [],
+      "activityScenarios": ["FileCreated", "SensitivityLabelApplied", "CopilotInteraction", "LoopComponentModified", "ExternalEmailSent", "DLPPolicyMatch"],
+      "safeVariantGuidance": "Create a non-privileged action tracker that removes legal analysis and preserves only task owner, due date, and evidence status."
+    }
+  ],
+  "emailBlueprints": [
+    {
+      "blueprintId": "EMAIL-BP-001",
+      "name": "External Vendor Request for Sanitized Evidence",
+      "senderRoles": ["Operations Director", "PMO Lead", "Legal Counsel"],
+      "recipientType": "External vendor",
+      "subjectTemplate": "Sanitized evidence package for {VendorOrCaseId}",
+      "bodyTemplate": "Hello, attached is the sanitized evidence package for {VendorOrCaseId}. Internal risk notes, customer identifiers, account-like values, and legal commentary have been removed. Please confirm receipt and use this version for your review.",
+      "attachmentCandidates": ["Vendor_Evidence_Package_Sanitized.pdf", "Vendor_KYC_Checklist_Sanitized.docx"],
+      "expectedSignals": ["ExternalEmailSent", "FileShared"],
+      "riskVariant": "Attach the internal package instead of the sanitized version to trigger DLP."
+    },
+    {
+      "blueprintId": "EMAIL-BP-002",
+      "name": "DLP Block Follow-Up",
+      "senderRoles": ["Junior Operations Analyst", "Customer Operations Specialist"],
+      "recipientType": "Security team",
+      "subjectTemplate": "Question about blocked sharing for {FileName}",
+      "bodyTemplate": "Hi Security team, I tried to send {FileName} for an urgent business review, but the message was blocked. Can you confirm whether I should create a sanitized version or share it through a restricted workspace instead?",
+      "attachmentCandidates": [],
+      "expectedSignals": ["TeamsMessageSent", "EmailSent", "DLPBlocked"],
+      "riskVariant": "User attempts a different sharing method before asking for guidance."
+    },
+    {
+      "blueprintId": "EMAIL-BP-003",
+      "name": "Customer-Safe Complaint Response",
+      "senderRoles": ["Customer Operations Specialist"],
+      "recipientType": "Customer contact",
+      "subjectTemplate": "Update on your case {CaseId}",
+      "bodyTemplate": "Thank you for your patience while we reviewed your case. Our team has completed the initial review and will continue processing the next step through the approved support channel. We will provide another update once the next action is complete.",
+      "attachmentCandidates": ["Customer_Complaint_Response_DISPUTE-FIC-60392_CustomerSafe.docx"],
+      "expectedSignals": ["ExternalEmailSent"],
+      "riskVariant": "Include internal transaction monitoring logic or attach internal notes."
+    }
+  ],
+  "teamsBlueprints": [
+    {
+      "blueprintId": "TEAMS-BP-001",
+      "name": "Quick Review Request with Potential Oversharing",
+      "participants": ["Junior Operations Analyst", "Customer Operations Specialist", "Security Manager"],
+      "channelType": "Operations channel",
+      "messageTemplates": [
+        "Can someone quickly review this file before the vendor call? {FileLink}",
+        "Is this the sanitized version or the internal one?",
+        "Please do not post regulated customer details in this channel. Move it to the restricted workspace.",
+        "Understood. I will remove the link and upload the sanitized version."
+      ],
+      "expectedSignals": ["TeamsMessageSent", "TeamsFileShared", "DLPPolicyMatch"],
+      "riskVariant": "Post a link to a regulated KYC or AML file in a broad channel."
+    },
+    {
+      "blueprintId": "TEAMS-BP-002",
+      "name": "Security Investigation Coordination",
+      "participants": ["Head of IT / Security", "Cybersecurity Manager", "Corporate Lawyer", "HR Manager", "Platform Engineer"],
+      "channelType": "Private investigation chat",
+      "messageTemplates": [
+        "I am seeing a sequence of sensitive downloads, external AI activity, and endpoint movement for {UserPrincipalName}.",
+        "Please preserve business context and avoid assumptions about intent until we validate the workflow.",
+        "I will check the device activity for {DeviceId} and confirm whether print or network-share copy occurred.",
+        "HR can confirm whether there is a relevant role-change context.",
+        "Let us document remediation and coaching separately from technical containment."
+      ],
+      "expectedSignals": ["TeamsMessageSent", "InsiderRiskSequence", "EndpointDLPPolicyMatch"],
+      "riskVariant": "Share investigation notes in a broad channel instead of a private chat."
+    }
+  ],
+  "aiPromptBlueprints": [
+    {
+      "blueprintId": "AI-BP-001",
+      "name": "Safe Aggregated Banking Summary",
+      "interactionType": "CopilotInteraction",
+      "promptTemplate": "Summarize {SourceFileName} at an aggregate level. Do not include customer IDs, account-like values, transaction references, or row-level details.",
+      "expectedSafeOutcome": "An aggregate summary by category, trend, risk tier, or business theme.",
+      "expectedSignals": ["CopilotInteraction", "FileReferencedByCopilot"],
+      "riskVariant": "Ask for a customer-by-customer breakdown from the same source file."
+    },
+    {
+      "blueprintId": "AI-BP-002",
+      "name": "Unsafe External AI Row Summary",
+      "interactionType": "AIAppInteraction",
+      "promptTemplate": "Summarize these rows quickly: {SensitiveRows}",
+      "expectedSafeOutcome": "This should not be used with raw sensitive rows. Route to approved internal workflow instead.",
+      "expectedSignals": ["AIAppInteraction", "UnmanagedAppUpload", "DLPPolicyMatch"],
+      "riskVariant": "Include AML, SAR, customer, and account-like values in the prompt."
+    },
+    {
+      "blueprintId": "AI-BP-003",
+      "name": "Legal Privileged Content Guardrail",
+      "interactionType": "CopilotInteraction",
+      "promptTemplate": "Create non-privileged action items based only on the approved action tracker, not the legal memo.",
+      "expectedSafeOutcome": "Action items limited to owner, due date, evidence status, and next review step.",
+      "expectedSignals": ["CopilotInteraction"],
+      "riskVariant": "Ask Copilot to rewrite privileged legal analysis for broad PMO distribution."
+    }
+  ],
+  "spreadsheetRowBlueprints": [
+    {
+      "blueprintId": "ROW-BP-001",
+      "name": "AML Review Row",
+      "columns": ["AmlCaseId", "SarDraftId", "CustomerId", "AccountRef", "TransactionRef", "RiskScore", "ReviewStatus", "Owner", "NextAction"],
+      "exampleRows": [
+        ["AML-CASE-2026-0519", "SAR-DRAFT-FIC-2044", "CUST-BNK-559102", "ACCT-FIC-1902-7781-0044", "TXN-FIC-5519", "High", "Open", "Compliance Ops", "Escalate for review"],
+        ["AML-CASE-2026-0520", "SAR-DRAFT-FIC-2045", "CUST-BNK-204919", "ACCT-FIC-7721-0044-9081", "TXN-FIC-771-902", "Medium", "Pending", "Customer Ops", "Request documentation"]
+      ],
+      "recommendedLabel": "Highly Confidential - Regulated Financial Data"
+    },
+    {
+      "blueprintId": "ROW-BP-002",
+      "name": "Loan Exception Row",
+      "columns": ["LoanExceptionId", "LoanId", "CustomerId", "MissingDocument", "AgingDays", "Owner", "Status"],
+      "exampleRows": [
+        ["LOAN-EXC-FIC-44012", "LOAN-FIC-2026-5519", "CUST-BNK-771903", "Income verification", 7, "Loan Ops", "Open"],
+        ["DOC-MISS-FIC-3320", "LOAN-FIC-2026-1187", "CUST-BNK-204919", "Collateral appendix", 3, "Risk Ops", "Pending review"]
+      ],
+      "recommendedLabel": "Highly Confidential - Regulated Financial Data"
+    },
+    {
+      "blueprintId": "ROW-BP-003",
+      "name": "HR Compensation Planning Row",
+      "columns": ["EmployeeId", "RoleFamily", "CurrentBand", "ProposedBand", "MeritPercent", "ManagerNote", "ApprovalStatus"],
+      "exampleRows": [
+        ["EMP-785511", "Customer Operations", "SAL-BAND-FIC-07", "SAL-BAND-FIC-08", "6%", "Retention risk", "Pending"],
+        ["EMP-782143", "Risk Analytics", "SAL-BAND-FIC-09", "SAL-BAND-FIC-09", "3%", "Standard merit cycle", "Approved"]
+      ],
+      "recommendedLabel": "Highly Confidential - HR Restricted"
+    }
+  ],
+  "investigationArtifactBlueprints": [
+    {
+      "blueprintId": "INV-BP-001",
+      "name": "Insider Risk Case Summary",
+      "fileNameTemplate": "{UserLastName}_Investigation_Case_Summary_{ScenarioId}.docx",
+      "recommendedLabel": "Highly Confidential",
+      "sections": ["Case Summary", "Business Context", "Observed Signals", "Timeline", "User Explanation", "HR Context", "Legal Guidance", "Remediation Actions", "Final Outcome"],
+      "expectedSignals": ["FileCreated", "SensitivityLabelApplied", "TeamsMessageSent"],
+      "toneGuidance": "Use neutral language. Avoid assuming malicious intent unless scenario evidence explicitly supports it."
+    },
+    {
+      "blueprintId": "INV-BP-002",
+      "name": "User Coaching Outcome",
+      "fileNameTemplate": "{UserLastName}_User_Coaching_Outcome_{ScenarioId}.docx",
+      "recommendedLabel": "Confidential",
+      "sections": ["Coaching Trigger", "Data Handling Guidance", "Approved Alternatives", "User Acknowledgement", "Follow-Up Date"],
+      "expectedSignals": ["FileCreated", "FileModified"],
+      "toneGuidance": "Frame coaching as risk reduction and process clarity, not punishment."
+    }
+  ],
+  "codexUsageGuidance": [
+    "Use documentBlueprints to generate Office documents and SharePoint artifacts.",
+    "Use emailBlueprints to create Outlook messages aligned to safe and risky variants.",
+    "Use teamsBlueprints to generate realistic Teams conversations before and after risky events.",
+    "Use aiPromptBlueprints to generate CopilotInteraction and AIAppInteraction events.",
+    "Use spreadsheetRowBlueprints to populate xlsx and csv files with consistent fictional sensitive patterns.",
+    "Use investigationArtifactBlueprints to create response artifacts after high-risk timelines.",
+    "Always preserve synthetic-only constraints and avoid real-world identifiers."
+  ]
+}
