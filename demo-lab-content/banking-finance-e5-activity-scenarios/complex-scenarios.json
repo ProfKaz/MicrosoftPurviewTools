@@ -1,0 +1,628 @@
+{
+  "metadata": {
+    "packName": "Banking and Finance Microsoft 365 E5 Complex Scenarios",
+    "version": "1.0",
+    "language": "en-US",
+    "industry": "Banking and Financial Services",
+    "scenarioCount": 30,
+    "fictionalDataOnly": true,
+    "purpose": "Provide Codex and browser-based agents with complex, multi-workload banking and finance scenarios that generate realistic Microsoft 365, Purview, Defender, Copilot, DLP, label, and insider-risk-style telemetry."
+  },
+  "complexScenarios": [
+    {
+      "scenarioId": "BF-SCEN-0001",
+      "title": "Weekly Loan Committee Package Oversharing",
+      "cadence": "Weekly",
+      "primaryPersona": "Sofia Lopez",
+      "supportingPersonas": ["Carlos Delgado", "Emily Johnson", "Devon Reyes", "Ana Rodriguez"],
+      "businessObjective": "Prepare and distribute the weekly loan committee package for internal approval.",
+      "technologiesUsed": ["SharePoint Online", "Teams", "Excel Web", "PowerPoint Web", "Outlook Web", "Microsoft Purview DLP", "Sensitivity Labels"],
+      "businessNarrative": "Sofia coordinates the loan committee pack using SharePoint and Teams. Carlos updates credit exposure data, Emily reviews legal caveats, and Devon is asked to upload supporting customer documents. Under time pressure, Devon shares the wrong folder link with a broad Operations channel and an external advisor mailbox.",
+      "normalActivities": ["Create loan committee folder in restricted SharePoint site", "Update credit exposure workbook", "Prepare PowerPoint decision deck", "Discuss readiness in Teams", "Apply Confidential label to committee materials"],
+      "riskyActivities": ["Devon uploads KYC support files to a broad Operations library", "Devon creates a sharing link with external access", "Committee package includes fictional customer IDs and loan references"],
+      "fictionalDataPatterns": ["LOAN-FIC-2026-1187", "CUST-BNK-204919", "ACCT-FIC-7721-0044-9081", "KYC-FIC-88421"],
+      "expectedFiles": [
+        {"fileName": "Weekly_Loan_Committee_Package_Internal.pptx", "suggestedLabel": "Confidential"},
+        {"fileName": "Credit_Exposure_Workbook_LOAN-FIC-2026-1187.xlsx", "suggestedLabel": "Highly Confidential - Regulated Financial Data"},
+        {"fileName": "KYC_Supporting_Documents_Index_KYC-FIC-88421.xlsx", "suggestedLabel": "Highly Confidential - Regulated Financial Data"}
+      ],
+      "expectedSignals": ["FileCreated", "FileModified", "FileShared", "ExternalEmailSent", "DLPPolicyMatch", "SensitivityLabelApplied", "TeamsMessageSent"],
+      "recommendedControls": ["DLP for SharePoint and Exchange", "Sensitivity labels", "External recipient warning", "Restricted SharePoint permissions", "Audit review"],
+      "suggestedBrowserAgentFlow": ["Sofia creates SharePoint folder", "Carlos edits Excel workbook", "Sofia creates PowerPoint deck", "Devon uploads KYC index to wrong library", "Devon shares link in Teams", "Devon emails external advisor", "Ana reviews DLP alert"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0002",
+      "title": "Monthly AML Review Workbook Download and External AI Upload",
+      "cadence": "Monthly",
+      "primaryPersona": "Devon Reyes",
+      "supportingPersonas": ["Marcus Olsson", "Ana Rodriguez", "Priya Sharma"],
+      "businessObjective": "Review monthly AML queue trends and prepare an internal summary.",
+      "technologiesUsed": ["SharePoint Online", "OneDrive for Business", "Excel Web", "External AI app", "Defender for Cloud Apps", "Microsoft Purview DLP", "Insider Risk Management"],
+      "businessNarrative": "Devon downloads the monthly AML review workbook from SharePoint to OneDrive. Instead of using approved Copilot workflows, he copies rows into an unmanaged AI tool to summarize trends. The workbook contains synthetic suspicious activity references and customer account-like identifiers.",
+      "normalActivities": ["Download AML review workbook", "Summarize monthly trends", "Create internal operations note", "Share summary with Marcus for security review"],
+      "riskyActivities": ["Upload or paste sensitive AML data into external AI", "Download regulated financial data to OneDrive", "Use customer-level data instead of aggregated trends"],
+      "fictionalDataPatterns": ["AML-CASE-2026-0519", "SAR-DRAFT-FIC-2044", "CUST-BNK-559102", "ACCT-FIC-1902-7781-0044"],
+      "expectedFiles": [
+        {"fileName": "Monthly_AML_Review_Workbook_AML-CASE-2026-0519.xlsx", "suggestedLabel": "Highly Confidential - Regulated Financial Data"},
+        {"fileName": "AML_Trend_Summary_Internal.docx", "suggestedLabel": "Confidential"},
+        {"fileName": "External_AI_Prompt_Transcript_AML_Review.txt", "suggestedLabel": "Highly Confidential - Regulated Financial Data"}
+      ],
+      "expectedSignals": ["FileDownloaded", "FileModified", "AIAppInteraction", "UnmanagedAppUpload", "DLPPolicyMatch", "InsiderRiskSequence"],
+      "recommendedControls": ["Defender for Cloud Apps session controls", "Endpoint DLP", "DSPM for AI", "DLP policy for AML and account-like values", "User coaching"],
+      "suggestedBrowserAgentFlow": ["Devon downloads AML workbook", "Devon opens workbook in Excel Web", "Devon copies sample rows", "Devon pastes data into external AI app", "Marcus receives alert", "Ana starts investigation note"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0003",
+      "title": "Customer Complaint Case Shared with Internal Notes",
+      "cadence": "Daily",
+      "primaryPersona": "David Chen",
+      "supportingPersonas": ["Devon Reyes", "Emily Johnson", "Marcus Olsson"],
+      "businessObjective": "Respond to a high-priority customer complaint involving a disputed transaction.",
+      "technologiesUsed": ["Microsoft Lists", "SharePoint Online", "Teams", "Outlook Web", "Word Web", "Microsoft Purview DLP"],
+      "businessNarrative": "David manages a complaint case in Microsoft Lists and drafts a customer response. Devon adds internal investigation notes directly into the customer-safe document. David nearly sends the file externally before Emily flags that the attachment contains internal legal and investigation commentary.",
+      "normalActivities": ["Update complaint list item", "Draft customer response", "Discuss case in Teams", "Send customer-safe response"],
+      "riskyActivities": ["Internal notes are added to customer-facing file", "Customer account-like number appears in Word comments", "External email draft includes wrong attachment"],
+      "fictionalDataPatterns": ["DISPUTE-FIC-60392", "CUST-BNK-88420", "TXN-FIC-771-902", "ACCT-FIC-8830-4412-9001"],
+      "expectedFiles": [
+        {"fileName": "Customer_Complaint_DISPUTE-FIC-60392_Internal_Notes.docx", "suggestedLabel": "Confidential"},
+        {"fileName": "Customer_Complaint_Response_DISPUTE-FIC-60392_CustomerSafe.docx", "suggestedLabel": "Public"},
+        {"fileName": "Complaint_Case_Tracker_Export.csv", "suggestedLabel": "Confidential"}
+      ],
+      "expectedSignals": ["ListItemModified", "FileModified", "TeamsMessageSent", "ExternalEmailSent", "DLPPolicyMatch", "SensitivityLabelChanged"],
+      "recommendedControls": ["DLP for Exchange", "DLP for Teams", "Sensitivity labels", "Trainable classifier for internal case notes", "External recipient warning"],
+      "suggestedBrowserAgentFlow": ["David updates Microsoft List", "Devon edits Word file and adds internal notes", "David posts Teams message asking for approval", "Emily reviews document", "David sends customer-safe version"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0004",
+      "title": "Power BI Customer-Level Credit Export",
+      "cadence": "Weekly",
+      "primaryPersona": "Carlos Delgado",
+      "supportingPersonas": ["Alexander Meyer", "Ana Rodriguez", "Devon Reyes"],
+      "businessObjective": "Prepare a weekly credit-risk summary for executive review.",
+      "technologiesUsed": ["Power BI", "Excel Web", "SharePoint Online", "Outlook Web", "Microsoft Purview DLP", "Sensitivity Labels"],
+      "businessNarrative": "Carlos reviews a Power BI credit-risk dashboard and exports underlying customer-level data to Excel for deeper analysis. Devon later forwards the export to a broad operations group instead of using the aggregated executive summary.",
+      "normalActivities": ["View Power BI dashboard", "Export aggregated summary", "Create executive report", "Apply Confidential label"],
+      "riskyActivities": ["Export underlying customer-level data", "Email export to broad distribution list", "Share customer-level credit scores outside Risk Analytics"],
+      "fictionalDataPatterns": ["CUST-BNK-204919", "CREDIT-RISK-FIC-3317", "LOAN-FIC-2026-3310", "EXPOSURE-FIC-7711"],
+      "expectedFiles": [
+        {"fileName": "Credit_Risk_Executive_Summary_Weekly.pdf", "suggestedLabel": "Confidential"},
+        {"fileName": "PowerBI_Customer_Level_Credit_Export.csv", "suggestedLabel": "Highly Confidential - Regulated Financial Data"},
+        {"fileName": "Credit_Exposure_Analysis_Working_Copy.xlsx", "suggestedLabel": "Highly Confidential - Regulated Financial Data"}
+      ],
+      "expectedSignals": ["PowerBIReportViewed", "PowerBIExport", "FileDownloaded", "FileCreated", "ExternalEmailSent", "DLPPolicyMatch"],
+      "recommendedControls": ["DLP for Power BI", "Sensitivity labels in Power BI", "Restrict export underlying data", "DLP for Exchange", "Role-based access review"],
+      "suggestedBrowserAgentFlow": ["Carlos views dashboard", "Carlos exports underlying data", "Carlos creates summary", "Devon forwards raw export", "Ana reviews DLP alert"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0005",
+      "title": "Treasury Reconciliation Workbook Printed and Copied",
+      "cadence": "Daily",
+      "primaryPersona": "Devon Reyes",
+      "supportingPersonas": ["James Wilson", "Miguel Santos", "Marcus Olsson"],
+      "businessObjective": "Support daily treasury reconciliation and exception review.",
+      "technologiesUsed": ["SharePoint Online", "OneDrive for Business", "Excel Web", "Defender for Endpoint", "Endpoint DLP", "Intune"],
+      "businessNarrative": "Devon downloads a treasury reconciliation workbook to his device, prints a copy for offline review, and then copies the workbook to a temporary network share. The workbook contains bank-like account references and reconciliation exceptions.",
+      "normalActivities": ["Open treasury workbook", "Update reconciliation status", "Send exception summary to James"],
+      "riskyActivities": ["Print regulated financial workbook", "Copy workbook to network share", "Download to local device outside approved process"],
+      "fictionalDataPatterns": ["TREAS-FIC-2026-0524", "ACCT-FIC-9920-4417-0038", "RECON-FIC-1187", "PAY-FIC-8842"],
+      "expectedFiles": [
+        {"fileName": "Daily_Treasury_Reconciliation_TREAS-FIC-2026-0524.xlsx", "suggestedLabel": "Highly Confidential - Regulated Financial Data"},
+        {"fileName": "Treasury_Exception_Summary_Internal.docx", "suggestedLabel": "Confidential"}
+      ],
+      "expectedSignals": ["FileDownloaded", "FilePrinted", "FileCopiedToNetworkShare", "EndpointDLPPolicyMatch", "InsiderRiskSequence"],
+      "recommendedControls": ["Endpoint DLP print restrictions", "Block copy to network share", "Sensitivity labels", "Defender for Endpoint investigation", "Insider Risk policy"],
+      "suggestedBrowserAgentFlow": ["Devon opens SharePoint workbook", "Devon downloads file", "Devon prints file", "Devon copies file to network share", "Miguel reviews endpoint alert", "Marcus documents incident"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0006",
+      "title": "Regulatory Response Draft Shared Before Legal Approval",
+      "cadence": "EventDriven",
+      "primaryPersona": "Emily Johnson",
+      "supportingPersonas": ["Sofia Lopez", "Ana Rodriguez", "Devon Reyes"],
+      "businessObjective": "Prepare a response package for a fictional regulator inquiry.",
+      "technologiesUsed": ["SharePoint Online", "Word Web", "Teams", "Outlook Web", "Microsoft Purview Information Protection", "Records Management"],
+      "businessNarrative": "Emily prepares a regulator response draft in a legal privileged SharePoint site. Sofia coordinates evidence collection. Devon downloads a draft and sends it to an external advisor before legal approval, exposing internal control-gap language.",
+      "normalActivities": ["Create legal privileged response draft", "Collect evidence from business teams", "Apply Legal Privileged label", "Coordinate review in Teams"],
+      "riskyActivities": ["External sharing of internal draft", "Download of legal privileged material", "Premature disclosure of control gaps"],
+      "fictionalDataPatterns": ["REG-REQ-FIC-2026-2044", "CTRL-GAP-FIC-771", "EVID-FIC-3319", "LEGAL-FIC-88421"],
+      "expectedFiles": [
+        {"fileName": "Regulatory_Response_Draft_REG-REQ-FIC-2026-2044.docx", "suggestedLabel": "Highly Confidential - Legal Privileged"},
+        {"fileName": "Regulatory_Evidence_Index_EVID-FIC-3319.xlsx", "suggestedLabel": "Confidential"},
+        {"fileName": "Regulator_Response_CustomerSafe_Final.pdf", "suggestedLabel": "Confidential"}
+      ],
+      "expectedSignals": ["FileCreated", "FileModified", "SensitivityLabelApplied", "FileDownloaded", "ExternalEmailSent", "DLPPolicyMatch"],
+      "recommendedControls": ["Legal privileged label encryption", "External sharing restriction", "DLP for legal keywords", "Records retention", "Access review"],
+      "suggestedBrowserAgentFlow": ["Emily drafts response", "Sofia updates evidence index", "Devon downloads draft", "Devon emails external advisor", "Ana receives alert", "Emily creates final approved PDF"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0007",
+      "title": "HR Compensation Data Surfaced Through Copilot",
+      "cadence": "Monthly",
+      "primaryPersona": "Laura Gomez",
+      "supportingPersonas": ["Alexander Meyer", "Ana Rodriguez", "Devon Reyes"],
+      "businessObjective": "Prepare monthly workforce and compensation planning materials.",
+      "technologiesUsed": ["SharePoint Online", "OneDrive for Business", "Word Web", "Excel Web", "Copilot for Microsoft 365", "Microsoft Purview DSPM for AI"],
+      "businessNarrative": "Laura stores HR compensation planning files in a SharePoint folder with inherited access from a broader group. Alexander asks Copilot to summarize workforce planning, and Copilot surfaces compensation details because permissions allow access. Devon also accesses the same workbook even though he has no business need.",
+      "normalActivities": ["Create workforce planning workbook", "Apply HR Restricted label", "Prepare executive summary", "Use Copilot for workforce trend summary"],
+      "riskyActivities": ["Inherited permissions expose HR file", "Copilot surfaces compensation data", "Devon accesses HR compensation workbook outside role scope"],
+      "fictionalDataPatterns": ["EMP-785511", "SAL-BAND-FIC-09", "COMP-FIC-2026-05", "HR-PLAN-FIC-1187"],
+      "expectedFiles": [
+        {"fileName": "Monthly_Workforce_Compensation_Planning_HR.xlsx", "suggestedLabel": "Highly Confidential - HR Restricted"},
+        {"fileName": "Executive_Workforce_Planning_Summary.docx", "suggestedLabel": "Confidential"},
+        {"fileName": "Copilot_Workforce_Summary_Risk_Notes.txt", "suggestedLabel": "Confidential"}
+      ],
+      "expectedSignals": ["FileCreated", "SensitivityLabelApplied", "CopilotInteraction", "FileAccessed", "SensitiveContentAccessed", "InsiderRiskSequence"],
+      "recommendedControls": ["DSPM for AI", "Restrict HR SharePoint permissions", "Sensitivity label encryption", "Access review", "Insider Risk policy"],
+      "suggestedBrowserAgentFlow": ["Laura uploads HR workbook", "Permissions remain inherited", "Alexander prompts Copilot", "Copilot references HR data", "Devon accesses workbook", "Ana reviews exposure"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0008",
+      "title": "Customer Onboarding KYC Packet Sent to Vendor",
+      "cadence": "Daily",
+      "primaryPersona": "Devon Reyes",
+      "supportingPersonas": ["David Chen", "Emily Johnson", "Marcus Olsson"],
+      "businessObjective": "Complete onboarding for a fictional high-value banking customer.",
+      "technologiesUsed": ["SharePoint Online", "Outlook Web", "Teams", "Microsoft Purview DLP", "Sensitivity Labels"],
+      "businessNarrative": "David asks Devon to prepare an internal KYC packet for review. Devon misunderstands the vendor request and sends the full KYC package externally instead of the sanitized checklist. Emily and Marcus intervene after the DLP alert triggers.",
+      "normalActivities": ["Create KYC packet", "Prepare sanitized vendor checklist", "Discuss onboarding status in Teams", "Apply regulated financial label"],
+      "riskyActivities": ["Send full KYC package externally", "Attach regulated financial data to vendor email", "Use broad sharing link"],
+      "fictionalDataPatterns": ["KYC-FIC-88421", "CUST-BNK-771903", "ACCT-FIC-5520-1147-8810", "ONBOARD-FIC-3310"],
+      "expectedFiles": [
+        {"fileName": "Full_KYC_Packet_KYC-FIC-88421_Internal.pdf", "suggestedLabel": "Highly Confidential - Regulated Financial Data"},
+        {"fileName": "Vendor_KYC_Checklist_Sanitized.docx", "suggestedLabel": "Internal"},
+        {"fileName": "KYC_External_Sharing_Incident_Notes.docx", "suggestedLabel": "Confidential"}
+      ],
+      "expectedSignals": ["FileCreated", "FileShared", "ExternalEmailSent", "DLPBlocked", "DLPPolicyMatch", "TeamsMessageSent"],
+      "recommendedControls": ["DLP block for KYC packages", "External sharing approval workflow", "Sensitivity label encryption", "User coaching", "Incident response workflow"],
+      "suggestedBrowserAgentFlow": ["David creates KYC checklist", "Devon downloads full KYC packet", "Devon drafts vendor email", "DLP blocks attachment", "Devon asks in Teams why it was blocked", "Marcus explains policy"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0009",
+      "title": "Suspicious Activity Review Copied to USB",
+      "cadence": "EventDriven",
+      "primaryPersona": "Devon Reyes",
+      "supportingPersonas": ["Miguel Santos", "Marcus Olsson", "Ana Rodriguez"],
+      "businessObjective": "Review suspicious activity records for internal operations follow-up.",
+      "technologiesUsed": ["SharePoint Online", "OneDrive for Business", "Endpoint DLP", "Defender for Endpoint", "Insider Risk Management"],
+      "businessNarrative": "Devon accesses a suspicious activity review folder and downloads several case files. Later, endpoint telemetry shows an attempted USB copy. Security must determine whether this was a training mistake, negligence, or potential exfiltration.",
+      "normalActivities": ["Open assigned suspicious activity case", "Add internal status note", "Notify Marcus of completed review"],
+      "riskyActivities": ["Mass download of suspicious activity files", "USB copy attempt", "Access to cases not assigned to Devon"],
+      "fictionalDataPatterns": ["SAR-DRAFT-FIC-2044", "SAR-CASE-FIC-5501", "CUST-BNK-441902", "ACCT-FIC-4418-2290-7711"],
+      "expectedFiles": [
+        {"fileName": "Suspicious_Activity_Review_SAR-DRAFT-FIC-2044.docx", "suggestedLabel": "Highly Confidential - Regulated Financial Data"},
+        {"fileName": "SAR_Case_Index_Internal.csv", "suggestedLabel": "Highly Confidential - Regulated Financial Data"}
+      ],
+      "expectedSignals": ["FileAccessed", "FileDownloaded", "MassDownloadActivity", "FileCopiedToUSB", "EndpointDLPPolicyMatch", "InsiderRiskSequence"],
+      "recommendedControls": ["Endpoint DLP block USB", "Insider Risk policy", "Least privilege access", "Defender for Endpoint alerting", "User investigation workflow"],
+      "suggestedBrowserAgentFlow": ["Devon accesses SAR folder", "Devon downloads multiple files", "Devon attempts USB copy", "Miguel reviews endpoint event", "Marcus opens case", "Ana reviews context"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0010",
+      "title": "Vendor Due Diligence Package with Excessive Access",
+      "cadence": "Monthly",
+      "primaryPersona": "James Wilson",
+      "supportingPersonas": ["Sofia Lopez", "Emily Johnson", "Ana Rodriguez", "Devon Reyes"],
+      "businessObjective": "Refresh monthly vendor due diligence evidence for a critical banking operations vendor.",
+      "technologiesUsed": ["SharePoint Online", "Planner", "Teams", "Outlook Web", "Microsoft Purview DLP", "Defender for Cloud Apps"],
+      "businessNarrative": "James coordinates vendor due diligence through a SharePoint workspace and Planner board. Devon adds an external guest to a Teams channel that contains internal vendor risk notes. Emily identifies legal concerns, and Ana reviews external access permissions.",
+      "normalActivities": ["Create vendor due diligence folder", "Assign evidence tasks in Planner", "Upload vendor questionnaire", "Share sanitized evidence with vendor"],
+      "riskyActivities": ["Guest user added to internal risk channel", "Internal vendor risk notes exposed", "Due diligence evidence shared with download rights"],
+      "fictionalDataPatterns": ["VENDOR-FIC-7701", "DDQ-FIC-2026-05", "RISK-NOTE-FIC-1187", "CTRL-FIC-3321"],
+      "expectedFiles": [
+        {"fileName": "Vendor_Due_Diligence_DDQ-FIC-2026-05.xlsx", "suggestedLabel": "Confidential"},
+        {"fileName": "Internal_Vendor_Risk_Notes_VENDOR-FIC-7701.docx", "suggestedLabel": "Confidential"},
+        {"fileName": "Vendor_Evidence_Package_Sanitized.pdf", "suggestedLabel": "Internal"}
+      ],
+      "expectedSignals": ["GuestUserAdded", "TeamsMessageSent", "FileShared", "SecureLinkUsed", "FileDownloaded", "DLPPolicyMatch"],
+      "recommendedControls": ["External access review", "Container sensitivity labels", "DLP for vendor risk notes", "Download blocking", "Guest expiration"],
+      "suggestedBrowserAgentFlow": ["James creates SharePoint workspace", "Sofia creates Planner tasks", "Devon adds external guest", "Emily flags legal risk", "Ana removes guest access", "James shares sanitized PDF"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0011",
+      "title": "Branch Operations Report Shared to Broad Distribution List",
+      "cadence": "Weekly",
+      "primaryPersona": "James Wilson",
+      "supportingPersonas": ["Carlos Delgado", "Devon Reyes", "Ana Rodriguez"],
+      "businessObjective": "Publish weekly branch operations performance metrics.",
+      "technologiesUsed": ["Power BI", "SharePoint Online", "Outlook Web", "Teams", "Microsoft Purview DLP"],
+      "businessNarrative": "James prepares a branch operations summary. Carlos exports metrics from Power BI. Devon forwards the raw export to a broad internal distribution list, including customer complaints and branch-level exception counts.",
+      "normalActivities": ["View branch operations dashboard", "Create aggregated weekly summary", "Post summary link in Teams"],
+      "riskyActivities": ["Forward raw export to broad distribution list", "Include branch exception details and customer complaint IDs", "Use attachment instead of controlled SharePoint link"],
+      "fictionalDataPatterns": ["BRANCH-FIC-1104", "COMPLAINT-FIC-7721", "CUST-BNK-883014", "OPS-EXC-FIC-5510"],
+      "expectedFiles": [
+        {"fileName": "Weekly_Branch_Operations_Summary.pdf", "suggestedLabel": "Internal"},
+        {"fileName": "Raw_Branch_Operations_Export.csv", "suggestedLabel": "Confidential"}
+      ],
+      "expectedSignals": ["PowerBIExport", "FileDownloaded", "EmailSent", "DLPPolicyMatch", "FileShared"],
+      "recommendedControls": ["DLP for customer complaint IDs", "Power BI export restrictions", "Sensitivity labels", "Use SharePoint links instead of attachments"],
+      "suggestedBrowserAgentFlow": ["Carlos exports Power BI data", "James creates PDF summary", "Devon forwards raw CSV", "Ana reviews DLP match", "James sends corrected link"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0012",
+      "title": "Loan Exception Tracker Exposed Through Microsoft List Export",
+      "cadence": "Daily",
+      "primaryPersona": "David Chen",
+      "supportingPersonas": ["Devon Reyes", "Sofia Lopez", "Marcus Olsson"],
+      "businessObjective": "Track missing or incomplete loan documentation exceptions.",
+      "technologiesUsed": ["Microsoft Lists", "SharePoint Online", "Excel Web", "Outlook Web", "Microsoft Purview DLP"],
+      "businessNarrative": "David maintains a Microsoft List for loan documentation exceptions. Devon exports the list to Excel to filter cases, then emails the export to a partner mailbox. The export includes loan IDs, customer IDs, and exception notes.",
+      "normalActivities": ["Update loan exception list", "Assign owners", "Filter overdue exceptions", "Create summarized status report"],
+      "riskyActivities": ["Export sensitive list to Excel", "Email raw list externally", "Include customer and loan identifiers"],
+      "fictionalDataPatterns": ["LOAN-EXC-FIC-44012", "LOAN-FIC-2026-5519", "CUST-BNK-771903", "DOC-MISS-FIC-3320"],
+      "expectedFiles": [
+        {"fileName": "Loan_Exception_Tracker_Export.xlsx", "suggestedLabel": "Highly Confidential - Regulated Financial Data"},
+        {"fileName": "Loan_Exception_Status_Summary.docx", "suggestedLabel": "Confidential"}
+      ],
+      "expectedSignals": ["ListExported", "FileCreated", "FileDownloaded", "ExternalEmailSent", "DLPPolicyMatch"],
+      "recommendedControls": ["DLP for list exports", "Restrict external sharing of regulated financial data", "Sensitivity labels", "Export governance"],
+      "suggestedBrowserAgentFlow": ["David updates list", "Devon exports list", "Devon emails external partner", "DLP warns or blocks", "Marcus reviews alert"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0013",
+      "title": "Finance Close Evidence Collection and Label Downgrade",
+      "cadence": "Monthly",
+      "primaryPersona": "Carlos Delgado",
+      "supportingPersonas": ["Alexander Meyer", "Ana Rodriguez", "Devon Reyes"],
+      "businessObjective": "Prepare monthly finance close evidence package for leadership review.",
+      "technologiesUsed": ["SharePoint Online", "Excel Web", "Outlook Web", "Sensitivity Labels", "Microsoft Purview DLP", "Audit"],
+      "businessNarrative": "Carlos prepares finance close evidence and applies a Confidential label. Devon creates a derivative copy and downgrades the label to Internal to send it to a broader audience. The file still contains account-like and treasury references.",
+      "normalActivities": ["Upload close evidence", "Apply Confidential label", "Create leadership summary", "Share with approved finance group"],
+      "riskyActivities": ["Label downgrade without proper sanitization", "Send finance evidence to broad audience", "Retain sensitive account-like values"],
+      "fictionalDataPatterns": ["CLOSE-FIC-2026-05", "ACCT-FIC-1902-4488-7001", "TREAS-FIC-1191", "INV-FIC-2026-2290"],
+      "expectedFiles": [
+        {"fileName": "Monthly_Finance_Close_Evidence_CLOSE-FIC-2026-05.xlsx", "suggestedLabel": "Confidential"},
+        {"fileName": "Finance_Close_Summary_BroadAudience.xlsx", "suggestedLabel": "Internal"}
+      ],
+      "expectedSignals": ["FileCreated", "FileModified", "SensitivityLabelApplied", "SensitivityLabelChanged", "DLPPolicyMatch", "EmailSent"],
+      "recommendedControls": ["Mandatory justification for downgrade", "DLP on label downgrade", "Auto-labeling", "Audit review", "User coaching"],
+      "suggestedBrowserAgentFlow": ["Carlos uploads evidence", "Carlos applies Confidential", "Devon copies file", "Devon changes label to Internal", "Devon emails broader group", "Ana reviews label event"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0014",
+      "title": "Collections Case Notes in Teams Chat",
+      "cadence": "Daily",
+      "primaryPersona": "David Chen",
+      "supportingPersonas": ["Devon Reyes", "Laura Gomez", "Marcus Olsson"],
+      "businessObjective": "Coordinate collections follow-up for fictional delinquent accounts.",
+      "technologiesUsed": ["Microsoft Teams", "SharePoint Online", "Outlook Web", "Communication Compliance", "Microsoft Purview DLP"],
+      "businessNarrative": "David asks the team for help with collections cases. Devon pastes customer account-like numbers and hardship notes directly into a broad Teams channel. Marcus receives a compliance signal and reminds the team to use the restricted case workspace.",
+      "normalActivities": ["Discuss collections workflow", "Link to restricted case file", "Create customer-safe follow-up note"],
+      "riskyActivities": ["Paste account-like numbers into Teams", "Include hardship notes in broad channel", "Discuss sensitive customer circumstances outside restricted workspace"],
+      "fictionalDataPatterns": ["COLL-FIC-2026-7781", "CUST-BNK-881045", "ACCT-FIC-4418-0022-7711", "HARDSHIP-FIC-0524"],
+      "expectedFiles": [
+        {"fileName": "Collections_Case_Notes_COLL-FIC-2026-7781.docx", "suggestedLabel": "Highly Confidential - Regulated Financial Data"},
+        {"fileName": "Collections_Customer_Safe_Followup.docx", "suggestedLabel": "Public"}
+      ],
+      "expectedSignals": ["TeamsMessageSent", "DLPPolicyMatch", "CommunicationComplianceMatch", "FileAccessed", "TeamsFileShared"],
+      "recommendedControls": ["DLP for Teams", "Communication Compliance", "Restricted Teams channels", "Sensitivity labels", "User education"],
+      "suggestedBrowserAgentFlow": ["David posts general request", "Devon pastes case details", "Marcus receives alert", "David moves discussion to restricted channel", "Laura advises on hardship language"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0015",
+      "title": "Executive Board Deck Built from Sensitive Source Files",
+      "cadence": "Monthly",
+      "primaryPersona": "Alexander Meyer",
+      "supportingPersonas": ["Carlos Delgado", "Priya Sharma", "Sofia Lopez", "Ana Rodriguez"],
+      "businessObjective": "Create monthly board reporting deck using finance, risk, and operations inputs.",
+      "technologiesUsed": ["PowerPoint Web", "SharePoint Online", "Power BI", "Copilot for Microsoft 365", "Sensitivity Labels"],
+      "businessNarrative": "Alexander asks Copilot to draft the board deck using multiple source files. The generated draft includes customer-level risk details from Carlos and model predictions from Priya. Sofia must sanitize the final board deck before publication.",
+      "normalActivities": ["Collect monthly executive inputs", "Use Copilot to draft deck", "Review and sanitize board materials", "Apply Highly Confidential label"],
+      "riskyActivities": ["AI-generated deck includes customer-level details", "Source files have mixed sensitivity levels", "Draft is shared before review"],
+      "fictionalDataPatterns": ["BOARD-FIC-2026-05", "CUST-BNK-204919", "MODEL-RISK-FIC-5519", "EXPOSURE-FIC-7711"],
+      "expectedFiles": [
+        {"fileName": "Monthly_Board_Deck_Draft_AI_Generated.pptx", "suggestedLabel": "Highly Confidential"},
+        {"fileName": "Monthly_Board_Deck_Final_Sanitized.pdf", "suggestedLabel": "Highly Confidential"},
+        {"fileName": "Board_Source_File_Index.xlsx", "suggestedLabel": "Confidential"}
+      ],
+      "expectedSignals": ["CopilotInteraction", "FileCreated", "FileModified", "SensitivityLabelApplied", "FileShared", "SensitiveContentAccessed"],
+      "recommendedControls": ["DSPM for AI", "Source file label review", "Sensitivity labels", "Board workspace access restriction", "Copilot interaction review"],
+      "suggestedBrowserAgentFlow": ["Alexander prompts Copilot", "Copilot creates draft", "Sofia reviews deck", "Sofia removes customer-level details", "Ana validates source exposure", "Final PDF is uploaded to board site"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0016",
+      "title": "Fraud Investigation Whiteboard Exported Externally",
+      "cadence": "EventDriven",
+      "primaryPersona": "Marcus Olsson",
+      "supportingPersonas": ["Ana Rodriguez", "Devon Reyes", "Emily Johnson"],
+      "businessObjective": "Map the timeline of a fictional fraud investigation and coordinate next steps.",
+      "technologiesUsed": ["Microsoft Whiteboard", "Teams", "SharePoint Online", "Outlook Web", "Microsoft Purview DLP"],
+      "businessNarrative": "Marcus creates a Whiteboard during a fraud investigation meeting. Devon exports the whiteboard as a PDF and sends it to an external advisor. The whiteboard includes internal control gaps, account-like references, and investigation hypotheses.",
+      "normalActivities": ["Create fraud investigation timeline", "Discuss containment steps in Teams", "Store whiteboard in restricted site"],
+      "riskyActivities": ["Export sensitive investigation whiteboard", "Send internal investigation hypotheses externally", "Expose control gap details"],
+      "fictionalDataPatterns": ["FRAUD-FIC-2026-0901", "ACCT-FIC-5520-7701-4498", "CTRL-GAP-FIC-884", "TXN-FIC-1190"],
+      "expectedFiles": [
+        {"fileName": "Fraud_Investigation_Timeline_FRAUD-FIC-2026-0901.whiteboard", "suggestedLabel": "Highly Confidential - Regulated Financial Data"},
+        {"fileName": "Fraud_Investigation_Timeline_Export.pdf", "suggestedLabel": "Highly Confidential - Regulated Financial Data"}
+      ],
+      "expectedSignals": ["WhiteboardCreated", "FileExported", "ExternalEmailSent", "DLPPolicyMatch", "TeamsMessageSent"],
+      "recommendedControls": ["DLP for exported files", "Restrict external sharing", "Sensitivity labels", "Legal review before external disclosure", "Incident response policy"],
+      "suggestedBrowserAgentFlow": ["Marcus creates Whiteboard", "Team adds timeline notes", "Devon exports PDF", "Devon emails external advisor", "Emily flags legal concern", "Ana starts containment review"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0017",
+      "title": "Security Awareness Example Accidentally Uses Realistic Sensitive Patterns",
+      "cadence": "Monthly",
+      "primaryPersona": "Marcus Olsson",
+      "supportingPersonas": ["Laura Gomez", "Devon Reyes", "Ana Rodriguez"],
+      "businessObjective": "Publish monthly security awareness content about data handling.",
+      "technologiesUsed": ["Viva Engage", "SharePoint Online", "PowerPoint Web", "Teams", "Microsoft Purview DLP"],
+      "businessNarrative": "Marcus prepares awareness material using synthetic examples. Devon contributes examples copied from a restricted banking workbook. The draft post includes account-like numbers and customer identifiers, triggering a DLP review before publication.",
+      "normalActivities": ["Create awareness deck", "Publish broad reminder", "Use generic examples", "Share training link"],
+      "riskyActivities": ["Use realistic sensitive patterns in broad awareness post", "Copy examples from restricted data", "Post sensitive-looking values to Viva Engage"],
+      "fictionalDataPatterns": ["ACCT-FIC-9920-4417-0038", "CUST-BNK-204919", "LOAN-FIC-2026-1187", "KYC-FIC-88421"],
+      "expectedFiles": [
+        {"fileName": "Monthly_Data_Handling_Awareness_Draft.pptx", "suggestedLabel": "Internal"},
+        {"fileName": "Awareness_Post_Sensitive_Example_Review.docx", "suggestedLabel": "Confidential"}
+      ],
+      "expectedSignals": ["FileModified", "CommunityPostCreated", "DLPPolicyMatch", "CommunicationComplianceMatch", "TeamsMessageSent"],
+      "recommendedControls": ["DLP for Viva Engage", "Communication Compliance", "Approved training examples", "Review workflow before broad publication"],
+      "suggestedBrowserAgentFlow": ["Marcus drafts awareness deck", "Devon adds examples", "Marcus drafts Viva Engage post", "DLP flags post", "Ana requests generic examples only"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0018",
+      "title": "Meeting Recording Transcript Contains Customer Data",
+      "cadence": "Weekly",
+      "primaryPersona": "James Wilson",
+      "supportingPersonas": ["David Chen", "Devon Reyes", "Ana Rodriguez"],
+      "businessObjective": "Run weekly customer operations review meeting and publish recording internally.",
+      "technologiesUsed": ["Microsoft Teams", "Stream on SharePoint", "SharePoint Online", "Microsoft Purview DLP", "Sensitivity Labels"],
+      "businessNarrative": "During the customer operations review, Devon reads customer account-like identifiers aloud while describing a dispute case. The Teams recording transcript captures the sensitive details and is later shared broadly in SharePoint.",
+      "normalActivities": ["Record weekly operations meeting", "Publish recording to restricted team", "Share action items"],
+      "riskyActivities": ["Customer identifiers appear in transcript", "Recording is shared broadly", "Transcript is downloaded by unauthorized users"],
+      "fictionalDataPatterns": ["CUST-BNK-88420", "ACCT-FIC-8830-4412-9001", "DISPUTE-FIC-60392", "TXN-FIC-771-902"],
+      "expectedFiles": [
+        {"fileName": "Weekly_Customer_Operations_Review_Recording.mp4", "suggestedLabel": "Confidential"},
+        {"fileName": "Weekly_Customer_Operations_Review_Transcript.vtt", "suggestedLabel": "Highly Confidential - Regulated Financial Data"}
+      ],
+      "expectedSignals": ["MeetingRecorded", "TranscriptCreated", "FileShared", "FileDownloaded", "DLPPolicyMatch", "SensitivityLabelRecommended"],
+      "recommendedControls": ["DLP scanning for transcripts", "Restrict recording permissions", "Sensitivity labels", "Meeting guidance for sensitive data", "Transcript review workflow"],
+      "suggestedBrowserAgentFlow": ["James schedules Teams meeting", "Devon mentions customer identifiers", "Recording and transcript are created", "James shares recording broadly", "Ana reviews DLP signal"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0019",
+      "title": "External Consultant Added to Risk Committee Team",
+      "cadence": "EventDriven",
+      "primaryPersona": "Sofia Lopez",
+      "supportingPersonas": ["Emily Johnson", "Ana Rodriguez", "Devon Reyes"],
+      "businessObjective": "Coordinate temporary external consulting support for risk committee preparation.",
+      "technologiesUsed": ["Microsoft Teams", "SharePoint Online", "Entra ID", "Defender for Cloud Apps", "Sensitivity Labels"],
+      "businessNarrative": "Sofia adds an external consultant to a Risk Committee Team for schedule coordination. The Team contains historical loan committee files, AML notes, and board prep materials. Devon shares a sensitive file into the same channel after the guest is added.",
+      "normalActivities": ["Add external consultant to limited collaboration space", "Share sanitized project calendar", "Coordinate agenda planning"],
+      "riskyActivities": ["Guest access to sensitive historical files", "Sensitive file posted after guest joins", "No expiration on guest access"],
+      "fictionalDataPatterns": ["GUEST-FIC-7701", "RISKCOMM-FIC-2026-05", "AML-CASE-2026-0519", "LOAN-FIC-2026-1187"],
+      "expectedFiles": [
+        {"fileName": "Risk_Committee_Agenda_Sanitized.docx", "suggestedLabel": "Internal"},
+        {"fileName": "Historical_Risk_Committee_Pack_Internal.pptx", "suggestedLabel": "Highly Confidential"}
+      ],
+      "expectedSignals": ["GuestUserAdded", "TeamsMessageSent", "TeamsFileShared", "FileAccessed", "ExternalUserAccessed", "DLPPolicyMatch"],
+      "recommendedControls": ["Guest access review", "Private channels", "Container labels", "Access expiration", "Defender for Cloud Apps monitoring"],
+      "suggestedBrowserAgentFlow": ["Sofia adds guest", "Devon posts sensitive file", "Guest accesses file", "Emily flags legal risk", "Ana removes guest and creates restricted channel"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0020",
+      "title": "Forms-Based Customer Complaint Intake Captures Sensitive Data",
+      "cadence": "Daily",
+      "primaryPersona": "David Chen",
+      "supportingPersonas": ["Devon Reyes", "Marcus Olsson", "Ana Rodriguez"],
+      "businessObjective": "Collect internal customer complaint intake details for operations triage.",
+      "technologiesUsed": ["Microsoft Forms", "Excel Web", "SharePoint Online", "Microsoft Purview DLP", "Outlook Web"],
+      "businessNarrative": "David creates an internal complaint intake form. Devon changes the form settings and makes it accessible outside the organization. Respondents enter account-like identifiers and transaction references in free-text fields.",
+      "normalActivities": ["Create internal complaint intake form", "Export responses to Excel", "Track complaint status"],
+      "riskyActivities": ["Form made externally accessible", "Free-text collection of account-like values", "Response export shared externally"],
+      "fictionalDataPatterns": ["FORM-FIC-2201", "CUST-BNK-551902", "ACCT-FIC-1902-7781-0044", "TXN-FIC-5519"],
+      "expectedFiles": [
+        {"fileName": "Customer_Complaint_Intake_Form_Responses.xlsx", "suggestedLabel": "Highly Confidential - Regulated Financial Data"},
+        {"fileName": "Complaint_Intake_Form_Settings_Review.docx", "suggestedLabel": "Internal"}
+      ],
+      "expectedSignals": ["FormCreated", "FormResponseSubmitted", "FormExported", "FileDownloaded", "ExternalSharingEnabled", "DLPPolicyMatch"],
+      "recommendedControls": ["Restrict Forms to internal users", "DLP for response exports", "Form governance review", "Sensitivity labels on exports", "User training"],
+      "suggestedBrowserAgentFlow": ["David creates form", "Devon changes sharing setting", "Responses include sensitive values", "David exports responses", "Marcus reviews DLP alert"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0021",
+      "title": "Privileged Legal Memo Copied into Loop Component",
+      "cadence": "EventDriven",
+      "primaryPersona": "Emily Johnson",
+      "supportingPersonas": ["Sofia Lopez", "Devon Reyes", "Ana Rodriguez"],
+      "businessObjective": "Coordinate legal and operational actions after a fictional regulatory inquiry.",
+      "technologiesUsed": ["Microsoft Loop", "Teams", "SharePoint Online", "Word Web", "Microsoft Purview Information Protection"],
+      "businessNarrative": "Emily drafts a privileged legal memo. During a Teams meeting, Devon copies a paragraph into a Loop component used for PMO action tracking. The Loop component is visible to non-legal project members.",
+      "normalActivities": ["Draft legal memo", "Track action items in Loop", "Coordinate legal and PMO tasks"],
+      "riskyActivities": ["Privileged content copied into broadly visible Loop component", "Legal analysis exposed to non-legal users", "Copilot may summarize Loop content later"],
+      "fictionalDataPatterns": ["LEGAL-FIC-2044", "REG-REQ-FIC-2026-2044", "PRIV-NOTE-FIC-771", "CTRL-GAP-FIC-1187"],
+      "expectedFiles": [
+        {"fileName": "Privileged_Legal_Memo_REG-REQ-FIC-2026-2044.docx", "suggestedLabel": "Highly Confidential - Legal Privileged"},
+        {"fileName": "Regulatory_Response_Action_Items.loop", "suggestedLabel": "Confidential"}
+      ],
+      "expectedSignals": ["FileModified", "LoopComponentCreated", "LoopComponentModified", "TeamsMessageSent", "SensitiveContentAccessed", "DLPPolicyMatch"],
+      "recommendedControls": ["Legal privileged labels", "DLP for Loop content", "Restrict Loop sharing", "User guidance", "Access review"],
+      "suggestedBrowserAgentFlow": ["Emily drafts memo", "Sofia creates Loop action list", "Devon copies privileged paragraph", "Ana detects exposure", "Emily creates non-privileged summary"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0022",
+      "title": "Unusual Sign-In Followed by Sensitive File Access",
+      "cadence": "EventDriven",
+      "primaryPersona": "Devon Reyes",
+      "supportingPersonas": ["Miguel Santos", "Ana Rodriguez", "Marcus Olsson"],
+      "businessObjective": "Investigate unusual access to sensitive banking operations content.",
+      "technologiesUsed": ["Microsoft Entra ID", "Conditional Access", "SharePoint Online", "Defender for Cloud Apps", "Microsoft Defender XDR"],
+      "businessNarrative": "Devon signs in from an unusual location and then accesses several regulated financial files in SharePoint. Conditional Access challenges the session, and Defender correlates unusual location with sensitive file downloads.",
+      "normalActivities": ["User signs in from usual work location", "Access assigned operations files", "MFA completed"],
+      "riskyActivities": ["Unusual sign-in location", "Sensitive file access after risky sign-in", "Multiple downloads from restricted site"],
+      "fictionalDataPatterns": ["SIGNIN-FIC-8841", "DEV-FIC-2219", "CUST-BNK-204919", "AML-CASE-2026-0519"],
+      "expectedFiles": [
+        {"fileName": "Risky_SignIn_Investigation_SIGNIN-FIC-8841.docx", "suggestedLabel": "Confidential"},
+        {"fileName": "Sensitive_File_Access_Timeline_DEVON.csv", "suggestedLabel": "Highly Confidential"}
+      ],
+      "expectedSignals": ["RiskySignIn", "ConditionalAccessTriggered", "MFARequired", "FileAccessed", "FileDownloaded", "AnomalousCloudActivity"],
+      "recommendedControls": ["Conditional Access", "Entra ID Protection", "Defender for Cloud Apps", "Session controls", "Insider Risk investigation"],
+      "suggestedBrowserAgentFlow": ["Simulate unusual sign-in context", "Devon accesses restricted files", "Conditional Access challenge occurs", "Miguel reviews sign-in logs", "Marcus correlates file access", "Ana documents response"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0023",
+      "title": "Customer Risk Model Feature Matrix Shared with Data Vendor",
+      "cadence": "Monthly",
+      "primaryPersona": "Priya Sharma",
+      "supportingPersonas": ["Carlos Delgado", "Devon Reyes", "Ana Rodriguez"],
+      "businessObjective": "Validate customer risk model features with an external analytics vendor.",
+      "technologiesUsed": ["SharePoint Online", "OneDrive for Business", "Excel Web", "Outlook Web", "Copilot for Microsoft 365", "Microsoft Purview DLP"],
+      "businessNarrative": "Priya prepares an anonymized feature matrix for vendor review. Devon attaches the pre-anonymized version to an external email because the file names are similar. The raw file includes customer IDs, account-like values, and model risk scores.",
+      "normalActivities": ["Create anonymized feature matrix", "Review with Carlos", "Send sanitized file to vendor", "Document approval"],
+      "riskyActivities": ["Send pre-anonymized feature matrix externally", "Include customer-level model scores", "Use similar filenames causing confusion"],
+      "fictionalDataPatterns": ["MODEL-FIC-2026-05", "CUST-BNK-193044", "ACCT-FIC-8830-1147-2290", "RISK-SCORE-FIC-82"],
+      "expectedFiles": [
+        {"fileName": "Customer_Risk_Model_Feature_Matrix_PreAnonymized.xlsx", "suggestedLabel": "Highly Confidential - Regulated Financial Data"},
+        {"fileName": "Customer_Risk_Model_Feature_Matrix_Anonymized.xlsx", "suggestedLabel": "Internal"},
+        {"fileName": "Vendor_Model_Review_Approval.docx", "suggestedLabel": "Confidential"}
+      ],
+      "expectedSignals": ["FileCreated", "FileModified", "ExternalEmailSent", "DLPPolicyMatch", "SensitivityLabelRecommended", "CopilotInteraction"],
+      "recommendedControls": ["DLP for customer IDs", "Auto-labeling", "External sharing approval", "File naming convention", "Data minimization review"],
+      "suggestedBrowserAgentFlow": ["Priya creates pre-anonymized file", "Priya creates anonymized file", "Devon selects wrong attachment", "DLP blocks email", "Ana reviews event", "Priya resends sanitized file"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0024",
+      "title": "Executive Assistant Sends Board Appendix to Wrong Audience",
+      "cadence": "Monthly",
+      "primaryPersona": "Alexander Meyer",
+      "supportingPersonas": ["Sofia Lopez", "Carlos Delgado", "Ana Rodriguez"],
+      "businessObjective": "Distribute board materials to approved executive recipients.",
+      "technologiesUsed": ["Outlook Web", "SharePoint Online", "PowerPoint Web", "Sensitivity Labels", "Microsoft Purview DLP"],
+      "businessNarrative": "The board appendix includes customer concentration, credit exposure, and strategic margin assumptions. A distribution mistake sends the appendix to a broader leadership list. Ana reviews the DLP and access signals and recommends link revocation and label enforcement.",
+      "normalActivities": ["Prepare board appendix", "Upload to restricted board site", "Send approved link to board recipients"],
+      "riskyActivities": ["Send board appendix to broad leadership list", "Use attachment instead of restricted link", "Expose customer concentration data"],
+      "fictionalDataPatterns": ["BOARD-APP-FIC-2026-05", "CUST-BNK-449201", "EXPOSURE-FIC-7711", "MARGIN-FIC-1187"],
+      "expectedFiles": [
+        {"fileName": "Board_Appendix_Customer_Concentration_HighlyConfidential.xlsx", "suggestedLabel": "Highly Confidential"},
+        {"fileName": "Board_Distribution_Error_Response.docx", "suggestedLabel": "Confidential"}
+      ],
+      "expectedSignals": ["ExternalEmailSent", "EmailSent", "FileShared", "DLPPolicyMatch", "SensitivityLabelApplied", "FileDownloaded"],
+      "recommendedControls": ["Restricted board workspace", "Block attachment of Highly Confidential files", "Sensitivity label encryption", "Link revocation workflow", "Audit review"],
+      "suggestedBrowserAgentFlow": ["Alexander finalizes appendix", "Sofia sends wrong email", "Recipients access attachment", "Ana reviews alert", "Sofia recalls message and sends restricted link"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0025",
+      "title": "Audit Evidence Package Downloaded After Role Change Notice",
+      "cadence": "EventDriven",
+      "primaryPersona": "Devon Reyes",
+      "supportingPersonas": ["Laura Gomez", "Marcus Olsson", "Emily Johnson", "Ana Rodriguez"],
+      "businessObjective": "Investigate sensitive audit evidence access after an HR role-change signal.",
+      "technologiesUsed": ["SharePoint Online", "OneDrive for Business", "Insider Risk Management", "Endpoint DLP", "Microsoft Defender XDR"],
+      "businessNarrative": "After a fictional role-change notice, Devon downloads audit evidence packages, copies one file to OneDrive, and prints a regulatory evidence index. The behavior creates an insider-risk-style sequence requiring HR, Legal, and Security coordination.",
+      "normalActivities": ["Access assigned operations files", "Prepare transition notes", "Attend role-change meeting"],
+      "riskyActivities": ["Download sensitive audit evidence after HR event", "Print regulatory evidence index", "Copy files to personal OneDrive folder"],
+      "fictionalDataPatterns": ["ROLE-CHANGE-FIC-2026-05", "AUDIT-EVID-FIC-3319", "REG-REQ-FIC-2044", "CTRL-FIC-771"],
+      "expectedFiles": [
+        {"fileName": "Audit_Evidence_Package_AUDIT-EVID-FIC-3319.zip.txt", "suggestedLabel": "Highly Confidential"},
+        {"fileName": "Regulatory_Evidence_Index_REG-REQ-FIC-2044.xlsx", "suggestedLabel": "Confidential"},
+        {"fileName": "Insider_Risk_Case_Devon_RoleChange.docx", "suggestedLabel": "Highly Confidential"}
+      ],
+      "expectedSignals": ["HRSignal", "FileDownloaded", "MassDownloadActivity", "FilePrinted", "FileCopiedToNetworkShare", "InsiderRiskSequence"],
+      "recommendedControls": ["Insider Risk policy", "Endpoint DLP", "Least privilege review", "HR-Legal-Security case workflow", "Audit evidence access controls"],
+      "suggestedBrowserAgentFlow": ["Laura creates role-change notice", "Devon downloads audit files", "Devon prints evidence index", "Marcus reviews case", "Emily provides legal guidance", "Ana approves access remediation"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0026",
+      "title": "Customer Support Email Includes Transaction Monitoring Details",
+      "cadence": "Daily",
+      "primaryPersona": "David Chen",
+      "supportingPersonas": ["Devon Reyes", "Marcus Olsson", "Emily Johnson"],
+      "businessObjective": "Respond to a customer inquiry about a delayed transaction review.",
+      "technologiesUsed": ["Outlook Web", "Teams", "SharePoint Online", "Microsoft Purview DLP", "Communication Compliance"],
+      "businessNarrative": "David drafts a customer email about a delayed transaction review. Devon suggests including internal transaction monitoring reasons. Emily warns that the explanation exposes internal monitoring logic and should be replaced with a customer-safe response.",
+      "normalActivities": ["Draft customer response", "Review with Legal", "Send customer-safe message"],
+      "riskyActivities": ["Include internal transaction monitoring logic", "Reference suspicious activity review status", "Expose transaction identifiers externally"],
+      "fictionalDataPatterns": ["TXN-MON-FIC-7712", "TXN-FIC-5519", "CUST-BNK-559102", "SAR-DRAFT-FIC-2044"],
+      "expectedFiles": [
+        {"fileName": "Transaction_Review_Customer_Response_Draft.docx", "suggestedLabel": "Confidential"},
+        {"fileName": "Transaction_Review_CustomerSafe_Response.docx", "suggestedLabel": "Public"}
+      ],
+      "expectedSignals": ["EmailSent", "ExternalEmailSent", "DLPPolicyMatch", "CommunicationComplianceMatch", "TeamsMessageSent"],
+      "recommendedControls": ["DLP for transaction identifiers", "Communication Compliance", "Legal approval workflow", "Customer-safe templates"],
+      "suggestedBrowserAgentFlow": ["David drafts email", "Devon adds monitoring rationale", "Emily reviews draft", "DLP flags sensitive values", "David sends sanitized response"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0027",
+      "title": "M&A Banking Strategy Workspace Overexposed",
+      "cadence": "EventDriven",
+      "primaryPersona": "Alexander Meyer",
+      "supportingPersonas": ["Emily Johnson", "Carlos Delgado", "Ana Rodriguez", "Devon Reyes"],
+      "businessObjective": "Prepare confidential banking strategy and acquisition readiness materials.",
+      "technologiesUsed": ["SharePoint Online", "Teams Private Channels", "PowerPoint Web", "Excel Web", "Copilot for Microsoft 365", "Sensitivity Labels"],
+      "businessNarrative": "Alexander and Emily work on a fictional acquisition strategy. Carlos provides financial exposure data. The workspace is accidentally created with broad leadership access. Devon accesses the folder and asks Copilot to summarize acquisition assumptions.",
+      "normalActivities": ["Create restricted strategy workspace", "Upload acquisition deck", "Review financial exposure", "Apply Highly Confidential label"],
+      "riskyActivities": ["Workspace overexposed to broad group", "Devon accesses M&A content", "Copilot summarizes acquisition assumptions for unauthorized user"],
+      "fictionalDataPatterns": ["MA-FIC-2026-771", "TARGET-FIC-3319", "VALUATION-FIC-15M", "CUST-CONC-FIC-449201"],
+      "expectedFiles": [
+        {"fileName": "Banking_Strategy_Acquisition_Readiness_HighlyConfidential.pptx", "suggestedLabel": "Highly Confidential"},
+        {"fileName": "Acquisition_Exposure_Model_TARGET-FIC-3319.xlsx", "suggestedLabel": "Highly Confidential"},
+        {"fileName": "Copilot_MA_Access_Risk_Notes.txt", "suggestedLabel": "Confidential"}
+      ],
+      "expectedSignals": ["FileCreated", "FileAccessed", "CopilotInteraction", "SensitiveContentAccessed", "SensitivityLabelApplied", "AccessReviewRequired"],
+      "recommendedControls": ["Restricted workspace template", "Container label", "DSPM for AI", "Access review", "Highly Confidential encryption"],
+      "suggestedBrowserAgentFlow": ["Alexander creates workspace", "Emily uploads legal notes", "Carlos uploads model", "Devon accesses folder", "Devon prompts Copilot", "Ana reviews permissions and Copilot exposure"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0028",
+      "title": "Policy Exception Request with Sensitive Attachments",
+      "cadence": "Weekly",
+      "primaryPersona": "Miguel Santos",
+      "supportingPersonas": ["Ana Rodriguez", "Marcus Olsson", "Devon Reyes"],
+      "businessObjective": "Review a policy exception request for temporary access to a restricted banking operations repository.",
+      "technologiesUsed": ["Microsoft Forms", "SharePoint Online", "Planner", "Teams", "Microsoft Purview DLP", "Entra ID"],
+      "businessNarrative": "Miguel creates a policy exception intake process. Devon submits a request and attaches a customer operations export as justification. The attachment contains regulated data and should not be part of an access request form.",
+      "normalActivities": ["Submit access exception request", "Review request in Planner", "Approve or reject based on business need"],
+      "riskyActivities": ["Attach sensitive customer export to access request", "Use broad request workflow for regulated data", "Request excessive access duration"],
+      "fictionalDataPatterns": ["ACCESS-EXC-FIC-5521", "CUST-BNK-771903", "OPS-EXPORT-FIC-2026-05", "ACCT-FIC-4418-2290-7711"],
+      "expectedFiles": [
+        {"fileName": "Policy_Exception_Request_ACCESS-EXC-FIC-5521.xlsx", "suggestedLabel": "Confidential"},
+        {"fileName": "Customer_Operations_Export_Attached_In_Error.csv", "suggestedLabel": "Highly Confidential - Regulated Financial Data"}
+      ],
+      "expectedSignals": ["FormResponseSubmitted", "FileAttached", "DLPPolicyMatch", "TaskCreated", "AccessReviewRequired", "TeamsMessageSent"],
+      "recommendedControls": ["DLP for Forms exports and attachments", "Access package governance", "Least privilege duration", "Attachment restrictions", "Security approval workflow"],
+      "suggestedBrowserAgentFlow": ["Miguel publishes exception form", "Devon submits request with attachment", "DLP flags attachment", "Planner task is created", "Ana rejects request and asks for business justification"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0029",
+      "title": "Sanitized Dataset Replaced by Raw Dataset Before Demo",
+      "cadence": "EventDriven",
+      "primaryPersona": "Priya Sharma",
+      "supportingPersonas": ["Diego Martinez", "Devon Reyes", "Ana Rodriguez"],
+      "businessObjective": "Prepare a customer-facing banking analytics demo using sanitized data only.",
+      "technologiesUsed": ["SharePoint Online", "Power BI", "Excel Web", "Teams", "Outlook Web", "Microsoft Purview DLP"],
+      "businessNarrative": "Priya prepares a sanitized dataset for Diego's customer demo. Devon replaces the dataset in the demo folder with a raw file that includes customer IDs and account-like values. Diego uses the folder link in a customer email without noticing the replacement.",
+      "normalActivities": ["Create sanitized demo dataset", "Publish Power BI demo report", "Share customer-safe demo link"],
+      "riskyActivities": ["Raw dataset replaces sanitized dataset", "Customer-facing folder contains regulated data", "External link exposes sensitive file"],
+      "fictionalDataPatterns": ["DEMO-DATA-FIC-2026-05", "CUST-BNK-193044", "ACCT-FIC-8830-1147-2290", "RISK-SCORE-FIC-82"],
+      "expectedFiles": [
+        {"fileName": "Banking_Analytics_Demo_Dataset_Sanitized.csv", "suggestedLabel": "Public"},
+        {"fileName": "Banking_Analytics_Demo_Dataset_RAW.csv", "suggestedLabel": "Highly Confidential - Regulated Financial Data"},
+        {"fileName": "Customer_Demo_Link_Risk_Review.docx", "suggestedLabel": "Confidential"}
+      ],
+      "expectedSignals": ["FileModified", "FileDeleted", "FileCreated", "FileShared", "ExternalEmailSent", "DLPPolicyMatch"],
+      "recommendedControls": ["DLP for demo folders", "File integrity review", "Restricted write permissions", "Customer-safe folder controls", "Label-based sharing restrictions"],
+      "suggestedBrowserAgentFlow": ["Priya uploads sanitized dataset", "Devon uploads raw dataset with similar name", "Diego sends folder link externally", "DLP flags folder content", "Ana remediates permissions"]
+    },
+    {
+      "scenarioId": "BF-SCEN-0030",
+      "title": "End-to-End Devon Risk Chain Across Banking Operations",
+      "cadence": "MultiDay",
+      "primaryPersona": "Devon Reyes",
+      "supportingPersonas": ["Ana Rodriguez", "Marcus Olsson", "Miguel Santos", "Emily Johnson", "Laura Gomez", "David Chen"],
+      "businessObjective": "Create a multi-day ambiguous insider-risk-style narrative combining normal work, mistakes, unsafe AI use, external sharing, endpoint movement, and investigation response.",
+      "technologiesUsed": ["SharePoint Online", "OneDrive for Business", "Teams", "Outlook Web", "Copilot for Microsoft 365", "External AI app", "Endpoint DLP", "Defender for Endpoint", "Defender for Cloud Apps", "Microsoft Purview DLP", "Insider Risk Management", "Entra ID"],
+      "businessNarrative": "Over several days, Devon performs a sequence of activities that individually could be explained as operational pressure but collectively indicate elevated risk. He downloads KYC, AML, and customer complaint files; asks Copilot to summarize restricted data; pastes sensitive rows into an external AI tool; shares one file externally; prints a treasury workbook; and copies a suspicious activity review file to a network share after a role-change conversation.",
+      "normalActivities": ["Work on customer operations cases", "Ask for help summarizing files", "Coordinate with David in Teams", "Prepare status updates", "Access assigned operations documents"],
+      "riskyActivities": ["Mass download of regulated files", "External AI paste", "External sharing attempt", "Label downgrade", "File printed", "File copied to network share", "Unusual sign-in", "Access outside role scope"],
+      "fictionalDataPatterns": ["DEVON-RISK-FIC-2026-05", "KYC-FIC-88421", "AML-CASE-2026-0519", "SAR-DRAFT-FIC-2044", "CUST-BNK-88420", "ACCT-FIC-7721-0044-9081", "ROLE-CHANGE-FIC-2026-05"],
+      "expectedFiles": [
+        {"fileName": "Devon_Risk_Chain_Timeline.csv", "suggestedLabel": "Highly Confidential"},
+        {"fileName": "Devon_External_AI_Prompt_Transcript.txt", "suggestedLabel": "Highly Confidential - Regulated Financial Data"},
+        {"fileName": "Devon_Investigation_Case_Summary.docx", "suggestedLabel": "Highly Confidential"},
+        {"fileName": "Devon_User_Coaching_Outcome.docx", "suggestedLabel": "Confidential"}
+      ],
+      "expectedSignals": ["RiskySignIn", "FileAccessed", "FileDownloaded", "MassDownloadActivity", "CopilotInteraction", "AIAppInteraction", "ExternalEmailSent", "DLPPolicyMatch", "DLPOverride", "FilePrinted", "FileCopiedToNetworkShare", "SensitivityLabelChanged", "InsiderRiskSequence"],
+      "recommendedControls": ["Insider Risk Management", "Endpoint DLP", "DLP across Exchange, SharePoint, OneDrive, and Teams", "DSPM for AI", "Defender for Cloud Apps", "Conditional Access", "User coaching", "HR-Legal-Security case workflow"],
+      "suggestedBrowserAgentFlow": ["Day 1: Devon accesses assigned customer operations files", "Day 1: Devon downloads KYC and complaint files", "Day 2: Devon asks Copilot to summarize restricted files", "Day 2: Devon pastes rows into external AI app", "Day 3: Devon emails a file externally and overrides warning", "Day 3: Devon prints treasury workbook", "Day 4: Devon copies SAR file to network share", "Day 4: Marcus and Ana open insider risk investigation", "Day 5: Emily and Laura review appropriate response", "Day 5: Access is remediated and coaching outcome is documented"]
+    }
+  ]
+}
