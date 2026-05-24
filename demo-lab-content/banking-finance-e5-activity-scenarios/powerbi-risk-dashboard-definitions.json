@@ -1,0 +1,267 @@
+{
+  "metadata": {
+    "packName": "Power BI Risk Dashboard Definitions for Banking Finance E5 Scenarios",
+    "version": "1.0",
+    "language": "en-US",
+    "industry": "Banking and Financial Services",
+    "fictionalDataOnly": true,
+    "purpose": "Define executive and analyst dashboard pages for visualizing synthetic Microsoft 365 E5, Purview, Defender, DLP, Copilot, endpoint, and insider-risk-style telemetry."
+  },
+  "dashboardModel": {
+    "recommendedFactTables": [
+      "FactActivityEvents",
+      "FactDlpEvents",
+      "FactLabelEvents",
+      "FactCopilotEvents",
+      "FactEndpointEvents",
+      "FactIdentityEvents",
+      "FactScenarioExecutions"
+    ],
+    "recommendedDimensionTables": [
+      "DimDate",
+      "DimUser",
+      "DimPersona",
+      "DimDepartment",
+      "DimWorkload",
+      "DimScenario",
+      "DimSignal",
+      "DimFile",
+      "DimSensitivityLabel",
+      "DimRiskCategory",
+      "DimExternalDomain"
+    ],
+    "recommendedRelationships": [
+      "FactActivityEvents[UserPrincipalName] -> DimUser[UserPrincipalName]",
+      "FactActivityEvents[ScenarioId] -> DimScenario[ScenarioId]",
+      "FactActivityEvents[FileName] -> DimFile[FileName]",
+      "FactActivityEvents[SignalName] -> DimSignal[SignalName]",
+      "FactActivityEvents[DateKey] -> DimDate[DateKey]"
+    ],
+    "importantModelingNotes": [
+      "Keep event-level granularity for investigation pages.",
+      "Use scenario and correlation IDs to connect multi-workload events.",
+      "Use a closed-week or completed-day concept to avoid partial-period drop-offs in trend visuals.",
+      "Separate raw event counts from incident or scenario counts.",
+      "Treat all synthetic risk scores as demo scoring, not production risk scoring."
+    ]
+  },
+  "dashboardPages": [
+    {
+      "pageId": "PBI-PAGE-001",
+      "pageName": "Executive Risk Snapshot",
+      "targetAudience": "Executive Leadership",
+      "pagePurpose": "Provide a concise view of overall synthetic banking data exposure, risky activity, AI usage, and control posture.",
+      "primaryQuestions": [
+        "What is the current risk posture?",
+        "Which areas generate the most sensitive data exposure?",
+        "Are AI and external sharing risks increasing?",
+        "Which controls require attention?"
+      ],
+      "recommendedVisuals": [
+        {"visualType": "KPI Card", "title": "Total Risk Events", "measureConcept": "Count of risky events in selected period"},
+        {"visualType": "KPI Card", "title": "High / Critical Events", "measureConcept": "Count of events with severity High or Critical"},
+        {"visualType": "KPI Card", "title": "External Sharing Events", "measureConcept": "Count of external email, file share, and guest access events"},
+        {"visualType": "KPI Card", "title": "AI Risk Events", "measureConcept": "Count of Copilot and external AI interactions with sensitive content"},
+        {"visualType": "Line Chart", "title": "Risk Events Over Time", "measureConcept": "Daily or weekly risky event count by severity"},
+        {"visualType": "Stacked Bar Chart", "title": "Risk by Department", "measureConcept": "Risk event count by department and severity"},
+        {"visualType": "Donut Chart", "title": "Risk Category Mix", "measureConcept": "DLP, Labels, AI, Endpoint, Identity, External Sharing"},
+        {"visualType": "Table", "title": "Top Active Scenarios", "measureConcept": "Scenario count, high severity events, primary user, last activity"}
+      ],
+      "suggestedMeasures": ["Total Events", "Risk Events", "High Critical Events", "External Sharing Events", "AI Risk Events", "Endpoint Movement Events", "Average Risk Score", "Distinct Risky Users"],
+      "storytellingGuidance": "Start with risk posture, then show that the highest risk does not come from one technology alone. It emerges from combinations of oversharing, weak permissions, AI summarization, endpoint movement, and external collaboration."
+    },
+    {
+      "pageId": "PBI-PAGE-002",
+      "pageName": "Sensitive Data Exposure",
+      "targetAudience": "Security, Compliance, Data Governance",
+      "pagePurpose": "Show where sensitive banking, HR, legal, and customer data appears and how it moves across Microsoft 365 workloads.",
+      "primaryQuestions": [
+        "Which files generate the most sensitive activity?",
+        "Which labels are associated with risky events?",
+        "Where is regulated financial data being accessed or shared?",
+        "Which sensitive files are overexposed?"
+      ],
+      "recommendedVisuals": [
+        {"visualType": "Matrix", "title": "Sensitive Events by Label and Workload", "measureConcept": "Risk events grouped by sensitivity label and workload"},
+        {"visualType": "Bar Chart", "title": "Top Sensitive Files by Risky Event Count", "measureConcept": "Count of risky operations per file"},
+        {"visualType": "Treemap", "title": "Sensitive Data by Department", "measureConcept": "Sensitive file events by department"},
+        {"visualType": "Line Chart", "title": "Sensitive Data Movement Trend", "measureConcept": "Downloads, shares, prints, and copies over time"},
+        {"visualType": "Table", "title": "Files Requiring Review", "measureConcept": "Files with risky events, weak labels, or external exposure"}
+      ],
+      "suggestedMeasures": ["Sensitive Events", "Sensitive Files", "Files Shared Externally", "Highly Confidential Events", "Label Missing Events", "Overexposed Files"],
+      "storytellingGuidance": "Use this page to reinforce the message that discovery and classification are prerequisites for AI readiness and data protection."
+    },
+    {
+      "pageId": "PBI-PAGE-003",
+      "pageName": "DLP Operations",
+      "targetAudience": "SOC, Security Operations, Compliance Operations",
+      "pagePurpose": "Operationalize DLP policy matches, warnings, blocks, overrides, and repeat behavior.",
+      "primaryQuestions": [
+        "Which DLP policies are firing?",
+        "Who is overriding warnings?",
+        "Which files or patterns trigger the most alerts?",
+        "Are blocks and warnings aligned with business workflows?"
+      ],
+      "recommendedVisuals": [
+        {"visualType": "Stacked Column Chart", "title": "DLP Events by Action", "measureConcept": "Warned, blocked, override, policy match"},
+        {"visualType": "Bar Chart", "title": "Top DLP Users", "measureConcept": "DLP event count by user"},
+        {"visualType": "Bar Chart", "title": "Top DLP Policies", "measureConcept": "Events by policy name"},
+        {"visualType": "Table", "title": "DLP Overrides Requiring Review", "measureConcept": "Override justification, user, file, recipient, label"},
+        {"visualType": "Line Chart", "title": "DLP Events Trend", "measureConcept": "DLP events over time by severity"}
+      ],
+      "suggestedMeasures": ["DLP Matches", "DLP Blocks", "DLP Warnings", "DLP Overrides", "Override Rate", "Repeat DLP Users"],
+      "storytellingGuidance": "Focus on DLP as coaching and control, not only blocking. Show where users need clearer workflows or safer alternatives."
+    },
+    {
+      "pageId": "PBI-PAGE-004",
+      "pageName": "AI and Copilot Risk",
+      "targetAudience": "AI Governance, Security, Compliance, Executive Leadership",
+      "pagePurpose": "Visualize safe and risky AI usage, including Copilot interactions, sensitive source references, and unmanaged AI app behavior.",
+      "primaryQuestions": [
+        "Which users are interacting with AI around sensitive content?",
+        "Which sensitive files are referenced by Copilot?",
+        "Where is external AI usage creating exposure?",
+        "Are over-permissioned files being surfaced by AI?"
+      ],
+      "recommendedVisuals": [
+        {"visualType": "KPI Card", "title": "Copilot Interactions", "measureConcept": "Total CopilotInteraction events"},
+        {"visualType": "KPI Card", "title": "External AI Interactions", "measureConcept": "AIAppInteraction and UnmanagedAppUpload events"},
+        {"visualType": "Bar Chart", "title": "Sensitive Sources Referenced by Copilot", "measureConcept": "Files referenced by Copilot and their labels"},
+        {"visualType": "Scatter Chart", "title": "AI Usage Risk by User", "measureConcept": "Interaction count vs risk score"},
+        {"visualType": "Table", "title": "Unsafe AI Prompt Samples", "measureConcept": "Prompt preview, source context, risk note, recommended control"}
+      ],
+      "suggestedMeasures": ["Copilot Interactions", "External AI Interactions", "Sensitive AI Interactions", "Unmanaged AI Uploads", "Copilot Sensitive Source Count", "AI Risk Score"],
+      "storytellingGuidance": "Explain that AI inherits existing access. The key risk is not only the prompt, but the permissions and source content behind the prompt."
+    },
+    {
+      "pageId": "PBI-PAGE-005",
+      "pageName": "Insider Risk Overview",
+      "targetAudience": "Security Leadership, Insider Risk Analysts, HR and Legal Stakeholders",
+      "pagePurpose": "Provide a privacy-aware view of correlated risky sequences involving downloads, sharing, label changes, endpoint movement, AI usage, and contextual HR signals.",
+      "primaryQuestions": [
+        "Which users have correlated risk sequences?",
+        "Which sequences need review?",
+        "What context exists before concluding intent?",
+        "Which cases require HR or Legal involvement?"
+      ],
+      "recommendedVisuals": [
+        {"visualType": "KPI Card", "title": "Active Risk Sequences", "measureConcept": "Count of synthetic InsiderRiskSequence events"},
+        {"visualType": "Bar Chart", "title": "Risk Sequences by User", "measureConcept": "Sequence count by user"},
+        {"visualType": "Timeline", "title": "Selected User Timeline", "measureConcept": "Chronological events for selected user and scenario"},
+        {"visualType": "Matrix", "title": "Signal Combination Matrix", "measureConcept": "Downloads, sharing, AI, endpoint, HR context by user"},
+        {"visualType": "Table", "title": "Cases Requiring Review", "measureConcept": "Scenario, user, severity, context, recommended outcome"}
+      ],
+      "suggestedMeasures": ["Insider Risk Sequences", "Mass Download Events", "Endpoint Movement Events", "After-Hours Sensitive Events", "Role Change Context Events", "Composite Risk Score"],
+      "storytellingGuidance": "Avoid framing users as malicious by default. Show how sequences require investigation, context, and appropriate HR/Legal guardrails."
+    },
+    {
+      "pageId": "PBI-PAGE-006",
+      "pageName": "External Sharing Heatmap",
+      "targetAudience": "Security, Compliance, Data Owners",
+      "pagePurpose": "Visualize external sharing, guest access, recipient domains, and exposed sensitive files.",
+      "primaryQuestions": [
+        "Which departments share externally the most?",
+        "Which external domains receive sensitive content?",
+        "Are guests accessing restricted spaces?",
+        "Which files should have links revoked?"
+      ],
+      "recommendedVisuals": [
+        {"visualType": "Heatmap", "title": "External Sharing by Department and Sensitivity", "measureConcept": "Event count by department and label"},
+        {"visualType": "Bar Chart", "title": "Top External Domains", "measureConcept": "External event count by domain"},
+        {"visualType": "Network Graph", "title": "User-to-Domain Sharing Map", "measureConcept": "Users connected to external recipient domains"},
+        {"visualType": "Table", "title": "Active External Links", "measureConcept": "File, owner, label, recipient, expiration, last access"},
+        {"visualType": "KPI Card", "title": "Guest Access Events", "measureConcept": "GuestUserAdded and ExternalUserAccessed events"}
+      ],
+      "suggestedMeasures": ["External Sharing Events", "External Domains", "Guest Access Events", "External Sensitive Files", "Links Requiring Revocation"],
+      "storytellingGuidance": "Use this page to show how collaboration risk is often driven by business urgency, not only malicious behavior."
+    },
+    {
+      "pageId": "PBI-PAGE-007",
+      "pageName": "Endpoint DLP and Device Movement",
+      "targetAudience": "Endpoint Security, SOC, Security Engineering",
+      "pagePurpose": "Show print, USB, network share, and device-level movement involving sensitive banking files.",
+      "primaryQuestions": [
+        "Which sensitive files moved to endpoints?",
+        "Which devices generated risky copy or print activity?",
+        "Are endpoint DLP controls working?",
+        "Which users need review or coaching?"
+      ],
+      "recommendedVisuals": [
+        {"visualType": "Stacked Bar Chart", "title": "Endpoint Actions by Type", "measureConcept": "Print, USB copy, network share copy, download"},
+        {"visualType": "Bar Chart", "title": "Top Devices by Risk Events", "measureConcept": "Endpoint event count by DeviceId"},
+        {"visualType": "Table", "title": "Sensitive Endpoint Movement", "measureConcept": "User, file, label, device, operation, timestamp"},
+        {"visualType": "Line Chart", "title": "Endpoint DLP Trend", "measureConcept": "Endpoint events over time"},
+        {"visualType": "KPI Card", "title": "Blocked Endpoint Actions", "measureConcept": "Endpoint DLP blocked events"}
+      ],
+      "suggestedMeasures": ["Endpoint DLP Events", "File Printed Events", "USB Copy Events", "Network Share Copy Events", "Blocked Endpoint Events", "Distinct Risky Devices"],
+      "storytellingGuidance": "Endpoint activity gives the story physicality: data is no longer just in the cloud; it is being printed, copied, or moved."
+    },
+    {
+      "pageId": "PBI-PAGE-008",
+      "pageName": "Scenario Replay and Timeline",
+      "targetAudience": "Demo Presenters, SOC Analysts, Security Architects",
+      "pagePurpose": "Replay synthetic scenarios chronologically with workload, user, file, signal, and risk context.",
+      "primaryQuestions": [
+        "What happened first?",
+        "Which signals formed the risk sequence?",
+        "Which controls reacted?",
+        "What would the investigation story look like?"
+      ],
+      "recommendedVisuals": [
+        {"visualType": "Timeline", "title": "Scenario Event Timeline", "measureConcept": "Chronological event sequence by scenario"},
+        {"visualType": "Slicer", "title": "Scenario Selector", "measureConcept": "Filter by ScenarioId or timeline"},
+        {"visualType": "Table", "title": "Event Details", "measureConcept": "Time, actor, workload, operation, file, label, risk level"},
+        {"visualType": "Ribbon Chart", "title": "Signal Sequence by Workload", "measureConcept": "Workload event sequence over time"},
+        {"visualType": "Text Box", "title": "Narrative Summary", "measureConcept": "Scenario business narrative and recommended outcome"}
+      ],
+      "suggestedMeasures": ["Scenario Events", "Scenario Duration", "Scenario Risk Score", "Distinct Workloads in Scenario", "Distinct Personas in Scenario"],
+      "storytellingGuidance": "This page should be presenter-friendly. It should let the audience follow the story before diving into individual controls."
+    }
+  ],
+  "measureDefinitions": [
+    {"measureName": "Total Events", "description": "Count of all activity events in the selected context.", "pseudoDax": "COUNTROWS(FactActivityEvents)"},
+    {"measureName": "Risk Events", "description": "Count of events where IsRiskEvent is true.", "pseudoDax": "CALCULATE([Total Events], FactActivityEvents[IsRiskEvent] = TRUE())"},
+    {"measureName": "High Critical Events", "description": "Count of events with severity High or Critical.", "pseudoDax": "CALCULATE([Total Events], DimSignal[Severity] IN {\"High\", \"Critical\"})"},
+    {"measureName": "External Sharing Events", "description": "Count of external sharing, external email, guest access, and external user access events.", "pseudoDax": "CALCULATE([Total Events], DimSignal[SignalName] IN {\"ExternalEmailSent\", \"FileShared\", \"GuestUserAdded\", \"ExternalUserAccessed\"})"},
+    {"measureName": "AI Risk Events", "description": "Count of Copilot or external AI events involving sensitive content.", "pseudoDax": "CALCULATE([Total Events], DimSignal[SignalName] IN {\"CopilotInteraction\", \"AIAppInteraction\", \"UnmanagedAppUpload\", \"SensitiveContentAccessed\"})"},
+    {"measureName": "Endpoint Movement Events", "description": "Count of print, USB copy, network share copy, and endpoint DLP events.", "pseudoDax": "CALCULATE([Total Events], DimSignal[SignalName] IN {\"FilePrinted\", \"FileCopiedToUSB\", \"FileCopiedToNetworkShare\", \"EndpointDLPPolicyMatch\"})"},
+    {"measureName": "Override Rate", "description": "DLP override events divided by DLP warning events.", "pseudoDax": "DIVIDE([DLP Overrides], [DLP Warnings])"},
+    {"measureName": "Composite Risk Score", "description": "Synthetic weighted score based on signal weights and risk modifiers.", "pseudoDax": "SUMX(FactActivityEvents, FactActivityEvents[RiskWeight] + FactActivityEvents[RiskModifierScore])"},
+    {"measureName": "Distinct Risky Users", "description": "Count of users with one or more risk events.", "pseudoDax": "CALCULATE(DISTINCTCOUNT(FactActivityEvents[UserPrincipalName]), FactActivityEvents[IsRiskEvent] = TRUE())"},
+    {"measureName": "Files Shared Externally", "description": "Distinct files involved in external sharing events.", "pseudoDax": "CALCULATE(DISTINCTCOUNT(FactActivityEvents[FileName]), FactActivityEvents[IsExternal] = TRUE())"}
+  ],
+  "drillthroughDefinitions": [
+    {
+      "drillthroughId": "DRILL-001",
+      "name": "User Investigation Drillthrough",
+      "sourcePages": ["Executive Risk Snapshot", "Insider Risk Overview", "DLP Operations"],
+      "targetFilters": ["UserPrincipalName", "ScenarioId"],
+      "targetVisuals": ["User timeline", "Top files accessed", "DLP events", "AI interactions", "Endpoint actions", "External recipients"],
+      "purpose": "Allow analysts to move from aggregate user risk to detailed user activity context."
+    },
+    {
+      "drillthroughId": "DRILL-002",
+      "name": "Sensitive File Drillthrough",
+      "sourcePages": ["Sensitive Data Exposure", "External Sharing Heatmap", "Endpoint DLP and Device Movement"],
+      "targetFilters": ["FileName", "SensitivityLabel"],
+      "targetVisuals": ["File event timeline", "Users who accessed file", "Sharing history", "Label history", "DLP matches"],
+      "purpose": "Show complete lifecycle and exposure path for a selected sensitive file."
+    },
+    {
+      "drillthroughId": "DRILL-003",
+      "name": "Scenario Replay Drillthrough",
+      "sourcePages": ["Scenario Replay and Timeline", "Executive Risk Snapshot"],
+      "targetFilters": ["ScenarioId"],
+      "targetVisuals": ["Scenario event sequence", "Personas involved", "Workloads involved", "Controls triggered", "Recommended response"],
+      "purpose": "Support presenter-led storytelling and scenario validation."
+    }
+  ],
+  "codexUsageGuidance": [
+    "Use this file to generate Power BI report specifications or documentation for manual report creation.",
+    "Map pseudoDax measures to the actual model once synthetic telemetry tables are implemented.",
+    "Use page definitions to create consistent report tabs across demo iterations.",
+    "Use storytellingGuidance as speaker notes or page descriptions.",
+    "Use drillthroughDefinitions to design investigation navigation paths.",
+    "Do not treat synthetic risk scores as production-ready scoring models."
+  ]
+}
