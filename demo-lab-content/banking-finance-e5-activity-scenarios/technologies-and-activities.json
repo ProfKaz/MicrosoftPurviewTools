@@ -1,0 +1,1050 @@
+{
+  "metadata": {
+    "packName": "Banking and Finance Microsoft 365 E5 Technologies and Activities",
+    "version": "1.0",
+    "language": "en-US",
+    "industry": "Banking and Financial Services",
+    "licenseAssumption": "Microsoft 365 E5 with Microsoft Purview, Microsoft Defender, Microsoft Entra ID P2, Intune, Power BI, and Copilot for Microsoft 365 where assigned",
+    "fictionalDataOnly": true,
+    "purpose": "Provide Codex and browser-based agents with a technology and activity catalog for realistic daily, weekly, monthly, and event-driven banking/finance simulations."
+  },
+  "technologies": [
+    {
+      "technologyId": "TECH-001",
+      "technologyName": "SharePoint Online",
+      "shortName": "SPO",
+      "businessUseInBanking": "Departmental and cross-functional document collaboration for loan packages, KYC reviews, audit evidence, policy documents, regulatory response files, and executive committee packs.",
+      "commonDailyActivities": [
+        "Create or update customer review files in controlled document libraries.",
+        "Edit Excel workbooks containing fictional account exposure or case queues.",
+        "Upload KYC packets or customer dispute evidence to department sites.",
+        "Review version history for regulatory or audit response documents.",
+        "Apply or update sensitivity labels on sensitive financial documents."
+      ],
+      "commonWeeklyActivities": [
+        "Publish weekly loan committee packages.",
+        "Update fraud review and AML investigation folders.",
+        "Consolidate branch operations reports.",
+        "Share risk committee documents with restricted groups.",
+        "Review access permissions on sensitive workspaces."
+      ],
+      "commonMonthlyActivities": [
+        "Prepare monthly finance close evidence.",
+        "Archive audit workpapers.",
+        "Publish compliance attestations and control evidence.",
+        "Review retention and records classification for regulated files.",
+        "Generate executive financial reporting packages."
+      ],
+      "eventDrivenActivities": [
+        "Create a restricted workspace for a regulatory request.",
+        "Break permission inheritance after oversharing is detected.",
+        "Revoke anonymous or broad sharing links.",
+        "Move files from a broad collaboration site to a restricted legal or security site.",
+        "Apply a higher sensitivity label after sensitive data is detected."
+      ],
+      "typicalFileTypes": ["docx", "xlsx", "pptx", "pdf", "csv", "txt"],
+      "normalBehaviorExamples": [
+        "Carlos updates a weekly credit-risk workbook in a restricted Risk Analytics library.",
+        "Emily uploads a regulator response draft to a Legal Privileged site.",
+        "Sofia updates a project RAID log in a PMO SharePoint site."
+      ],
+      "riskyBehaviorExamples": [
+        "Devon uploads a KYC workbook to a broad Operations site instead of the restricted Banking Operations site.",
+        "A user creates an organization-wide sharing link for a loan review package.",
+        "A confidential AML workbook is copied into a project site with inherited permissions."
+      ],
+      "expectedSignals": ["FileCreated", "FileModified", "FileAccessed", "FileDownloaded", "FileShared", "AnonymousLinkCreated", "SecureLinkUsed", "SensitivityLabelApplied", "SensitivityLabelChanged", "SensitivityLabelRemoved"],
+      "primaryPurviewControls": ["Sensitivity labels", "DLP for SharePoint", "Data Lifecycle Management", "Records Management", "Insider Risk Management", "Activity Explorer", "Audit"],
+      "primaryDefenderControls": ["Defender for Cloud Apps", "Microsoft Defender XDR", "Defender for Endpoint integration"]
+    },
+    {
+      "technologyId": "TECH-002",
+      "technologyName": "OneDrive for Business",
+      "shortName": "ODB",
+      "businessUseInBanking": "Personal work staging area for drafts, analysis files, exports, meeting notes, and working copies before formal publication to SharePoint.",
+      "commonDailyActivities": [
+        "Save draft customer analysis files.",
+        "Sync working copies of Excel files from SharePoint.",
+        "Download Power BI or Excel exports for local analysis.",
+        "Share a draft with one colleague for review.",
+        "Rename or duplicate files for versioning."
+      ],
+      "commonWeeklyActivities": [
+        "Prepare weekly branch performance workbooks.",
+        "Stage loan committee drafts before publishing.",
+        "Consolidate notes from Teams meetings.",
+        "Review shared-with-me files.",
+        "Clean up temporary exports."
+      ],
+      "commonMonthlyActivities": [
+        "Create month-end finance close working files.",
+        "Prepare monthly risk review charts.",
+        "Archive personal working drafts to official repositories.",
+        "Remove stale sharing links.",
+        "Review local synced folders for sensitive data."
+      ],
+      "eventDrivenActivities": [
+        "A user downloads a large volume of customer files after a role-change notice.",
+        "A sensitive file is shared from OneDrive to an external vendor.",
+        "A draft containing account-like values is uploaded from a local device.",
+        "A sensitive file is copied from OneDrive sync to a network share.",
+        "A user attempts to share a file externally and triggers DLP."
+      ],
+      "typicalFileTypes": ["xlsx", "docx", "pdf", "csv", "pptx"],
+      "normalBehaviorExamples": [
+        "Priya stores a temporary feature-analysis workbook before publishing an approved aggregate to SharePoint.",
+        "Diego drafts a customer-safe proposal and shares it with Emily for legal review.",
+        "Laura stores a personal draft of a workforce planning summary before uploading the final HR version."
+      ],
+      "riskyBehaviorExamples": [
+        "Devon downloads multiple restricted files to OneDrive and creates an external sharing link.",
+        "A finance analyst syncs a treasury workbook to an unmanaged endpoint.",
+        "A user shares a local draft containing customer account-like numbers with a personal mailbox."
+      ],
+      "expectedSignals": ["FileCreated", "FileModified", "FileDownloaded", "FileShared", "FileSynced", "FileCopiedToNetworkShare", "FileCopiedToUSB", "SensitivityLabelApplied", "SensitivityLabelChanged"],
+      "primaryPurviewControls": ["Endpoint DLP", "DLP for OneDrive", "Sensitivity labels", "Insider Risk Management", "Audit"],
+      "primaryDefenderControls": ["Defender for Endpoint", "Defender for Cloud Apps", "Microsoft Defender XDR"]
+    },
+    {
+      "technologyId": "TECH-003",
+      "technologyName": "Microsoft Teams",
+      "shortName": "Teams",
+      "businessUseInBanking": "Collaboration hub for operations, risk committees, customer escalations, legal reviews, fraud response, and executive coordination.",
+      "commonDailyActivities": [
+        "Discuss customer operations cases in department channels.",
+        "Share links to SharePoint files.",
+        "Ask whether documents can be sent to external parties.",
+        "Coordinate urgent review of customer disputes or fraud alerts.",
+        "Discuss DLP or label warnings with security teams."
+      ],
+      "commonWeeklyActivities": [
+        "Run weekly risk committee chats and meetings.",
+        "Post loan committee agenda updates.",
+        "Coordinate PMO status and blockers.",
+        "Share weekly fraud queue summaries.",
+        "Discuss security awareness reminders."
+      ],
+      "commonMonthlyActivities": [
+        "Coordinate monthly finance close activities.",
+        "Review compliance evidence collection progress.",
+        "Discuss monthly board reporting deadlines.",
+        "Coordinate regulatory response readiness.",
+        "Review monthly operational risk metrics."
+      ],
+      "eventDrivenActivities": [
+        "Escalate a suspected data leak.",
+        "Ask security whether an external share is allowed.",
+        "Share the wrong file in a channel.",
+        "Discuss a customer complaint involving sensitive details.",
+        "Coordinate incident containment after risky file activity."
+      ],
+      "typicalFileTypes": ["docx", "xlsx", "pptx", "pdf"],
+      "normalBehaviorExamples": [
+        "Sofia posts the weekly PMO status link to the project team channel.",
+        "Marcus posts a reminder about external sharing controls.",
+        "David asks for review of a customer complaint summary before sending it externally."
+      ],
+      "riskyBehaviorExamples": [
+        "Devon posts a KYC spreadsheet directly in a broad Teams channel.",
+        "A user pastes account-like numbers into a Teams chat.",
+        "A Teams channel includes a guest user while internal risk notes are being discussed."
+      ],
+      "expectedSignals": ["TeamsMessageSent", "TeamsFileShared", "FileShared", "FileAccessed", "ExternalUserAdded", "SensitivityLabelApplied"],
+      "primaryPurviewControls": ["DLP for Teams", "Communication Compliance", "Sensitivity labels for Teams and groups", "Audit"],
+      "primaryDefenderControls": ["Defender for Cloud Apps", "Microsoft Defender XDR"]
+    },
+    {
+      "technologyId": "TECH-004",
+      "technologyName": "Exchange Online and Outlook Web",
+      "shortName": "EXO-Outlook",
+      "businessUseInBanking": "Formal internal and external communication for customer notices, vendor coordination, legal correspondence, audit requests, finance approvals, and executive reporting.",
+      "commonDailyActivities": [
+        "Send customer follow-up emails.",
+        "Route invoice approvals.",
+        "Send internal case summaries.",
+        "Forward documents for review.",
+        "Schedule meetings with sensitive attachments."
+      ],
+      "commonWeeklyActivities": [
+        "Send weekly risk committee agendas.",
+        "Distribute loan committee materials.",
+        "Send customer complaint status updates.",
+        "Coordinate legal review of contract or regulatory drafts.",
+        "Send weekly security posture summaries."
+      ],
+      "commonMonthlyActivities": [
+        "Send monthly finance close packages.",
+        "Send audit evidence summaries.",
+        "Distribute board reporting packets.",
+        "Send payroll and compensation approval notices.",
+        "Coordinate regulatory filing packages."
+      ],
+      "eventDrivenActivities": [
+        "Send an email to an external domain with a sensitive attachment.",
+        "Reply-all with internal risk commentary.",
+        "Forward a customer complaint containing account-like values.",
+        "Trigger DLP warning for financial data.",
+        "Attempt to override a DLP block with justification."
+      ],
+      "typicalFileTypes": ["xlsx", "pdf", "docx", "pptx", "csv"],
+      "normalBehaviorExamples": [
+        "Emily emails an approved clean legal redline to external counsel.",
+        "James sends a monthly operations summary to leadership.",
+        "Diego sends a customer-safe proposal PDF to a fictional customer."
+      ],
+      "riskyBehaviorExamples": [
+        "Devon attaches an internal KYC workbook to an external vendor email.",
+        "A finance analyst sends a treasury worksheet with bank-like values to a broad distribution list.",
+        "A support user forwards a customer dispute thread with internal notes to an external party."
+      ],
+      "expectedSignals": ["EmailSent", "ExternalEmailSent", "DLPPolicyMatch", "DLPOverride", "AttachmentDetected", "SensitivityLabelApplied", "SensitivityLabelChanged"],
+      "primaryPurviewControls": ["DLP for Exchange", "Sensitivity labels", "Message encryption", "Communication Compliance", "Audit"],
+      "primaryDefenderControls": ["Defender for Office 365", "Microsoft Defender XDR"]
+    },
+    {
+      "technologyId": "TECH-005",
+      "technologyName": "Office for the Web",
+      "shortName": "OfficeWeb",
+      "businessUseInBanking": "Browser-based editing of Word, Excel, and PowerPoint files for customer analysis, risk workbooks, executive decks, and policy documents.",
+      "commonDailyActivities": [
+        "Edit customer account analysis workbooks in Excel Web.",
+        "Update policy drafts in Word Web.",
+        "Prepare executive and committee decks in PowerPoint Web.",
+        "Apply sensitivity labels during save or close.",
+        "Use comments and mentions to request review."
+      ],
+      "commonWeeklyActivities": [
+        "Update weekly loan committee decks.",
+        "Modify risk review spreadsheets.",
+        "Prepare customer operations scorecards.",
+        "Add comments to legal and compliance drafts.",
+        "Refresh PMO steering committee decks."
+      ],
+      "commonMonthlyActivities": [
+        "Finalize board reporting materials.",
+        "Refresh finance close workbooks.",
+        "Prepare audit evidence summaries.",
+        "Update HR compensation or workforce planning documents.",
+        "Finalize compliance certification files."
+      ],
+      "eventDrivenActivities": [
+        "A label recommendation appears after sensitive values are added.",
+        "A user downgrades a label to share externally.",
+        "A user removes a label from a sanitized derivative file.",
+        "A file is edited after being shared externally.",
+        "Comments reveal sensitive details not present in the main document body."
+      ],
+      "typicalFileTypes": ["docx", "xlsx", "pptx"],
+      "normalBehaviorExamples": [
+        "Carlos edits a credit exposure workbook and applies Confidential.",
+        "Emily updates a legal response draft and applies Legal Privileged.",
+        "Sofia edits a PMO deck and removes internal risk notes before export."
+      ],
+      "riskyBehaviorExamples": [
+        "Devon removes a Confidential label from a customer account workbook before sharing it.",
+        "A user pastes account-like values into comments that are later shared externally.",
+        "A sensitive workbook is exported to PDF without preserving the intended label."
+      ],
+      "expectedSignals": ["FileModified", "SensitivityLabelApplied", "SensitivityLabelChanged", "SensitivityLabelRemoved", "LabelRecommended", "FileShared", "FileDownloaded"],
+      "primaryPurviewControls": ["Sensitivity labels", "Auto-labeling", "DLP", "Activity Explorer", "Audit"],
+      "primaryDefenderControls": ["Defender for Cloud Apps"]
+    },
+    {
+      "technologyId": "TECH-006",
+      "technologyName": "Copilot for Microsoft 365",
+      "shortName": "M365Copilot",
+      "businessUseInBanking": "AI-assisted summarization, drafting, analysis, meeting recap, file discovery, and executive briefing creation over permitted Microsoft 365 content.",
+      "commonDailyActivities": [
+        "Summarize customer complaint threads.",
+        "Draft customer-safe responses.",
+        "Summarize Teams meetings.",
+        "Find relevant policy or procedure documents.",
+        "Draft internal status updates from source files."
+      ],
+      "commonWeeklyActivities": [
+        "Summarize weekly loan committee package.",
+        "Create risk review talking points.",
+        "Generate PMO steering summaries.",
+        "Summarize fraud queue trends.",
+        "Prepare executive briefing notes."
+      ],
+      "commonMonthlyActivities": [
+        "Create monthly finance close narratives.",
+        "Summarize board reporting materials.",
+        "Draft audit evidence summaries.",
+        "Generate regulatory response outlines.",
+        "Summarize HR workforce planning files."
+      ],
+      "eventDrivenActivities": [
+        "Copilot surfaces sensitive files due to broad permissions.",
+        "A user prompts Copilot to summarize a confidential customer file.",
+        "AI output inherits sensitive information from source documents.",
+        "A user asks Copilot to create external content from internal-only sources.",
+        "Copilot becomes part of an insider risk narrative after sensitive file discovery."
+      ],
+      "typicalFileTypes": ["docx", "xlsx", "pptx", "pdf", "chat", "email"],
+      "normalBehaviorExamples": [
+        "Alexander asks Copilot to summarize approved executive briefing files.",
+        "Diego asks Copilot to draft a customer-safe follow-up from sanitized proposal notes.",
+        "Priya asks Copilot to summarize aggregated model trends."
+      ],
+      "riskyBehaviorExamples": [
+        "Devon asks Copilot to summarize KYC files he should not need for his role.",
+        "A user asks Copilot for all documents containing account-like numbers.",
+        "A user generates an external response from internal fraud investigation notes."
+      ],
+      "expectedSignals": ["CopilotInteraction", "FileReferencedByCopilot", "SensitiveContentAccessed", "SearchQuery", "FileAccessed", "DLPPolicyMatch"],
+      "primaryPurviewControls": ["Data Security Posture Management for AI", "Audit", "Sensitivity labels", "DLP", "Insider Risk Management"],
+      "primaryDefenderControls": ["Microsoft Defender XDR", "Defender for Cloud Apps"]
+    },
+    {
+      "technologyId": "TECH-007",
+      "technologyName": "Microsoft Purview Information Protection",
+      "shortName": "MIP",
+      "businessUseInBanking": "Classification, labeling, protection, and encryption of regulated financial, legal, HR, and customer data.",
+      "commonDailyActivities": [
+        "Apply labels to new customer files.",
+        "Respond to label recommendations.",
+        "Review label downgrade justifications.",
+        "Open protected documents.",
+        "Create customer-safe derivatives with lower labels."
+      ],
+      "commonWeeklyActivities": [
+        "Review files missing labels in sensitive workspaces.",
+        "Validate label coverage for loan committee materials.",
+        "Review auto-labeling results.",
+        "Check label analytics for finance and HR content.",
+        "Investigate unusual label removal events."
+      ],
+      "commonMonthlyActivities": [
+        "Review label policy effectiveness.",
+        "Tune sensitive information types.",
+        "Validate regulated financial data label adoption.",
+        "Review label-based access and encryption behavior.",
+        "Report label coverage to governance committee."
+      ],
+      "eventDrivenActivities": [
+        "A user removes a label before external sharing.",
+        "Auto-labeling recommends Highly Confidential for an AML workbook.",
+        "A protected file is accessed by an unexpected user.",
+        "A label downgrade requires business justification.",
+        "A file is relabeled after legal or HR content is added."
+      ],
+      "typicalFileTypes": ["docx", "xlsx", "pptx", "pdf"],
+      "normalBehaviorExamples": [
+        "Emily labels regulator response drafts as Legal Privileged.",
+        "Laura labels compensation planning files as HR Restricted.",
+        "Carlos labels credit-risk workbooks as Regulated Financial Data."
+      ],
+      "riskyBehaviorExamples": [
+        "Devon removes a Highly Confidential label before sending a file externally.",
+        "A user applies Public to a workbook containing customer account-like numbers.",
+        "A protected file is copied into a location where label enforcement is weaker."
+      ],
+      "expectedSignals": ["SensitivityLabelApplied", "SensitivityLabelChanged", "SensitivityLabelRemoved", "LabelRecommended", "ProtectedFileAccessed"],
+      "primaryPurviewControls": ["Sensitivity labels", "Auto-labeling", "Encryption", "Activity Explorer", "Audit"],
+      "primaryDefenderControls": ["Defender for Cloud Apps"]
+    },
+    {
+      "technologyId": "TECH-008",
+      "technologyName": "Microsoft Purview Data Loss Prevention",
+      "shortName": "DLP",
+      "businessUseInBanking": "Prevent or monitor unsafe sharing of customer account data, financial identifiers, payment-like references, HR compensation data, legal content, and regulated banking records.",
+      "commonDailyActivities": [
+        "Warn users before sending sensitive attachments externally.",
+        "Block emails containing regulated financial patterns.",
+        "Audit file sharing from SharePoint and OneDrive.",
+        "Detect customer account-like values in Teams messages.",
+        "Capture user justifications for policy overrides."
+      ],
+      "commonWeeklyActivities": [
+        "Review DLP policy matches.",
+        "Tune false positives for synthetic banking identifiers.",
+        "Review override justifications.",
+        "Analyze top risky users and locations.",
+        "Review external domain trends."
+      ],
+      "commonMonthlyActivities": [
+        "Report DLP incidents to governance committee.",
+        "Refine policies for new banking scenarios.",
+        "Review high-severity DLP events.",
+        "Tune endpoint DLP restrictions.",
+        "Validate DLP coverage across workloads."
+      ],
+      "eventDrivenActivities": [
+        "A file with customer account-like numbers is emailed externally.",
+        "A user attempts to copy a regulated workbook to USB.",
+        "A Teams message includes payment-like references.",
+        "A user overrides a warning to send a file to a vendor.",
+        "A large customer CSV export is downloaded and shared."
+      ],
+      "typicalFileTypes": ["xlsx", "csv", "docx", "pdf", "email", "chat"],
+      "normalBehaviorExamples": [
+        "Marcus reviews DLP alerts and closes expected test events.",
+        "Ana tunes DLP rules for financial identifiers and HR records.",
+        "Carlos receives a warning when attempting to share a sensitive workbook with a partner."
+      ],
+      "riskyBehaviorExamples": [
+        "Devon overrides a DLP warning to send a KYC workbook externally.",
+        "A user copies an AML case export to a USB device.",
+        "A broad Teams channel receives a pasted list of customer account-like numbers."
+      ],
+      "expectedSignals": ["DLPPolicyMatch", "DLPBlocked", "DLPWarned", "DLPOverride", "FileShared", "EmailSent", "TeamsMessageSent", "FileCopiedToUSB", "FileCopiedToNetworkShare"],
+      "primaryPurviewControls": ["DLP for Exchange", "DLP for SharePoint", "DLP for OneDrive", "DLP for Teams", "Endpoint DLP", "Activity Explorer"],
+      "primaryDefenderControls": ["Defender for Endpoint", "Defender for Cloud Apps", "Microsoft Defender XDR"]
+    },
+    {
+      "technologyId": "TECH-009",
+      "technologyName": "Microsoft Purview Insider Risk Management",
+      "shortName": "IRM",
+      "businessUseInBanking": "Correlate risky user activities such as mass downloads, sensitive file access, label removal, external sharing, endpoint copy, resignation indicators, and unusual work patterns.",
+      "commonDailyActivities": [
+        "Review user risk indicators.",
+        "Investigate sensitive file activity sequences.",
+        "Correlate DLP events with HR or role-change context.",
+        "Escalate cases to Security or HR.",
+        "Document investigation decisions."
+      ],
+      "commonWeeklyActivities": [
+        "Review open insider risk cases.",
+        "Tune policy thresholds.",
+        "Assess risky behavior patterns by department.",
+        "Review repeated label removals or overrides.",
+        "Conduct case review with HR and Legal."
+      ],
+      "commonMonthlyActivities": [
+        "Report anonymized insider risk trends.",
+        "Review policy effectiveness.",
+        "Update risky behavior scenarios.",
+        "Review governance committee metrics.",
+        "Validate privacy and role-based access controls."
+      ],
+      "eventDrivenActivities": [
+        "A user downloads many files after a performance or role-change event.",
+        "A user prints and copies confidential files to a network share.",
+        "A user accesses files outside normal role scope.",
+        "A user shares sensitive data externally after multiple DLP warnings.",
+        "A user removes labels from files before sharing."
+      ],
+      "typicalFileTypes": ["xlsx", "docx", "pdf", "csv"],
+      "normalBehaviorExamples": [
+        "Marcus reviews a simulated case involving multiple sensitive downloads.",
+        "Ana validates whether Devon's actions were negligent or malicious.",
+        "Emily provides legal guidance on investigation boundaries."
+      ],
+      "riskyBehaviorExamples": [
+        "Devon downloads AML case files, prints loan data, and uploads a CSV to an external app.",
+        "A user repeatedly removes labels from customer account files.",
+        "A user accesses legal privileged content unrelated to their role."
+      ],
+      "expectedSignals": ["InsiderRiskSequence", "MassDownloadActivity", "FileDownloaded", "FilePrinted", "FileCopiedToUSB", "FileCopiedToNetworkShare", "SensitivityLabelRemoved", "ExternalEmailSent", "DLPOverride"],
+      "primaryPurviewControls": ["Insider Risk Management", "DLP", "Audit", "Communication Compliance", "Sensitivity labels"],
+      "primaryDefenderControls": ["Microsoft Defender XDR", "Defender for Endpoint", "Defender for Cloud Apps"]
+    },
+    {
+      "technologyId": "TECH-010",
+      "technologyName": "Microsoft Defender for Cloud Apps",
+      "shortName": "MDCA",
+      "businessUseInBanking": "Monitor cloud app usage, detect risky sharing, identify unmanaged app uploads, control sessions, and investigate anomalous file activity.",
+      "commonDailyActivities": [
+        "Review risky cloud app activity.",
+        "Detect downloads from sensitive SharePoint sites.",
+        "Monitor uploads to unmanaged apps.",
+        "Review impossible travel or anomalous session activity.",
+        "Apply session controls for sensitive files."
+      ],
+      "commonWeeklyActivities": [
+        "Review sanctioned and unsanctioned app usage.",
+        "Analyze external sharing trends.",
+        "Review risky OAuth app behavior.",
+        "Assess sensitive file exposure.",
+        "Tune cloud discovery policies."
+      ],
+      "commonMonthlyActivities": [
+        "Report unsanctioned app risk.",
+        "Review app governance findings.",
+        "Update sanctioned app catalog.",
+        "Review session control effectiveness.",
+        "Coordinate with compliance for cloud risk posture."
+      ],
+      "eventDrivenActivities": [
+        "A user uploads a customer CSV to an unmanaged AI app.",
+        "A user downloads a large number of sensitive files from SharePoint.",
+        "A risky session is blocked or monitored.",
+        "A sensitive file is shared through an unmanaged app.",
+        "A user accesses content from an unusual location."
+      ],
+      "typicalFileTypes": ["csv", "xlsx", "pdf", "docx"],
+      "normalBehaviorExamples": [
+        "Ana reviews cloud app usage for approved financial analysis tools.",
+        "Marcus monitors risky sessions involving regulated financial data.",
+        "Miguel reviews app governance alerts for suspicious OAuth grants."
+      ],
+      "riskyBehaviorExamples": [
+        "Devon uploads a customer dispute export to an unmanaged AI summarization site.",
+        "A user downloads regulated financial data from an unmanaged device.",
+        "An external app receives an exported Power BI customer report."
+      ],
+      "expectedSignals": ["UnmanagedAppUpload", "MassDownloadActivity", "AnomalousCloudActivity", "SessionControlApplied", "OAuthAppConsent", "FileDownloaded"],
+      "primaryPurviewControls": ["DLP integration", "Sensitivity labels", "Audit"],
+      "primaryDefenderControls": ["Defender for Cloud Apps", "Microsoft Defender XDR", "Defender for Endpoint"]
+    },
+    {
+      "technologyId": "TECH-011",
+      "technologyName": "Microsoft Defender for Endpoint and Intune-managed endpoints",
+      "shortName": "MDE-Intune",
+      "businessUseInBanking": "Protect and monitor managed devices used for financial analysis, customer operations, remote work, and secure access to sensitive banking files.",
+      "commonDailyActivities": [
+        "Access SharePoint and OneDrive from managed devices.",
+        "Open protected Office files.",
+        "Print customer or finance documents when allowed.",
+        "Use approved browsers and apps.",
+        "Sync working files through OneDrive."
+      ],
+      "commonWeeklyActivities": [
+        "Review endpoint compliance.",
+        "Patch and update banking operations devices.",
+        "Review device risk alerts.",
+        "Validate endpoint DLP policy behavior.",
+        "Review removable media activity."
+      ],
+      "commonMonthlyActivities": [
+        "Report endpoint compliance posture.",
+        "Review device inventory and ownership.",
+        "Validate encryption and protection baselines.",
+        "Audit high-risk endpoint activity.",
+        "Review unmanaged device access attempts."
+      ],
+      "eventDrivenActivities": [
+        "A sensitive file is copied to USB.",
+        "A regulated workbook is printed.",
+        "A file is copied to a network share.",
+        "A user accesses sensitive data from a non-compliant device.",
+        "A malware or suspicious process touches sensitive files."
+      ],
+      "typicalFileTypes": ["xlsx", "csv", "docx", "pdf"],
+      "normalBehaviorExamples": [
+        "Carlos opens a confidential credit workbook on a compliant managed laptop.",
+        "Laura prints an approved HR summary after label policy allows printing.",
+        "James syncs approved operations files using OneDrive on a managed device."
+      ],
+      "riskyBehaviorExamples": [
+        "Devon copies a KYC export to USB after a DLP warning.",
+        "A user prints a legal privileged document outside approved workflow.",
+        "A non-compliant device downloads a treasury workbook."
+      ],
+      "expectedSignals": ["FileCopiedToUSB", "FileCopiedToNetworkShare", "FilePrinted", "DeviceRiskDetected", "NonCompliantDeviceAccess", "EndpointDLPPolicyMatch"],
+      "primaryPurviewControls": ["Endpoint DLP", "Sensitivity labels", "Insider Risk Management", "Audit"],
+      "primaryDefenderControls": ["Defender for Endpoint", "Microsoft Defender XDR", "Intune compliance policies"]
+    },
+    {
+      "technologyId": "TECH-012",
+      "technologyName": "Microsoft Entra ID and Conditional Access",
+      "shortName": "Entra-CA",
+      "businessUseInBanking": "Identity security, access governance, MFA enforcement, device compliance, privileged access, and conditional access policies for sensitive banking workloads.",
+      "commonDailyActivities": [
+        "Authenticate to Microsoft 365 workloads.",
+        "Use MFA for privileged or risky sessions.",
+        "Access restricted sites based on user role.",
+        "Respond to conditional access prompts.",
+        "Review sign-in risk for unusual access."
+      ],
+      "commonWeeklyActivities": [
+        "Review risky sign-ins.",
+        "Validate conditional access policy reports.",
+        "Review guest access and external collaboration.",
+        "Check privileged role activations.",
+        "Review access packages and group membership changes."
+      ],
+      "commonMonthlyActivities": [
+        "Run access reviews for sensitive banking groups.",
+        "Review Conditional Access policy coverage.",
+        "Audit privileged role assignments.",
+        "Report identity posture to governance.",
+        "Review inactive or stale guests."
+      ],
+      "eventDrivenActivities": [
+        "A user accesses sensitive content from an unusual location.",
+        "A guest user is added to a restricted team.",
+        "A risky sign-in blocks access to SharePoint.",
+        "An access review removes broad permissions.",
+        "Privileged access is activated to investigate an incident."
+      ],
+      "typicalFileTypes": ["identityEvent", "auditEvent", "accessReview"],
+      "normalBehaviorExamples": [
+        "Ana reviews access to the Regulated Financial Data SharePoint group.",
+        "Marcus investigates a risky sign-in alert.",
+        "Miguel activates a privileged role to review a security configuration."
+      ],
+      "riskyBehaviorExamples": [
+        "Devon signs in from an unusual location and downloads sensitive files.",
+        "A guest account receives access to a team containing KYC files.",
+        "A broad dynamic group grants access to HR or finance content."
+      ],
+      "expectedSignals": ["RiskySignIn", "ConditionalAccessTriggered", "MFARequired", "GuestUserAdded", "AccessReviewCompleted", "PrivilegedRoleActivated"],
+      "primaryPurviewControls": ["Audit", "Insider Risk Management integration context"],
+      "primaryDefenderControls": ["Microsoft Defender XDR", "Defender for Identity", "Entra ID Protection"]
+    },
+    {
+      "technologyId": "TECH-013",
+      "technologyName": "Power BI",
+      "shortName": "PowerBI",
+      "businessUseInBanking": "Executive, risk, finance, branch operations, credit exposure, fraud trends, and customer operations reporting.",
+      "commonDailyActivities": [
+        "View operational dashboards.",
+        "Filter customer or branch metrics.",
+        "Export summarized data to Excel.",
+        "Share dashboard links with internal teams.",
+        "Refresh datasets."
+      ],
+      "commonWeeklyActivities": [
+        "Review weekly risk and fraud dashboards.",
+        "Export loan committee summary data.",
+        "Publish updated branch performance reports.",
+        "Review dashboard access permissions.",
+        "Share executive snapshot links."
+      ],
+      "commonMonthlyActivities": [
+        "Generate monthly finance and risk reports.",
+        "Export board-level metrics.",
+        "Review dataset refresh history.",
+        "Validate RLS behavior.",
+        "Archive monthly report outputs."
+      ],
+      "eventDrivenActivities": [
+        "A user exports customer-level credit-risk data.",
+        "A dashboard is shared with a broad group.",
+        "A report export is emailed externally.",
+        "A dataset refresh fails before a regulatory deadline.",
+        "A user downloads sensitive underlying data."
+      ],
+      "typicalFileTypes": ["pbix", "xlsx", "csv", "pdf"],
+      "normalBehaviorExamples": [
+        "Carlos views a credit exposure dashboard with role-based access.",
+        "Alexander reviews an executive finance dashboard.",
+        "Priya exports aggregated model trend data."
+      ],
+      "riskyBehaviorExamples": [
+        "Devon exports underlying customer-level data from a report and emails it externally.",
+        "A user shares a Power BI report with a broad group containing account-level metrics.",
+        "A CSV export from Power BI is uploaded to an unmanaged AI tool."
+      ],
+      "expectedSignals": ["PowerBIReportViewed", "PowerBIExport", "FileDownloaded", "FileShared", "ExternalEmailSent", "DLPPolicyMatch"],
+      "primaryPurviewControls": ["DLP for Power BI", "Sensitivity labels in Power BI", "Audit", "Activity Explorer"],
+      "primaryDefenderControls": ["Defender for Cloud Apps"]
+    },
+    {
+      "technologyId": "TECH-014",
+      "technologyName": "Microsoft Lists",
+      "shortName": "Lists",
+      "businessUseInBanking": "Structured tracking of KYC cases, customer complaints, regulatory tasks, audit evidence, vendor due diligence, and operational approvals.",
+      "commonDailyActivities": [
+        "Update customer complaint status.",
+        "Assign KYC review tasks.",
+        "Track loan documentation exceptions.",
+        "Record fraud review status.",
+        "Update vendor due diligence fields."
+      ],
+      "commonWeeklyActivities": [
+        "Review open operational risk items.",
+        "Update audit evidence collection status.",
+        "Review aged customer complaints.",
+        "Export list items for committee review.",
+        "Assign owners for unresolved exceptions."
+      ],
+      "commonMonthlyActivities": [
+        "Archive closed cases.",
+        "Export monthly compliance task status.",
+        "Review overdue regulatory tasks.",
+        "Validate access to sensitive lists.",
+        "Create monthly operations metrics."
+      ],
+      "eventDrivenActivities": [
+        "A list export includes customer IDs and complaint details.",
+        "A user shares a list view externally.",
+        "A broad group receives edit access to a sensitive list.",
+        "A KYC case is escalated to Legal or Security.",
+        "A list attachment contains regulated data."
+      ],
+      "typicalFileTypes": ["listItem", "xlsx", "csv", "pdf"],
+      "normalBehaviorExamples": [
+        "David updates customer complaint statuses in a restricted list.",
+        "Sofia tracks regulatory response tasks in a PMO list.",
+        "Laura tracks HR onboarding exceptions in an HR list."
+      ],
+      "riskyBehaviorExamples": [
+        "Devon exports a complaints list containing customer account-like identifiers.",
+        "A list with KYC notes is shared with an external guest.",
+        "A user attaches a sensitive spreadsheet to a list item with broad access."
+      ],
+      "expectedSignals": ["ListItemCreated", "ListItemModified", "ListExported", "FileDownloaded", "FileShared", "DLPPolicyMatch"],
+      "primaryPurviewControls": ["DLP", "Sensitivity labels for containers", "Audit", "Records Management"],
+      "primaryDefenderControls": ["Defender for Cloud Apps"]
+    },
+    {
+      "technologyId": "TECH-015",
+      "technologyName": "Microsoft Planner and Tasks",
+      "shortName": "Planner",
+      "businessUseInBanking": "Task management for audits, regulatory responses, customer remediation, loan committee preparation, incident response, and PMO execution.",
+      "commonDailyActivities": [
+        "Create remediation tasks.",
+        "Assign owners for missing customer documents.",
+        "Track due dates for regulatory requests.",
+        "Attach links to SharePoint files.",
+        "Update task status."
+      ],
+      "commonWeeklyActivities": [
+        "Review open compliance tasks.",
+        "Update incident response task boards.",
+        "Review loan committee preparation tasks.",
+        "Update PMO steering tasks.",
+        "Review overdue vendor risk tasks."
+      ],
+      "commonMonthlyActivities": [
+        "Close monthly audit evidence tasks.",
+        "Archive completed regulatory response plans.",
+        "Review recurring finance close tasks.",
+        "Update monthly risk governance board.",
+        "Export task status for governance reporting."
+      ],
+      "eventDrivenActivities": [
+        "A task includes a link to a sensitive file with broad access.",
+        "A user attaches confidential evidence to a broadly visible plan.",
+        "Incident response tasks reference sensitive investigation details.",
+        "A user exports task data with regulated references.",
+        "A guest user is added to a plan containing internal remediation notes."
+      ],
+      "typicalFileTypes": ["task", "xlsx", "docx", "pdf"],
+      "normalBehaviorExamples": [
+        "Sofia assigns audit evidence collection tasks to department owners.",
+        "Marcus creates incident response tasks after a DLP alert.",
+        "Emily tracks legal review tasks for a regulator response."
+      ],
+      "riskyBehaviorExamples": [
+        "Devon attaches a customer account workbook to a broadly visible Planner task.",
+        "A task comment includes internal fraud investigation details.",
+        "A guest can view a plan containing regulatory response notes."
+      ],
+      "expectedSignals": ["TaskCreated", "TaskModified", "FileLinked", "FileShared", "GuestUserAdded", "DLPPolicyMatch"],
+      "primaryPurviewControls": ["DLP", "Audit", "Sensitivity labels for groups", "Communication Compliance"],
+      "primaryDefenderControls": ["Defender for Cloud Apps"]
+    },
+    {
+      "technologyId": "TECH-016",
+      "technologyName": "Microsoft Forms",
+      "shortName": "Forms",
+      "businessUseInBanking": "Collect internal attestations, customer feedback, control evidence responses, training acknowledgements, and incident intake details.",
+      "commonDailyActivities": [
+        "Submit customer complaint intake forms.",
+        "Collect operational issue reports.",
+        "Capture security awareness acknowledgements.",
+        "Submit access request forms.",
+        "Collect audit evidence responses."
+      ],
+      "commonWeeklyActivities": [
+        "Review weekly control attestation submissions.",
+        "Export customer operations feedback.",
+        "Collect loan committee readiness confirmations.",
+        "Review security training completion responses.",
+        "Export support survey results."
+      ],
+      "commonMonthlyActivities": [
+        "Export monthly compliance certification responses.",
+        "Collect policy exception attestations.",
+        "Review control owner confirmations.",
+        "Export regulator response readiness survey results.",
+        "Archive monthly form results."
+      ],
+      "eventDrivenActivities": [
+        "A form captures customer account-like values in free text.",
+        "A form response export is shared externally.",
+        "A form is configured as public when it should be internal only.",
+        "Sensitive attachments are requested through an inappropriate form.",
+        "A user exports responses containing HR or customer data."
+      ],
+      "typicalFileTypes": ["xlsx", "csv", "formResponse"],
+      "normalBehaviorExamples": [
+        "Ana collects security control attestation responses.",
+        "David collects customer complaint intake details through an internal form.",
+        "Sofia collects project readiness confirmations."
+      ],
+      "riskyBehaviorExamples": [
+        "Devon creates a public form asking for account-like customer identifiers.",
+        "A Forms export containing customer complaints is emailed externally.",
+        "A user collects HR details through a form with broad access."
+      ],
+      "expectedSignals": ["FormCreated", "FormResponseSubmitted", "FormExported", "FileDownloaded", "FileShared", "DLPPolicyMatch"],
+      "primaryPurviewControls": ["DLP", "Audit", "Sensitivity labels on exported files"],
+      "primaryDefenderControls": ["Defender for Cloud Apps"]
+    },
+    {
+      "technologyId": "TECH-017",
+      "technologyName": "Microsoft Loop",
+      "shortName": "Loop",
+      "businessUseInBanking": "Lightweight collaborative components for meeting notes, action items, customer escalation summaries, risk decisions, and project status updates.",
+      "commonDailyActivities": [
+        "Create shared action items during Teams discussions.",
+        "Collaborate on customer escalation notes.",
+        "Update meeting decisions in Loop components.",
+        "Mention colleagues for review.",
+        "Copy Loop content into documents or emails."
+      ],
+      "commonWeeklyActivities": [
+        "Maintain weekly committee decision notes.",
+        "Update project blocker lists.",
+        "Track security remediation actions.",
+        "Summarize recurring customer operations issues.",
+        "Coordinate loan committee preparation."
+      ],
+      "commonMonthlyActivities": [
+        "Prepare monthly governance decision summaries.",
+        "Consolidate recurring risk themes.",
+        "Update monthly executive action registers.",
+        "Archive key decisions into SharePoint documents.",
+        "Review sensitive content in collaborative notes."
+      ],
+      "eventDrivenActivities": [
+        "A Loop component includes account-like identifiers.",
+        "A component is shared into a channel with guest users.",
+        "A user copies confidential investigation notes into Loop.",
+        "A Loop component is converted into an email sent externally.",
+        "Copilot summarizes Loop notes containing sensitive data."
+      ],
+      "typicalFileTypes": ["loop", "docx", "chat"],
+      "normalBehaviorExamples": [
+        "Sofia uses Loop to track PMO action items.",
+        "Marcus uses Loop for security remediation actions.",
+        "David uses Loop to coordinate internal customer complaint next steps."
+      ],
+      "riskyBehaviorExamples": [
+        "Devon pastes KYC case details into a Loop component shared in a broad Teams channel.",
+        "A legal privileged discussion is summarized in a Loop note accessible to non-legal users.",
+        "A Loop component containing customer identifiers is copied into an external email."
+      ],
+      "expectedSignals": ["LoopComponentCreated", "LoopComponentModified", "TeamsMessageSent", "FileShared", "CopilotInteraction", "DLPPolicyMatch"],
+      "primaryPurviewControls": ["DLP", "Audit", "Sensitivity labels where supported", "Communication Compliance"],
+      "primaryDefenderControls": ["Defender for Cloud Apps"]
+    },
+    {
+      "technologyId": "TECH-018",
+      "technologyName": "Microsoft Whiteboard",
+      "shortName": "Whiteboard",
+      "businessUseInBanking": "Visual collaboration for process mapping, incident timelines, loan workflow design, fraud investigation brainstorming, and executive workshops.",
+      "commonDailyActivities": [
+        "Sketch process flows.",
+        "Map customer escalation paths.",
+        "Create incident timeline diagrams.",
+        "Collaborate during Teams meetings.",
+        "Export whiteboard snapshots."
+      ],
+      "commonWeeklyActivities": [
+        "Map risk review outcomes.",
+        "Update project workflow diagrams.",
+        "Review fraud investigation flow diagrams.",
+        "Create committee decision maps.",
+        "Export diagrams to SharePoint."
+      ],
+      "commonMonthlyActivities": [
+        "Document monthly governance process changes.",
+        "Create executive workshop diagrams.",
+        "Archive regulatory response process maps.",
+        "Review diagrams for sensitive content before sharing.",
+        "Publish sanitized process diagrams."
+      ],
+      "eventDrivenActivities": [
+        "A whiteboard includes customer account-like values.",
+        "An incident timeline diagram is shared externally.",
+        "A process map includes internal control gaps.",
+        "A user exports a sensitive whiteboard as an image or PDF.",
+        "A guest user accesses an internal investigation whiteboard."
+      ],
+      "typicalFileTypes": ["whiteboard", "png", "pdf"],
+      "normalBehaviorExamples": [
+        "Ana maps the security investigation workflow during a Teams meeting.",
+        "Sofia maps project dependencies for a steering committee.",
+        "James maps banking operations process improvements."
+      ],
+      "riskyBehaviorExamples": [
+        "Devon adds customer account-like values to a whiteboard shared with a vendor.",
+        "An incident timeline whiteboard is exported and emailed externally.",
+        "A whiteboard includes internal fraud control weaknesses."
+      ],
+      "expectedSignals": ["WhiteboardCreated", "WhiteboardModified", "FileExported", "FileShared", "ExternalUserAdded"],
+      "primaryPurviewControls": ["Audit", "DLP for exported files", "Sensitivity labels on exported artifacts"],
+      "primaryDefenderControls": ["Defender for Cloud Apps"]
+    },
+    {
+      "technologyId": "TECH-019",
+      "technologyName": "Microsoft Stream on SharePoint",
+      "shortName": "Stream",
+      "businessUseInBanking": "Meeting recordings, training videos, executive briefings, security awareness clips, compliance sessions, and operations walkthroughs stored in SharePoint/OneDrive.",
+      "commonDailyActivities": [
+        "Record Teams meetings.",
+        "Share meeting recordings with internal teams.",
+        "Review transcripts.",
+        "Download recordings for editing.",
+        "Publish training videos."
+      ],
+      "commonWeeklyActivities": [
+        "Review weekly committee meeting recordings.",
+        "Publish customer operations training clips.",
+        "Review transcripts for sensitive content.",
+        "Share security awareness recordings.",
+        "Archive project meeting recordings."
+      ],
+      "commonMonthlyActivities": [
+        "Publish monthly compliance training recordings.",
+        "Review access to executive meeting recordings.",
+        "Archive governance committee recordings.",
+        "Review transcript retention.",
+        "Remove external sharing from recordings."
+      ],
+      "eventDrivenActivities": [
+        "A recording transcript includes customer account-like values.",
+        "An executive meeting recording is shared broadly.",
+        "A training video includes internal control details.",
+        "A recording is downloaded after a sensitive meeting.",
+        "A guest user accesses a restricted meeting recording."
+      ],
+      "typicalFileTypes": ["mp4", "vtt", "transcript", "pdf"],
+      "normalBehaviorExamples": [
+        "Marcus publishes a security awareness recording to an internal training site.",
+        "Sofia shares a PMO meeting recording with the project team.",
+        "Ana reviews an incident response meeting transcript."
+      ],
+      "riskyBehaviorExamples": [
+        "Devon downloads a compliance meeting recording that includes sensitive customer examples.",
+        "An executive meeting recording is shared with all employees.",
+        "A transcript containing account-like identifiers is exported to an external vendor."
+      ],
+      "expectedSignals": ["MeetingRecorded", "TranscriptCreated", "FileDownloaded", "FileShared", "ExternalUserAccessed", "DLPPolicyMatch"],
+      "primaryPurviewControls": ["DLP", "Sensitivity labels", "Audit", "Retention policies"],
+      "primaryDefenderControls": ["Defender for Cloud Apps"]
+    },
+    {
+      "technologyId": "TECH-020",
+      "technologyName": "Viva Engage",
+      "shortName": "VivaEngage",
+      "businessUseInBanking": "Internal community communication, announcements, training discussions, culture updates, and broad organizational engagement.",
+      "commonDailyActivities": [
+        "Post internal announcements.",
+        "Discuss training content.",
+        "Ask process questions.",
+        "Share links to internal resources.",
+        "React to leadership updates."
+      ],
+      "commonWeeklyActivities": [
+        "Post weekly security awareness tips.",
+        "Share operational excellence updates.",
+        "Discuss training reminders.",
+        "Post compliance campaign updates.",
+        "Answer common policy questions."
+      ],
+      "commonMonthlyActivities": [
+        "Publish monthly compliance awareness posts.",
+        "Summarize training completion campaigns.",
+        "Post leadership messages.",
+        "Review community moderation issues.",
+        "Archive key campaign materials."
+      ],
+      "eventDrivenActivities": [
+        "A user posts customer details in a public community.",
+        "A user shares a link to a sensitive file in a broad community.",
+        "A discussion reveals internal incident details.",
+        "A compliance post includes too much operational detail.",
+        "Communication Compliance flags risky wording."
+      ],
+      "typicalFileTypes": ["post", "link", "image", "pdf"],
+      "normalBehaviorExamples": [
+        "Marcus posts a monthly awareness reminder about external sharing.",
+        "James posts an operations excellence update.",
+        "Laura posts an HR training reminder without sensitive employee data."
+      ],
+      "riskyBehaviorExamples": [
+        "Devon posts a question containing a customer account-like number in a broad community.",
+        "A user shares a link to a confidential fraud review file.",
+        "A user discusses an active incident in a public employee community."
+      ],
+      "expectedSignals": ["CommunityPostCreated", "LinkShared", "DLPPolicyMatch", "CommunicationComplianceMatch", "FileAccessed"],
+      "primaryPurviewControls": ["Communication Compliance", "DLP", "Audit"],
+      "primaryDefenderControls": ["Defender for Cloud Apps"]
+    }
+  ],
+  "cadencePatterns": [
+    {
+      "cadence": "Daily",
+      "bankingActivityThemes": [
+        "Customer onboarding",
+        "KYC document collection",
+        "Transaction exception review",
+        "Customer complaint handling",
+        "Fraud queue triage",
+        "Treasury reconciliation",
+        "Loan document updates",
+        "Support escalation handling",
+        "Sensitive file labeling",
+        "Copilot-assisted summarization"
+      ]
+    },
+    {
+      "cadence": "Weekly",
+      "bankingActivityThemes": [
+        "Loan committee package preparation",
+        "Risk committee review",
+        "AML investigation queue review",
+        "Branch operations reporting",
+        "Security posture review",
+        "PMO steering committee preparation",
+        "External sharing review",
+        "DLP alert triage",
+        "Access review spot checks",
+        "Customer escalation governance"
+      ]
+    },
+    {
+      "cadence": "Monthly",
+      "bankingActivityThemes": [
+        "Finance close",
+        "Regulatory evidence collection",
+        "Audit package preparation",
+        "Board reporting",
+        "Payroll and compensation review",
+        "Vendor due diligence refresh",
+        "Data lifecycle and retention review",
+        "Label coverage reporting",
+        "Insider risk trend review",
+        "Power BI executive reporting"
+      ]
+    },
+    {
+      "cadence": "EventDriven",
+      "bankingActivityThemes": [
+        "Regulatory inquiry",
+        "Customer data exposure investigation",
+        "Fraud incident response",
+        "Suspicious activity review",
+        "Sensitive data oversharing",
+        "External vendor request",
+        "Role change or employee exit",
+        "Unusual sign-in activity",
+        "DLP policy override",
+        "AI misuse or external AI upload"
+      ]
+    }
+  ],
+  "personaActivityMapping": [
+    {"persona":"Alexander Meyer","role":"CEO","primaryTechnologies":["Outlook Web","Teams","SharePoint Online","Power BI","Copilot for Microsoft 365"],"typicalActivities":["Review executive dashboards","Approve board materials","Ask Copilot for executive summaries","Participate in leadership Teams meetings"],"riskNotes":["May access highly confidential executive and financial files"]},
+    {"persona":"Ana Rodriguez","role":"Head of IT / Security","primaryTechnologies":["Microsoft Purview","Microsoft Defender XDR","Entra ID","Teams","SharePoint Online"],"typicalActivities":["Review DLP and insider risk signals","Coordinate security response","Approve access remediation","Tune policy controls"],"riskNotes":["Privileged security role with broad visibility into sensitive telemetry"]},
+    {"persona":"Carlos Delgado","role":"Data Analyst","primaryTechnologies":["Power BI","Excel Web","SharePoint Online","OneDrive for Business","Copilot for Microsoft 365"],"typicalActivities":["Analyze credit exposure","Export dashboards","Prepare risk summaries","Create aggregated datasets"],"riskNotes":["May export customer-level data if controls are weak"]},
+    {"persona":"David Chen","role":"Customer Operations Specialist","primaryTechnologies":["Teams","Outlook Web","Lists","SharePoint Online","Forms"],"typicalActivities":["Manage customer complaints","Update case lists","Send customer-safe responses","Coordinate operations escalations"],"riskNotes":["May handle complaint records containing account-like identifiers"]},
+    {"persona":"Diego Martinez","role":"Sales Manager","primaryTechnologies":["Outlook Web","Teams","SharePoint Online","PowerPoint Web","Copilot for Microsoft 365"],"typicalActivities":["Prepare customer proposals","Send customer follow-ups","Coordinate account escalations","Use Copilot for draft messaging"],"riskNotes":["May accidentally include internal pricing or risk commentary"]},
+    {"persona":"Emily Johnson","role":"Corporate Lawyer","primaryTechnologies":["Word Web","SharePoint Online","Outlook Web","Teams","Copilot for Microsoft 365"],"typicalActivities":["Review contracts","Prepare regulator responses","Manage privileged legal drafts","Coordinate external counsel"],"riskNotes":["Handles privileged legal and regulatory content"]},
+    {"persona":"James Wilson","role":"Director of Operations","primaryTechnologies":["Teams","SharePoint Online","Power BI","Planner","Outlook Web"],"typicalActivities":["Review operations metrics","Coordinate branch operations","Approve process changes","Lead operational risk meetings"],"riskNotes":["May access broad operations data and customer process metrics"]},
+    {"persona":"Laura Gomez","role":"HR Manager","primaryTechnologies":["SharePoint Online","OneDrive for Business","Outlook Web","Teams","Word Web"],"typicalActivities":["Prepare HR planning files","Review compensation documents","Manage employee records","Coordinate HR cases"],"riskNotes":["Handles compensation, employee records, and HR-sensitive content"]},
+    {"persona":"Marcus Olsson","role":"Cybersecurity Manager","primaryTechnologies":["Microsoft Purview","Microsoft Defender XDR","Teams","SharePoint Online","Defender for Cloud Apps"],"typicalActivities":["Review security alerts","Investigate DLP events","Coordinate incident response","Report security posture"],"riskNotes":["Security investigation role with access to sensitive evidence"]},
+    {"persona":"Miguel Santos","role":"Platform Engineer","primaryTechnologies":["Entra ID","Intune","Defender for Endpoint","SharePoint Online","Teams"],"typicalActivities":["Manage endpoints","Review device compliance","Support platform security","Investigate endpoint DLP behavior"],"riskNotes":["May access technical logs and device telemetry"]},
+    {"persona":"Priya Sharma","role":"Data Scientist","primaryTechnologies":["SharePoint Online","OneDrive for Business","Power BI","Excel Web","Copilot for Microsoft 365"],"typicalActivities":["Analyze customer behavior","Build predictive datasets","Prepare model summaries","Create aggregate insights"],"riskNotes":["May handle customer-level predictions and feature matrices"]},
+    {"persona":"Sofia Lopez","role":"Project Manager","primaryTechnologies":["Teams","Planner","SharePoint Online","PowerPoint Web","Loop"],"typicalActivities":["Coordinate PMO activities","Prepare steering decks","Track RAID logs","Manage delivery timelines"],"riskNotes":["May expose internal project risks or budget notes if sharing externally"]},
+    {"persona":"Devon Reyes","role":"Junior Operations Analyst","primaryTechnologies":["SharePoint Online","OneDrive for Business","Teams","Outlook Web","Copilot for Microsoft 365","External AI apps"],"typicalActivities":["Process customer operations files","Export case lists","Ask for help summarizing documents","Move working files between locations"],"riskNotes":["Primary risky-behavior persona for unsafe sharing, excessive downloads, label removal, external AI use, endpoint copy, and ambiguous insider risk scenarios"]}
+  ]
+}
