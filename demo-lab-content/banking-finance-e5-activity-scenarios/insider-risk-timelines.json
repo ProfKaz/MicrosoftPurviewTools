@@ -1,0 +1,138 @@
+{
+  "metadata": {
+    "packName": "Banking and Finance Insider Risk Timelines",
+    "version": "1.0",
+    "language": "en-US",
+    "industry": "Banking and Financial Services",
+    "fictionalDataOnly": true,
+    "purpose": "Provide chronological, investigation-ready insider-risk-style timelines for synthetic Microsoft 365 E5 banking/finance demo scenarios."
+  },
+  "timelineDesignPrinciples": [
+    "Preserve ambiguity: risky behavior may be malicious, negligent, or caused by operational pressure.",
+    "Combine normal business context with risky signals to make investigations realistic.",
+    "Use time proximity, sensitivity, volume, external movement, endpoint movement, and HR context as correlation factors.",
+    "Include investigation response actions by Security, HR, Legal, and Platform teams.",
+    "Use only fictional identifiers, files, customers, accounts, incidents, and employee records."
+  ],
+  "timelines": [
+    {
+      "timelineId": "IR-TL-0001",
+      "title": "Devon Reyes Multi-Day Banking Operations Risk Chain",
+      "linkedScenarioId": "BF-SCEN-0030",
+      "primaryUser": "Devon Reyes",
+      "timeSpan": "5 business days",
+      "overallSeverity": "Critical",
+      "summary": "A multi-day ambiguous risk chain where Devon performs normal customer operations work but also downloads sensitive KYC, AML, and SAR files, uses external AI, sends data externally, prints treasury data, and copies regulated content to a network share after a role-change context emerges.",
+      "events": [
+        {"day": 1, "time": "08:42", "actor": "Devon Reyes", "workload": "SharePoint Online", "activity": "Accesses Full_KYC_Packet_KYC-FIC-88421_Internal.pdf from the restricted Customer Operations site.", "signals": ["FileAccessed"], "riskLevel": "Medium", "businessContext": "Assigned customer onboarding support work."},
+        {"day": 1, "time": "09:18", "actor": "Devon Reyes", "workload": "SharePoint Online", "activity": "Downloads Full_KYC_Packet_KYC-FIC-88421_Internal.pdf and Customer_Complaint_DISPUTE-FIC-60392_Internal_Notes.docx.", "signals": ["FileDownloaded", "DLPPolicyMatch"], "riskLevel": "High", "businessContext": "Could be normal if needed for assigned case, but volume and sensitivity are notable."},
+        {"day": 1, "time": "10:05", "actor": "Devon Reyes", "workload": "Teams", "activity": "Asks David Chen whether the KYC file can be sent to a vendor for quick review.", "signals": ["TeamsMessageSent"], "riskLevel": "Medium", "businessContext": "Shows uncertainty about external sharing policy."},
+        {"day": 1, "time": "16:47", "actor": "Devon Reyes", "workload": "OneDrive for Business", "activity": "Copies KYC and complaint files into a personal working folder named Urgent_Customer_Review.", "signals": ["FileCreated", "FileModified"], "riskLevel": "Medium", "businessContext": "Late-afternoon deadline pressure."},
+        {"day": 2, "time": "09:12", "actor": "Devon Reyes", "workload": "Copilot for Microsoft 365", "activity": "Prompts Copilot: Summarize the KYC and AML issues for CUST-BNK-88420 and prepare an escalation summary.", "signals": ["CopilotInteraction", "SensitiveContentAccessed"], "riskLevel": "High", "businessContext": "AI use may be legitimate, but source access and sensitivity require review."},
+        {"day": 2, "time": "10:34", "actor": "Devon Reyes", "workload": "External AI app", "activity": "Pastes synthetic rows containing CUST-BNK-88420, ACCT-FIC-7721-0044-9081, and AML-CASE-2026-0519 into an unmanaged AI prompt.", "signals": ["AIAppInteraction", "UnmanagedAppUpload", "DLPPolicyMatch"], "riskLevel": "High", "businessContext": "Unsafe AI shortcut behavior."},
+        {"day": 2, "time": "11:20", "actor": "Devon Reyes", "workload": "Word Web", "activity": "Creates Devon_External_AI_Prompt_Transcript.txt and AML_Trend_Summary_Internal.docx from AI-generated output.", "signals": ["FileCreated", "FileModified"], "riskLevel": "Medium", "businessContext": "Generated summary may contain sensitive source details."},
+        {"day": 3, "time": "08:55", "actor": "Laura Gomez", "workload": "Outlook Web", "activity": "Sends fictional role-change meeting notice to Devon and HR leadership.", "signals": ["HRSignal", "EmailSent"], "riskLevel": "Medium", "businessContext": "Contextual HR signal; not a violation by itself."},
+        {"day": 3, "time": "10:15", "actor": "Devon Reyes", "workload": "SharePoint Online", "activity": "Downloads Suspicious_Activity_Review_SAR-DRAFT-FIC-2044.docx and SAR_Case_Index_Internal.csv.", "signals": ["FileDownloaded", "MassDownloadActivity"], "riskLevel": "High", "businessContext": "Sensitive files accessed after HR context appears."},
+        {"day": 3, "time": "15:50", "actor": "Devon Reyes", "workload": "Outlook Web", "activity": "Attempts to email Customer_Operations_Export_Attached_In_Error.csv to external partner ops.partner@example.test.", "signals": ["ExternalEmailSent", "DLPPolicyMatch", "DLPWarned"], "riskLevel": "High", "businessContext": "External sharing request under deadline pressure."},
+        {"day": 3, "time": "15:52", "actor": "Devon Reyes", "workload": "Outlook Web", "activity": "Provides DLP override justification: urgent vendor review requested by operations.", "signals": ["DLPOverride"], "riskLevel": "High", "businessContext": "Override justification requires validation."},
+        {"day": 4, "time": "09:26", "actor": "Devon Reyes", "workload": "Endpoint", "activity": "Prints Daily_Treasury_Reconciliation_TREAS-FIC-2026-0524.xlsx from DEV-FIC-2219.", "signals": ["FilePrinted", "EndpointDLPPolicyMatch"], "riskLevel": "High", "businessContext": "Printing regulated financial data is unusual for his role."},
+        {"day": 4, "time": "10:08", "actor": "Devon Reyes", "workload": "Endpoint", "activity": "Copies Suspicious_Activity_Review_SAR-DRAFT-FIC-2044.docx to \\\\fileshare-demo\\ops-temp.", "signals": ["FileCopiedToNetworkShare", "EndpointDLPPolicyMatch"], "riskLevel": "High", "businessContext": "Non-standard data movement."},
+        {"day": 4, "time": "13:45", "actor": "Marcus Olsson", "workload": "Insider Risk Management", "activity": "Reviews correlated DLP, AI, file download, print, and network-copy signals.", "signals": ["InsiderRiskSequence"], "riskLevel": "Critical", "businessContext": "Multiple risky actions now form a pattern."},
+        {"day": 4, "time": "14:30", "actor": "Miguel Santos", "workload": "Defender for Endpoint", "activity": "Reviews DEV-FIC-2219 endpoint events and confirms print and network-share copy telemetry.", "signals": ["EndpointDLPPolicyMatch", "DeviceActivityReviewed"], "riskLevel": "High", "businessContext": "Endpoint evidence supports the investigation timeline."},
+        {"day": 5, "time": "09:00", "actor": "Ana Rodriguez", "workload": "Teams", "activity": "Starts HR-Legal-Security review with Marcus, Laura, Emily, and Miguel.", "signals": ["TeamsMessageSent"], "riskLevel": "Medium", "businessContext": "Investigation response begins."},
+        {"day": 5, "time": "10:20", "actor": "Emily Johnson", "workload": "Teams", "activity": "Provides legal guidance: preserve evidence, avoid assumptions of intent, document business context.", "signals": ["TeamsMessageSent"], "riskLevel": "Low", "businessContext": "Legal oversight for investigation handling."},
+        {"day": 5, "time": "11:10", "actor": "Laura Gomez", "workload": "Teams", "activity": "Confirms role-change context but recommends coaching-first approach unless additional evidence appears.", "signals": ["TeamsMessageSent"], "riskLevel": "Low", "businessContext": "HR context tempers interpretation."},
+        {"day": 5, "time": "15:15", "actor": "Ana Rodriguez", "workload": "SharePoint Online", "activity": "Creates Devon_Investigation_Case_Summary.docx and Devon_User_Coaching_Outcome.docx.", "signals": ["FileCreated", "SensitivityLabelApplied"], "riskLevel": "Medium", "businessContext": "Case outcome documented."}
+      ],
+      "recommendedOutcome": "Access remediation, user coaching, external AI guidance, endpoint DLP reinforcement, and monitoring of future risky sequences.",
+      "keyTeachingPoints": ["Risk emerges from sequences, not isolated events.", "AI misuse can be part of an insider-risk narrative.", "HR context should inform but not automatically prove intent.", "Endpoint movement strengthens the case for investigation.", "Legal and HR review should preserve fairness and privacy."]
+    },
+    {
+      "timelineId": "IR-TL-0002",
+      "title": "Role Change Followed by Audit Evidence Download",
+      "linkedScenarioId": "BF-SCEN-0025",
+      "primaryUser": "Devon Reyes",
+      "timeSpan": "2 business days",
+      "overallSeverity": "High",
+      "summary": "A focused timeline showing how a role-change notice followed by downloads, printing, and evidence movement can trigger an insider-risk-style review without assuming malicious intent.",
+      "events": [
+        {"day": 1, "time": "08:55", "actor": "Laura Gomez", "workload": "Outlook Web", "activity": "Sends role-change notice ROLE-CHANGE-FIC-2026-05 to Devon.", "signals": ["HRSignal", "EmailSent"], "riskLevel": "Medium", "businessContext": "Contextual HR event."},
+        {"day": 1, "time": "10:10", "actor": "Devon Reyes", "workload": "SharePoint Online", "activity": "Accesses Audit_Evidence_Package_AUDIT-EVID-FIC-3319.zip.txt.", "signals": ["FileAccessed"], "riskLevel": "Medium", "businessContext": "Audit support may be part of transition work."},
+        {"day": 1, "time": "10:18", "actor": "Devon Reyes", "workload": "SharePoint Online", "activity": "Downloads six audit evidence files within 12 minutes.", "signals": ["MassDownloadActivity", "FileDownloaded"], "riskLevel": "High", "businessContext": "Volume is unusual after role-change notice."},
+        {"day": 1, "time": "16:40", "actor": "Devon Reyes", "workload": "Endpoint", "activity": "Prints Regulatory_Evidence_Index_REG-REQ-FIC-2044.xlsx.", "signals": ["FilePrinted", "EndpointDLPPolicyMatch"], "riskLevel": "High", "businessContext": "Printed evidence index may be legitimate handoff or risky retention."},
+        {"day": 2, "time": "09:15", "actor": "Marcus Olsson", "workload": "Insider Risk Management", "activity": "Reviews mass download sequence and HR context.", "signals": ["InsiderRiskSequence"], "riskLevel": "High", "businessContext": "Correlation suggests review is warranted."},
+        {"day": 2, "time": "10:00", "actor": "Emily Johnson", "workload": "Teams", "activity": "Advises investigation team to document purpose and avoid speculative language.", "signals": ["TeamsMessageSent"], "riskLevel": "Low", "businessContext": "Legal oversight."},
+        {"day": 2, "time": "14:15", "actor": "Ana Rodriguez", "workload": "SharePoint Online", "activity": "Removes Devon from restricted audit evidence group and creates remediation notes.", "signals": ["AccessReviewCompleted", "FileCreated"], "riskLevel": "Medium", "businessContext": "Least privilege correction."}
+      ],
+      "recommendedOutcome": "Access review, manager validation, coaching, and audit evidence access cleanup.",
+      "keyTeachingPoints": ["Context matters.", "Mass downloads after HR events deserve review.", "Legal and HR should be involved before conclusions are reached."]
+    },
+    {
+      "timelineId": "IR-TL-0003",
+      "title": "External AI Shortcut During AML Review",
+      "linkedScenarioId": "BF-SCEN-0002",
+      "primaryUser": "Devon Reyes",
+      "timeSpan": "1 business day",
+      "overallSeverity": "High",
+      "summary": "A one-day timeline showing how operational pressure causes Devon to use an unmanaged AI application with sensitive AML and customer data.",
+      "events": [
+        {"day": 1, "time": "09:05", "actor": "Priya Sharma", "workload": "SharePoint Online", "activity": "Publishes Monthly_AML_Review_Workbook_AML-CASE-2026-0519.xlsx to restricted library.", "signals": ["FileCreated", "SensitivityLabelApplied"], "riskLevel": "Low", "businessContext": "Normal monthly AML workflow."},
+        {"day": 1, "time": "09:50", "actor": "Devon Reyes", "workload": "SharePoint Online", "activity": "Opens AML workbook for assigned review.", "signals": ["FileAccessed"], "riskLevel": "Medium", "businessContext": "Assigned support task."},
+        {"day": 1, "time": "10:15", "actor": "Devon Reyes", "workload": "OneDrive for Business", "activity": "Downloads workbook to personal working folder.", "signals": ["FileDownloaded"], "riskLevel": "Medium", "businessContext": "Working copy may be normal but content is highly sensitive."},
+        {"day": 1, "time": "10:42", "actor": "Devon Reyes", "workload": "External AI app", "activity": "Pastes AML rows into external AI prompt for a faster summary.", "signals": ["AIAppInteraction", "UnmanagedAppUpload", "DLPPolicyMatch"], "riskLevel": "High", "businessContext": "Unsafe shortcut."},
+        {"day": 1, "time": "11:30", "actor": "Devon Reyes", "workload": "Word Web", "activity": "Creates AML_Trend_Summary_Internal.docx from the generated answer.", "signals": ["FileCreated"], "riskLevel": "Medium", "businessContext": "Output may contain sensitive source details."},
+        {"day": 1, "time": "13:30", "actor": "Marcus Olsson", "workload": "Defender for Cloud Apps", "activity": "Reviews unmanaged AI usage signal.", "signals": ["UnmanagedAppUpload"], "riskLevel": "High", "businessContext": "Cloud app risk review."},
+        {"day": 1, "time": "15:00", "actor": "Ana Rodriguez", "workload": "Teams", "activity": "Sends coaching guidance: use Copilot or approved internal summarization workflows only.", "signals": ["TeamsMessageSent"], "riskLevel": "Low", "businessContext": "Corrective action."}
+      ],
+      "recommendedOutcome": "User coaching, external AI policy reinforcement, and DLP tuning for AML and account-like values.",
+      "keyTeachingPoints": ["Shadow AI risk often appears as a productivity shortcut.", "Sensitive data can leak through prompts, not only files.", "Approved Copilot usage still requires permission hygiene."]
+    },
+    {
+      "timelineId": "IR-TL-0004",
+      "title": "Risky Sign-In Followed by Sensitive Download",
+      "linkedScenarioId": "BF-SCEN-0022",
+      "primaryUser": "Devon Reyes",
+      "timeSpan": "4 hours",
+      "overallSeverity": "High",
+      "summary": "A compact identity-to-data timeline correlating a risky sign-in with sensitive banking file downloads.",
+      "events": [
+        {"day": 1, "time": "07:12", "actor": "Devon Reyes", "workload": "Microsoft Entra ID", "activity": "Signs in from an unusual location compared with normal Puerto Rico working pattern.", "signals": ["RiskySignIn"], "riskLevel": "High", "businessContext": "Could be travel, VPN, or account compromise."},
+        {"day": 1, "time": "07:13", "actor": "Microsoft Entra ID", "workload": "Conditional Access", "activity": "Conditional Access requires MFA for the session.", "signals": ["ConditionalAccessTriggered", "MFARequired"], "riskLevel": "Medium", "businessContext": "Identity control responds to risk."},
+        {"day": 1, "time": "07:25", "actor": "Devon Reyes", "workload": "SharePoint Online", "activity": "Accesses restricted AML and KYC folders before normal working hours.", "signals": ["FileAccessed", "AfterHoursSensitiveActivity"], "riskLevel": "High", "businessContext": "Time and location are both unusual."},
+        {"day": 1, "time": "07:31", "actor": "Devon Reyes", "workload": "SharePoint Online", "activity": "Downloads Sensitive_File_Access_Timeline_DEVON.csv and SAR_Case_Index_Internal.csv.", "signals": ["FileDownloaded", "DLPPolicyMatch"], "riskLevel": "High", "businessContext": "Sensitive download after risky sign-in."},
+        {"day": 1, "time": "08:05", "actor": "Marcus Olsson", "workload": "Microsoft Defender XDR", "activity": "Correlates risky sign-in with sensitive file access and download activity.", "signals": ["AnomalousCloudActivity"], "riskLevel": "High", "businessContext": "Security review triggered."},
+        {"day": 1, "time": "09:10", "actor": "Miguel Santos", "workload": "Intune", "activity": "Checks device compliance for DEV-FIC-2219 and confirms managed device status.", "signals": ["DeviceActivityReviewed"], "riskLevel": "Medium", "businessContext": "Device posture affects investigation severity."},
+        {"day": 1, "time": "10:45", "actor": "Ana Rodriguez", "workload": "Teams", "activity": "Requests validation from Devon's manager before taking stronger containment actions.", "signals": ["TeamsMessageSent"], "riskLevel": "Low", "businessContext": "Preserve ambiguity before escalation."}
+      ],
+      "recommendedOutcome": "Validate user travel or VPN context, review downloads, and consider session controls for future sensitive access.",
+      "keyTeachingPoints": ["Identity risk becomes more serious when followed by sensitive data access.", "Device compliance can reduce but not eliminate risk.", "Early-morning or unusual-location activity should be evaluated in context."]
+    },
+    {
+      "timelineId": "IR-TL-0005",
+      "title": "Label Downgrade and External Send During Finance Close",
+      "linkedScenarioId": "BF-SCEN-0013",
+      "primaryUser": "Devon Reyes",
+      "timeSpan": "1 business day",
+      "overallSeverity": "High",
+      "summary": "A finance close evidence file is copied, downgraded from Confidential to Internal, and then sent to a broader audience while still containing sensitive finance references.",
+      "events": [
+        {"day": 1, "time": "09:00", "actor": "Carlos Delgado", "workload": "SharePoint Online", "activity": "Uploads Monthly_Finance_Close_Evidence_CLOSE-FIC-2026-05.xlsx.", "signals": ["FileCreated"], "riskLevel": "Low", "businessContext": "Normal finance close workflow."},
+        {"day": 1, "time": "09:10", "actor": "Carlos Delgado", "workload": "Office Web", "activity": "Applies Confidential label to finance close evidence.", "signals": ["SensitivityLabelApplied"], "riskLevel": "Low", "businessContext": "Correct labeling behavior."},
+        {"day": 1, "time": "13:20", "actor": "Devon Reyes", "workload": "SharePoint Online", "activity": "Creates a derivative copy named Finance_Close_Summary_BroadAudience.xlsx.", "signals": ["FileCreated"], "riskLevel": "Medium", "businessContext": "May be preparing a sanitized summary."},
+        {"day": 1, "time": "13:26", "actor": "Devon Reyes", "workload": "Office Web", "activity": "Changes label from Confidential to Internal.", "signals": ["SensitivityLabelChanged", "LabelDowngrade"], "riskLevel": "High", "businessContext": "Downgrade may be valid only if content is actually sanitized."},
+        {"day": 1, "time": "13:45", "actor": "Devon Reyes", "workload": "Outlook Web", "activity": "Sends workbook to broad finance-operations distribution list.", "signals": ["EmailSent", "DLPPolicyMatch"], "riskLevel": "High", "businessContext": "File still contains ACCT-FIC-1902-4488-7001 and treasury references."},
+        {"day": 1, "time": "14:05", "actor": "Ana Rodriguez", "workload": "Microsoft Purview", "activity": "Reviews label downgrade and DLP match sequence.", "signals": ["InsiderRiskSequence"], "riskLevel": "High", "businessContext": "Downgrade before sharing requires review."},
+        {"day": 1, "time": "15:30", "actor": "Carlos Delgado", "workload": "Excel Web", "activity": "Creates a properly sanitized summary without account-like values.", "signals": ["FileCreated", "SensitivityLabelApplied"], "riskLevel": "Low", "businessContext": "Corrected business output."}
+      ],
+      "recommendedOutcome": "Require downgrade justification, apply DLP on downgrade, and train users on sanitized derivatives.",
+      "keyTeachingPoints": ["A lower label does not mean the content is actually safe.", "Downgrade plus sharing is a high-value correlation.", "Derivative files need validation before distribution."]
+    }
+  ],
+  "codexUsageGuidance": [
+    "Use each timeline as a deterministic event sequence for demo playback.",
+    "Map events to browser-agent actions where possible and synthetic logs where direct browser telemetry is not available.",
+    "Preserve the event order and time proximity to maintain investigation realism.",
+    "Use recommendedOutcome and keyTeachingPoints in demo notes, dashboards, or presenter scripts.",
+    "Do not replace fictional values with real customer, employee, account, legal, or incident data."
+  ]
+}
