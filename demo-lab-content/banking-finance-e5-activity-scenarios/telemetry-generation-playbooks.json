@@ -1,0 +1,205 @@
+{
+  "metadata": {
+    "packName": "Telemetry Generation Playbooks for Banking Finance E5 Simulations",
+    "version": "1.0",
+    "language": "en-US",
+    "industry": "Banking and Financial Services",
+    "fictionalDataOnly": true,
+    "purpose": "Define practical telemetry-generation playbooks that browser agents can use to convert scenario plans into realistic Microsoft 365 E5, Purview, Defender, DLP, Copilot, endpoint, and insider-risk-style activity streams."
+  },
+  "playbookPrinciples": [
+    "Generate normal business telemetry before generating risky telemetry.",
+    "Use realistic quiet periods and delays so event timelines do not look robotic.",
+    "Prefer chained activity over isolated events: create, edit, label, discuss, share, detect, investigate, remediate.",
+    "Use deterministic seeds for replayable demos.",
+    "Emit synthetic telemetry records when a browser cannot generate a specific backend signal directly.",
+    "Preserve fictional data boundaries at all times."
+  ],
+  "replaySettings": {
+    "defaultSeedStrategy": "scenarioId + executionDate + primaryPersona",
+    "timeCompressionModes": [
+      {"mode": "realistic", "description": "Actions occur over actual hours or days."},
+      {"mode": "compressed", "description": "A full day is compressed into 20 to 60 minutes for demos."},
+      {"mode": "instantReplay", "description": "Synthetic telemetry is emitted immediately for dashboards and walkthroughs."}
+    ],
+    "recommendedDefaultMode": "compressed",
+    "quietPeriodRules": [
+      "Insert 5 to 20 minutes of quiet time after document creation bursts in compressed mode.",
+      "Insert 30 to 90 minutes of quiet time between major workday phases in realistic mode.",
+      "Avoid generating high-risk events back-to-back unless the selected scenario is an insider-risk chain.",
+      "Preserve lunch window and end-of-day slowdown unless a deadline-pressure scenario is active."
+    ]
+  },
+  "playbooks": [
+    {
+      "playbookId": "PLAYBOOK-0001",
+      "name": "SharePoint Sensitive Document Lifecycle",
+      "linkedWorkloads": ["SharePoint Online", "Office Web", "Microsoft Purview Information Protection", "Microsoft Purview DLP"],
+      "objective": "Generate a complete lifecycle for a sensitive banking document from creation to classification, collaboration, sharing, and review.",
+      "recommendedForScenarios": ["BF-SCEN-0001", "BF-SCEN-0006", "BF-SCEN-0013", "BF-SCEN-0027"],
+      "orderedActions": [
+        {"sequence": 1, "actionName": "Create restricted folder", "browserAction": "Navigate to SharePoint site and create or open a restricted library folder.", "syntheticEvent": "FileCreated", "delayAfterSeconds": {"min": 20, "max": 90}},
+        {"sequence": 2, "actionName": "Create Office file", "browserAction": "Create Word, Excel, or PowerPoint file using a scenario-specific name.", "syntheticEvent": "FileCreated", "delayAfterSeconds": {"min": 45, "max": 180}},
+        {"sequence": 3, "actionName": "Add fictional sensitive content", "browserAction": "Add synthetic customer, account, loan, AML, HR, legal, or treasury patterns based on scenario.", "syntheticEvent": "FileModified", "delayAfterSeconds": {"min": 120, "max": 420}},
+        {"sequence": 4, "actionName": "Apply sensitivity label", "browserAction": "Apply the scenario-recommended sensitivity label.", "syntheticEvent": "SensitivityLabelApplied", "delayAfterSeconds": {"min": 15, "max": 60}},
+        {"sequence": 5, "actionName": "Collaborate through comments or Teams", "browserAction": "Mention another persona or post a Teams link for review.", "syntheticEvent": "TeamsMessageSent", "delayAfterSeconds": {"min": 60, "max": 240}},
+        {"sequence": 6, "actionName": "Optional risky sharing", "browserAction": "Create internal, broad, or external sharing link depending on risk model.", "syntheticEvent": "FileShared", "delayAfterSeconds": {"min": 20, "max": 120}},
+        {"sequence": 7, "actionName": "DLP or governance review", "browserAction": "Security persona reviews generated event or synthetic DLP record.", "syntheticEvent": "DLPPolicyMatch", "delayAfterSeconds": {"min": 90, "max": 360}}
+      ],
+      "downstreamTelemetry": ["FileAccessed", "FileModified", "FileShared", "DLPPolicyMatch", "SensitivityLabelApplied", "AccessReviewRequired"],
+      "validationChecks": ["File exists", "Label exists", "At least one collaboration event exists", "Risky sharing event only occurs if scenario requires it"]
+    },
+    {
+      "playbookId": "PLAYBOOK-0002",
+      "name": "Outlook External Sharing and DLP Flow",
+      "linkedWorkloads": ["Outlook Web", "Exchange Online", "Microsoft Purview DLP", "Sensitivity Labels"],
+      "objective": "Generate email-based external sharing telemetry with optional warning, block, override, and remediation paths.",
+      "recommendedForScenarios": ["BF-SCEN-0003", "BF-SCEN-0008", "BF-SCEN-0023", "BF-SCEN-0024", "BF-SCEN-0030"],
+      "orderedActions": [
+        {"sequence": 1, "actionName": "Draft external email", "browserAction": "Open Outlook Web and draft a message to a fake external recipient domain such as example.test.", "syntheticEvent": "ExternalEmailSent", "delayAfterSeconds": {"min": 60, "max": 240}},
+        {"sequence": 2, "actionName": "Attach file or SharePoint link", "browserAction": "Attach a file or insert a SharePoint link matching the scenario.", "syntheticEvent": "AttachmentDetected", "delayAfterSeconds": {"min": 30, "max": 120}},
+        {"sequence": 3, "actionName": "Trigger DLP evaluation", "browserAction": "Send or attempt to send message; emit DLP event if content matches policy.", "syntheticEvent": "DLPPolicyMatch", "delayAfterSeconds": {"min": 10, "max": 60}},
+        {"sequence": 4, "actionName": "Warning or block decision", "browserAction": "If warning appears, decide cancel, override, or sanitize based on persona profile.", "syntheticEvent": "DLPWarned", "delayAfterSeconds": {"min": 30, "max": 180}},
+        {"sequence": 5, "actionName": "Optional override", "browserAction": "Submit fictional business justification if scenario allows override.", "syntheticEvent": "DLPOverride", "delayAfterSeconds": {"min": 20, "max": 120}},
+        {"sequence": 6, "actionName": "Remediation", "browserAction": "Create sanitized version or notify security through Teams.", "syntheticEvent": "FileCreated", "delayAfterSeconds": {"min": 120, "max": 420}}
+      ],
+      "downstreamTelemetry": ["ExternalEmailSent", "DLPPolicyMatch", "DLPWarned", "DLPBlocked", "DLPOverride", "TeamsMessageSent"],
+      "validationChecks": ["Recipient domain is fake", "Attachment name matches scenario", "DLP event includes policy name", "Override justification is fictional and business-like"]
+    },
+    {
+      "playbookId": "PLAYBOOK-0003",
+      "name": "Teams Collaboration and Oversharing Flow",
+      "linkedWorkloads": ["Microsoft Teams", "SharePoint Online", "Microsoft Purview DLP", "Communication Compliance"],
+      "objective": "Generate Teams messages, file links, broad-channel mistakes, guest exposure, and communication compliance events.",
+      "recommendedForScenarios": ["BF-SCEN-0014", "BF-SCEN-0019", "BF-SCEN-0021", "BF-SCEN-0030"],
+      "orderedActions": [
+        {"sequence": 1, "actionName": "Start business conversation", "browserAction": "Post a normal business question or status update in Teams.", "syntheticEvent": "TeamsMessageSent", "delayAfterSeconds": {"min": 10, "max": 90}},
+        {"sequence": 2, "actionName": "Share controlled file link", "browserAction": "Share a SharePoint link to a controlled document.", "syntheticEvent": "TeamsFileShared", "delayAfterSeconds": {"min": 30, "max": 120}},
+        {"sequence": 3, "actionName": "Introduce mistake", "browserAction": "Paste fictional account-like values or share wrong internal file depending on scenario.", "syntheticEvent": "DLPPolicyMatch", "delayAfterSeconds": {"min": 20, "max": 90}},
+        {"sequence": 4, "actionName": "Peer correction", "browserAction": "Another persona replies with policy guidance or asks to move to restricted workspace.", "syntheticEvent": "TeamsMessageSent", "delayAfterSeconds": {"min": 45, "max": 180}},
+        {"sequence": 5, "actionName": "Security review", "browserAction": "Security persona documents or reviews communication compliance finding.", "syntheticEvent": "CommunicationComplianceMatch", "delayAfterSeconds": {"min": 120, "max": 360}}
+      ],
+      "downstreamTelemetry": ["TeamsMessageSent", "TeamsFileShared", "DLPPolicyMatch", "CommunicationComplianceMatch", "FileAccessed"],
+      "validationChecks": ["Conversation has at least three messages", "Mistake has business context", "Correction or escalation message exists"]
+    },
+    {
+      "playbookId": "PLAYBOOK-0004",
+      "name": "Copilot and External AI Contrast Flow",
+      "linkedWorkloads": ["Copilot for Microsoft 365", "External AI app", "SharePoint Online", "Defender for Cloud Apps", "Microsoft Purview"],
+      "objective": "Demonstrate the difference between approved Copilot usage and unsafe unmanaged external AI usage.",
+      "recommendedForScenarios": ["BF-SCEN-0002", "BF-SCEN-0007", "BF-SCEN-0015", "BF-SCEN-0030"],
+      "orderedActions": [
+        {"sequence": 1, "actionName": "Approved Copilot prompt", "browserAction": "Use Copilot to summarize an approved or sanitized internal file.", "syntheticEvent": "CopilotInteraction", "delayAfterSeconds": {"min": 30, "max": 180}},
+        {"sequence": 2, "actionName": "Source reference check", "browserAction": "Capture or emit source file references used by Copilot.", "syntheticEvent": "FileReferencedByCopilot", "delayAfterSeconds": {"min": 15, "max": 90}},
+        {"sequence": 3, "actionName": "Risky external AI prompt", "browserAction": "Paste fictional sensitive rows into an unmanaged AI prompt if scenario calls for it.", "syntheticEvent": "AIAppInteraction", "delayAfterSeconds": {"min": 45, "max": 180}},
+        {"sequence": 4, "actionName": "Unmanaged app detection", "browserAction": "Emit Defender for Cloud Apps or synthetic unmanaged app upload event.", "syntheticEvent": "UnmanagedAppUpload", "delayAfterSeconds": {"min": 10, "max": 60}},
+        {"sequence": 5, "actionName": "Governance response", "browserAction": "Security persona creates a guidance note or Teams coaching message.", "syntheticEvent": "TeamsMessageSent", "delayAfterSeconds": {"min": 120, "max": 360}}
+      ],
+      "downstreamTelemetry": ["CopilotInteraction", "SensitiveContentAccessed", "AIAppInteraction", "UnmanagedAppUpload", "DLPPolicyMatch"],
+      "validationChecks": ["Copilot event and external AI event are distinguishable", "External AI prompt contains only fictional values", "Governance response exists"]
+    },
+    {
+      "playbookId": "PLAYBOOK-0005",
+      "name": "Endpoint DLP Movement Flow",
+      "linkedWorkloads": ["SharePoint Online", "OneDrive for Business", "Endpoint DLP", "Defender for Endpoint", "Intune"],
+      "objective": "Generate endpoint movement telemetry such as download, print, USB copy, and network-share copy for sensitive financial files.",
+      "recommendedForScenarios": ["BF-SCEN-0005", "BF-SCEN-0009", "BF-SCEN-0025", "BF-SCEN-0030"],
+      "orderedActions": [
+        {"sequence": 1, "actionName": "Open sensitive file", "browserAction": "Open a labeled workbook or document from SharePoint.", "syntheticEvent": "FileAccessed", "delayAfterSeconds": {"min": 20, "max": 120}},
+        {"sequence": 2, "actionName": "Download working copy", "browserAction": "Download file to managed endpoint or simulate download telemetry.", "syntheticEvent": "FileDownloaded", "delayAfterSeconds": {"min": 10, "max": 60}},
+        {"sequence": 3, "actionName": "Print attempt", "browserAction": "Simulate print event for the sensitive file.", "syntheticEvent": "FilePrinted", "delayAfterSeconds": {"min": 30, "max": 180}},
+        {"sequence": 4, "actionName": "Network-share copy", "browserAction": "Simulate copy to \\\\fileshare-demo\\ops-temp or equivalent synthetic path.", "syntheticEvent": "FileCopiedToNetworkShare", "delayAfterSeconds": {"min": 30, "max": 180}},
+        {"sequence": 5, "actionName": "Endpoint alert review", "browserAction": "Endpoint/security persona reviews event and records investigation note.", "syntheticEvent": "EndpointDLPPolicyMatch", "delayAfterSeconds": {"min": 120, "max": 420}}
+      ],
+      "downstreamTelemetry": ["FileDownloaded", "FilePrinted", "FileCopiedToNetworkShare", "FileCopiedToUSB", "EndpointDLPPolicyMatch", "InsiderRiskSequence"],
+      "validationChecks": ["DeviceId is populated", "File label is high sensitivity", "Endpoint action has destination details"]
+    },
+    {
+      "playbookId": "PLAYBOOK-0006",
+      "name": "Identity-to-Data Correlation Flow",
+      "linkedWorkloads": ["Microsoft Entra ID", "Conditional Access", "SharePoint Online", "Defender for Cloud Apps", "Microsoft Defender XDR"],
+      "objective": "Correlate risky sign-in or conditional access activity with sensitive file access and downloads.",
+      "recommendedForScenarios": ["BF-SCEN-0022", "BF-SCEN-0030"],
+      "orderedActions": [
+        {"sequence": 1, "actionName": "Risky sign-in", "browserAction": "Emit or simulate a risky sign-in event for the persona.", "syntheticEvent": "RiskySignIn", "delayAfterSeconds": {"min": 10, "max": 60}},
+        {"sequence": 2, "actionName": "Conditional Access challenge", "browserAction": "Emit or simulate Conditional Access and MFA requirement.", "syntheticEvent": "ConditionalAccessTriggered", "delayAfterSeconds": {"min": 5, "max": 45}},
+        {"sequence": 3, "actionName": "Sensitive file access", "browserAction": "Open restricted SharePoint files after sign-in event.", "syntheticEvent": "FileAccessed", "delayAfterSeconds": {"min": 60, "max": 300}},
+        {"sequence": 4, "actionName": "Sensitive download", "browserAction": "Download one or more sensitive files.", "syntheticEvent": "FileDownloaded", "delayAfterSeconds": {"min": 10, "max": 90}},
+        {"sequence": 5, "actionName": "Security correlation", "browserAction": "Security persona correlates identity and file events.", "syntheticEvent": "AnomalousCloudActivity", "delayAfterSeconds": {"min": 120, "max": 420}}
+      ],
+      "downstreamTelemetry": ["RiskySignIn", "ConditionalAccessTriggered", "MFARequired", "FileAccessed", "FileDownloaded", "AnomalousCloudActivity"],
+      "validationChecks": ["Identity event precedes data access", "Time window is less than four hours", "Device or location context is present"]
+    },
+    {
+      "playbookId": "PLAYBOOK-0007",
+      "name": "Power BI Export and Downstream Sharing Flow",
+      "linkedWorkloads": ["Power BI", "Excel Web", "SharePoint Online", "Outlook Web", "Microsoft Purview DLP"],
+      "objective": "Generate telemetry for Power BI export, derived workbook creation, and downstream sharing.",
+      "recommendedForScenarios": ["BF-SCEN-0004", "BF-SCEN-0011"],
+      "orderedActions": [
+        {"sequence": 1, "actionName": "View report", "browserAction": "Open a synthetic Power BI report such as Credit Risk Executive Dashboard.", "syntheticEvent": "PowerBIReportViewed", "delayAfterSeconds": {"min": 30, "max": 180}},
+        {"sequence": 2, "actionName": "Export data", "browserAction": "Export summarized or underlying data depending on scenario.", "syntheticEvent": "PowerBIExport", "delayAfterSeconds": {"min": 20, "max": 120}},
+        {"sequence": 3, "actionName": "Create workbook", "browserAction": "Upload or open exported CSV/XLSX in SharePoint or OneDrive.", "syntheticEvent": "FileCreated", "delayAfterSeconds": {"min": 60, "max": 240}},
+        {"sequence": 4, "actionName": "Share export", "browserAction": "Email or share exported file with internal or external recipients.", "syntheticEvent": "FileShared", "delayAfterSeconds": {"min": 60, "max": 240}},
+        {"sequence": 5, "actionName": "DLP review", "browserAction": "Emit DLP match if export contains customer-level data.", "syntheticEvent": "DLPPolicyMatch", "delayAfterSeconds": {"min": 30, "max": 120}}
+      ],
+      "downstreamTelemetry": ["PowerBIReportViewed", "PowerBIExport", "UnderlyingDataExport", "FileCreated", "FileShared", "DLPPolicyMatch"],
+      "validationChecks": ["Export type is captured", "Derived file is linked to report name", "Sharing event occurs within six hours of export"]
+    },
+    {
+      "playbookId": "PLAYBOOK-0008",
+      "name": "Investigation and Remediation Flow",
+      "linkedWorkloads": ["Microsoft Purview", "Microsoft Defender XDR", "Teams", "SharePoint Online", "Entra ID", "Planner"],
+      "objective": "Generate response telemetry after high-risk activity is detected.",
+      "recommendedForScenarios": ["BF-SCEN-0002", "BF-SCEN-0025", "BF-SCEN-0030"],
+      "orderedActions": [
+        {"sequence": 1, "actionName": "Open investigation", "browserAction": "Security persona creates or opens an investigation note.", "syntheticEvent": "InsiderRiskSequence", "delayAfterSeconds": {"min": 120, "max": 420}},
+        {"sequence": 2, "actionName": "Create response channel", "browserAction": "Create or use Teams thread for Security, HR, Legal, and Platform review.", "syntheticEvent": "TeamsMessageSent", "delayAfterSeconds": {"min": 60, "max": 180}},
+        {"sequence": 3, "actionName": "Document evidence", "browserAction": "Create investigation summary document with fictional event list.", "syntheticEvent": "FileCreated", "delayAfterSeconds": {"min": 120, "max": 420}},
+        {"sequence": 4, "actionName": "Review access", "browserAction": "Review or modify SharePoint/Entra access for the user or guest.", "syntheticEvent": "AccessReviewCompleted", "delayAfterSeconds": {"min": 120, "max": 420}},
+        {"sequence": 5, "actionName": "Create remediation tasks", "browserAction": "Create Planner tasks for coaching, policy tuning, and access cleanup.", "syntheticEvent": "TaskCreated", "delayAfterSeconds": {"min": 60, "max": 240}},
+        {"sequence": 6, "actionName": "Close with outcome", "browserAction": "Create user coaching outcome or remediation note.", "syntheticEvent": "FileModified", "delayAfterSeconds": {"min": 120, "max": 420}}
+      ],
+      "downstreamTelemetry": ["InsiderRiskSequence", "TeamsMessageSent", "FileCreated", "AccessReviewCompleted", "TaskCreated", "FileModified"],
+      "validationChecks": ["Investigation includes business context", "HR or Legal is included when HRSignal exists", "Outcome avoids unsupported assumptions of malicious intent"]
+    }
+  ],
+  "errorInjectionRules": [
+    {
+      "errorId": "ERR-001",
+      "name": "Transient Page Load Failure",
+      "description": "Browser page does not load or times out.",
+      "recommendedAgentResponse": "Retry once after a randomized delay, then emit a synthetic failed-action note if still unavailable.",
+      "maxRetries": 2
+    },
+    {
+      "errorId": "ERR-002",
+      "name": "File Name Collision",
+      "description": "A file with the intended name already exists.",
+      "recommendedAgentResponse": "Append a deterministic suffix using scenario ID or execution date.",
+      "maxRetries": 1
+    },
+    {
+      "errorId": "ERR-003",
+      "name": "DLP Block Prevents Action",
+      "description": "A policy blocks an attempted share or send.",
+      "recommendedAgentResponse": "Follow escalation rule: ask for guidance, create sanitized derivative, or document blocked action.",
+      "maxRetries": 0
+    },
+    {
+      "errorId": "ERR-004",
+      "name": "Copilot Source Not Available",
+      "description": "Copilot cannot access the intended source document.",
+      "recommendedAgentResponse": "Emit a safer governance story: the control prevented overexposure or the user lacks permission.",
+      "maxRetries": 0
+    }
+  ],
+  "codexUsageGuidance": [
+    "Use playbooks as reusable execution templates that can be parameterized by scenario, persona, file, and cadence.",
+    "Combine playbooks to build end-to-end scenario execution: for example SharePoint lifecycle plus Outlook DLP plus investigation remediation.",
+    "Emit normalized telemetry using synthetic-telemetry-schema.json after each browser action or simulated backend signal.",
+    "Use deterministic seeds for repeatable demos and randomized delays for realism.",
+    "When a workload action cannot be automated directly, emit a synthetic event with clear IsSynthetic=true and BusinessContext explaining the simulation.",
+    "Never use real customer, employee, banking, legal, credential, or production incident data."
+  ]
+}
