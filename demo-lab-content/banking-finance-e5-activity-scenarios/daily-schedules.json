@@ -1,0 +1,194 @@
+{
+  "metadata": {
+    "packName": "Banking and Finance Daily Schedules",
+    "version": "1.0",
+    "language": "en-US",
+    "industry": "Banking and Financial Services",
+    "fictionalDataOnly": true,
+    "purpose": "Provide realistic daily, weekly, monthly, and risk-window schedules for synthetic Microsoft 365 E5 banking/finance persona activity."
+  },
+  "scheduleDesignPrinciples": [
+    "Create believable business-hour activity rather than constant robotic activity.",
+    "Mix low-risk routine collaboration with occasional sensitive-data handling.",
+    "Create natural workload bursts before committee meetings, finance close, regulatory deadlines, and customer escalations.",
+    "Avoid making risky behavior constant; risky events should be contextual, time-bound, and explainable.",
+    "Use Devon Reyes as a recurring ambiguity anchor for unsafe, negligent, or potentially malicious behavior."
+  ],
+  "globalWorkPatterns": {
+    "standardBusinessHours": "08:00-18:00 local persona time",
+    "commonLunchWindow": "12:00-13:00",
+    "lowActivityWindows": ["07:00-08:00", "12:00-13:00", "18:00-20:00"],
+    "higherRiskWindows": ["07:00-08:00", "17:30-20:00", "Late Friday", "End of month", "Day before committee meetings"],
+    "recommendedSimulationDensity": {
+      "normalPersonaDailyActions": "8-18 actions per business day",
+      "managerPersonaDailyActions": "12-25 actions per business day",
+      "securityPersonaDailyActions": "10-30 actions per business day during incidents",
+      "riskyPersonaDailyActions": "10-22 normal actions plus 2-6 risky actions only during selected scenarios"
+    }
+  },
+  "personaSchedules": [
+    {
+      "persona": "Alexander Meyer",
+      "role": "CEO",
+      "timezone": "Europe/Stockholm",
+      "normalDailyPattern": [
+        {"timeWindow": "08:00-08:30", "activity": "Review executive email summaries and overnight escalations.", "workloads": ["Outlook Web", "Copilot for Microsoft 365"]},
+        {"timeWindow": "08:30-09:30", "activity": "Review Power BI executive dashboards and financial snapshots.", "workloads": ["Power BI", "SharePoint Online"]},
+        {"timeWindow": "10:00-11:00", "activity": "Attend leadership or board preparation meetings.", "workloads": ["Teams", "PowerPoint Web"]},
+        {"timeWindow": "14:00-15:00", "activity": "Review strategic documents and provide comments.", "workloads": ["SharePoint Online", "Word Web", "PowerPoint Web"]},
+        {"timeWindow": "16:30-17:30", "activity": "Ask Copilot for executive summaries and prepare talking points.", "workloads": ["Copilot for Microsoft 365", "Outlook Web"]}
+      ],
+      "weeklyRecurringActivities": ["Executive committee preparation", "Board material review", "Customer escalation sponsor review"],
+      "monthlyRecurringActivities": ["Board reporting", "Finance forecast review", "Risk governance review"],
+      "riskWindows": ["Board packet preparation", "M&A strategy review", "AI summaries over sensitive source files"]
+    },
+    {
+      "persona": "Ana Rodriguez",
+      "role": "Head of IT / Security",
+      "timezone": "America/Bogota",
+      "normalDailyPattern": [
+        {"timeWindow": "08:00-09:00", "activity": "Review overnight Defender and Purview alerts.", "workloads": ["Microsoft Defender XDR", "Microsoft Purview"]},
+        {"timeWindow": "09:00-10:00", "activity": "Check DLP, label, and external sharing trends.", "workloads": ["Microsoft Purview", "Defender for Cloud Apps"]},
+        {"timeWindow": "11:00-12:00", "activity": "Meet with Marcus or Miguel on active investigations.", "workloads": ["Teams", "Microsoft Defender XDR"]},
+        {"timeWindow": "14:00-15:30", "activity": "Review access remediation and governance tasks.", "workloads": ["Entra ID", "SharePoint Online", "Planner"]},
+        {"timeWindow": "16:00-17:30", "activity": "Document security decisions, incident notes, or policy changes.", "workloads": ["Word Web", "SharePoint Online"]}
+      ],
+      "weeklyRecurringActivities": ["Security posture review", "DLP policy review", "Access governance checkpoint"],
+      "monthlyRecurringActivities": ["Governance committee report", "Label coverage review", "Insider risk trend review"],
+      "riskWindows": ["After DLP spikes", "After external sharing events", "After Devon risk-chain activity"]
+    },
+    {
+      "persona": "Devon Reyes",
+      "role": "Junior Operations Analyst",
+      "timezone": "America/Puerto_Rico",
+      "normalDailyPattern": [
+        {"timeWindow": "08:15-09:00", "activity": "Review assigned customer operations tasks and Teams messages.", "workloads": ["Teams", "Planner", "Microsoft Lists"]},
+        {"timeWindow": "09:00-10:30", "activity": "Open customer operations files and update case trackers.", "workloads": ["SharePoint Online", "Excel Web", "Microsoft Lists"]},
+        {"timeWindow": "10:30-11:30", "activity": "Ask for clarification in Teams and share links for review.", "workloads": ["Teams", "SharePoint Online"]},
+        {"timeWindow": "13:00-14:30", "activity": "Download working copies or export lists for analysis.", "workloads": ["SharePoint Online", "OneDrive for Business", "Excel Web"]},
+        {"timeWindow": "15:30-17:30", "activity": "Prepare summaries, send follow-up emails, and close assigned items.", "workloads": ["Outlook Web", "Word Web", "Copilot for Microsoft 365"]}
+      ],
+      "weeklyRecurringActivities": ["Customer operations backlog cleanup", "Loan exception updates", "Complaint case review"],
+      "monthlyRecurringActivities": ["Support regulatory evidence collection", "Assist with operations reporting", "Prepare recurring case exports"],
+      "riskWindows": ["Late afternoon deadline pressure", "After role-change or performance feedback", "When asked to summarize unfamiliar sensitive files", "When similar raw and sanitized files coexist"],
+      "riskyBehaviorCandidates": [
+        "Create broad sharing link for sensitive file.",
+        "Attach wrong version to external email.",
+        "Paste customer rows into external AI app.",
+        "Download multiple files in a short window.",
+        "Remove or downgrade sensitivity label.",
+        "Copy file to network share.",
+        "Print restricted workbook.",
+        "Add guest to the wrong Teams channel."
+      ]
+    },
+    {
+      "persona": "Carlos Delgado",
+      "role": "Data Analyst",
+      "timezone": "America/Bogota",
+      "normalDailyPattern": [
+        {"timeWindow": "08:30-09:30", "activity": "Refresh Power BI dashboards and review data quality.", "workloads": ["Power BI", "SharePoint Online"]},
+        {"timeWindow": "09:30-11:00", "activity": "Analyze credit exposure and operational metrics.", "workloads": ["Excel Web", "Power BI"]},
+        {"timeWindow": "11:00-12:00", "activity": "Publish aggregated reports to SharePoint.", "workloads": ["SharePoint Online", "Excel Web"]},
+        {"timeWindow": "14:00-15:30", "activity": "Respond to requests from leadership or risk committee.", "workloads": ["Teams", "Outlook Web"]},
+        {"timeWindow": "16:00-17:00", "activity": "Document assumptions and source files.", "workloads": ["Word Web", "SharePoint Online"]}
+      ],
+      "weeklyRecurringActivities": ["Credit risk dashboard review", "Loan committee metrics", "Branch operations metrics"],
+      "monthlyRecurringActivities": ["Finance close analysis", "Board reporting inputs", "Risk reporting package"],
+      "riskWindows": ["Power BI underlying data exports", "Raw CSV handling", "Customer-level analysis before aggregation"]
+    },
+    {
+      "persona": "Priya Sharma",
+      "role": "Data Scientist",
+      "timezone": "Asia/Kolkata",
+      "normalDailyPattern": [
+        {"timeWindow": "09:00-10:00", "activity": "Review model runs and feature tables.", "workloads": ["SharePoint Online", "Excel Web", "Power BI"]},
+        {"timeWindow": "10:00-12:00", "activity": "Prepare aggregate model insights and validation notes.", "workloads": ["Excel Web", "Word Web", "Copilot for Microsoft 365"]},
+        {"timeWindow": "13:00-14:00", "activity": "Coordinate with Carlos on analytics assumptions.", "workloads": ["Teams", "Loop"]},
+        {"timeWindow": "15:00-16:30", "activity": "Prepare sanitized datasets for review or demo.", "workloads": ["SharePoint Online", "Excel Web"]},
+        {"timeWindow": "17:00-18:00", "activity": "Document model limitations and privacy notes.", "workloads": ["Word Web", "SharePoint Online"]}
+      ],
+      "weeklyRecurringActivities": ["Model review", "Risk analytics update", "Feature quality check"],
+      "monthlyRecurringActivities": ["Model governance readout", "External analytics vendor review", "Anonymization validation"],
+      "riskWindows": ["Pre-anonymized dataset handling", "External vendor review", "AI-generated insight summaries"]
+    }
+  ],
+  "recurringBusinessCycles": [
+    {
+      "cycleId": "CYCLE-001",
+      "cycleName": "Daily Customer Operations Review",
+      "cadence": "Daily",
+      "typicalTimeWindow": "09:00-11:30",
+      "primaryPersonas": ["David Chen", "Devon Reyes", "James Wilson"],
+      "workloads": ["Microsoft Lists", "Teams", "SharePoint Online", "Outlook Web"],
+      "normalOutputs": ["Updated complaint list", "Customer-safe response draft", "Operations follow-up email"],
+      "riskOpportunities": ["Sensitive customer IDs in chat", "Wrong attachment to customer", "List export with customer details"]
+    },
+    {
+      "cycleId": "CYCLE-002",
+      "cycleName": "Weekly Loan Committee Preparation",
+      "cadence": "Weekly",
+      "typicalTimeWindow": "Wednesday 13:00-Friday 11:00",
+      "primaryPersonas": ["Sofia Lopez", "Carlos Delgado", "Emily Johnson", "Devon Reyes"],
+      "workloads": ["SharePoint Online", "Teams", "PowerPoint Web", "Excel Web", "Outlook Web"],
+      "normalOutputs": ["Loan committee deck", "Credit exposure workbook", "Legal caveat note"],
+      "riskOpportunities": ["KYC oversharing", "External advisor email", "Broad link creation"]
+    },
+    {
+      "cycleId": "CYCLE-003",
+      "cycleName": "Monthly AML and Suspicious Activity Review",
+      "cadence": "Monthly",
+      "typicalTimeWindow": "First week of month",
+      "primaryPersonas": ["Devon Reyes", "Marcus Olsson", "Ana Rodriguez", "Priya Sharma"],
+      "workloads": ["SharePoint Online", "OneDrive for Business", "Excel Web", "Copilot for Microsoft 365", "External AI app", "Microsoft Purview"],
+      "normalOutputs": ["AML trend summary", "Suspicious activity case index", "Security review notes"],
+      "riskOpportunities": ["External AI upload", "Mass download", "USB or network copy"]
+    },
+    {
+      "cycleId": "CYCLE-004",
+      "cycleName": "Monthly Finance Close",
+      "cadence": "Monthly",
+      "typicalTimeWindow": "Last three business days of month",
+      "primaryPersonas": ["Carlos Delgado", "Alexander Meyer", "Ana Rodriguez", "Devon Reyes"],
+      "workloads": ["SharePoint Online", "Excel Web", "Outlook Web", "Power BI", "Sensitivity Labels"],
+      "normalOutputs": ["Finance close evidence", "Executive forecast summary", "Board appendix"],
+      "riskOpportunities": ["Label downgrade", "Broad email distribution", "Treasury workbook download"]
+    },
+    {
+      "cycleId": "CYCLE-005",
+      "cycleName": "Regulatory Response Event",
+      "cadence": "EventDriven",
+      "typicalTimeWindow": "3-10 business days after inquiry",
+      "primaryPersonas": ["Emily Johnson", "Sofia Lopez", "Ana Rodriguez", "James Wilson"],
+      "workloads": ["SharePoint Online", "Word Web", "Teams", "Planner", "Outlook Web", "Records Management"],
+      "normalOutputs": ["Regulatory response draft", "Evidence index", "Final approved response"],
+      "riskOpportunities": ["Privileged draft external sharing", "Loop component exposure", "Wrong evidence package"]
+    }
+  ],
+  "devonRiskWindows": [
+    {
+      "riskWindowId": "DEVON-RISK-001",
+      "name": "Late Afternoon Deadline Pressure",
+      "timeWindow": "16:30-18:30",
+      "likelyTriggers": ["Customer escalation deadline", "Vendor request", "Committee package due next morning"],
+      "likelyRiskyActions": ["Send wrong attachment", "Create broad link", "Bypass review", "Ask external AI for quick summary"],
+      "recommendedSignals": ["ExternalEmailSent", "DLPPolicyMatch", "AIAppInteraction", "FileShared"]
+    },
+    {
+      "riskWindowId": "DEVON-RISK-002",
+      "name": "Post Role-Change Ambiguity",
+      "timeWindow": "First 48 hours after role-change notice",
+      "likelyTriggers": ["HR meeting", "New manager assignment", "Loss of access expected"],
+      "likelyRiskyActions": ["Mass download", "Print sensitive file", "Copy to OneDrive", "Copy to network share"],
+      "recommendedSignals": ["HRSignal", "MassDownloadActivity", "FilePrinted", "FileCopiedToNetworkShare", "InsiderRiskSequence"]
+    },
+    {
+      "riskWindowId": "DEVON-RISK-003",
+      "name": "AI Shortcut Behavior",
+      "timeWindow": "Any time during complex analysis tasks",
+      "likelyTriggers": ["Asked to summarize unfamiliar files", "High workload", "Unclear data handling guidance"],
+      "likelyRiskyActions": ["Paste sensitive rows into external AI", "Ask Copilot for content outside role scope", "Generate customer-facing text from internal notes"],
+      "recommendedSignals": ["CopilotInteraction", "AIAppInteraction", "SensitiveContentAccessed", "DLPPolicyMatch"]
+    }
+  ]
+}
