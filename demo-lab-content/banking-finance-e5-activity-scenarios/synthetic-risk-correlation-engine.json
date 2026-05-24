@@ -1,0 +1,214 @@
+{
+  "metadata": {
+    "packName": "Synthetic Risk Correlation Engine for Banking Finance E5 Simulations",
+    "version": "1.0",
+    "language": "en-US",
+    "industry": "Banking and Financial Services",
+    "fictionalDataOnly": true,
+    "purpose": "Define synthetic risk intelligence logic that converts low-level Microsoft 365, Purview, Defender, DLP, Copilot, endpoint, identity, and communication events into correlated risk sequences, scenario confidence, escalation thresholds, and executive risk indicators."
+  },
+  "enginePrinciples": [
+    "Risk should be evaluated as a sequence, not as a single isolated action.",
+    "Normal business context can reduce severity, but it should not erase evidence of unsafe handling.",
+    "A high-risk score does not prove malicious intent; it indicates the need for review.",
+    "AI interactions amplify risk when source content is sensitive, over-permissioned, or externally copied.",
+    "Endpoint movement increases confidence that data left controlled cloud boundaries.",
+    "HR and Legal context should be used carefully and only as investigation context, not as proof of intent.",
+    "All scoring is synthetic and demo-oriented, not production-grade risk scoring."
+  ],
+  "baseSignalWeights": [
+    {"signalName": "FileCreated", "baseWeight": 2, "riskContribution": "Low"},
+    {"signalName": "FileModified", "baseWeight": 2, "riskContribution": "Low"},
+    {"signalName": "FileAccessed", "baseWeight": 4, "riskContribution": "Low"},
+    {"signalName": "FileDownloaded", "baseWeight": 12, "riskContribution": "Medium"},
+    {"signalName": "FileShared", "baseWeight": 18, "riskContribution": "Medium"},
+    {"signalName": "ExternalEmailSent", "baseWeight": 22, "riskContribution": "Medium"},
+    {"signalName": "DLPPolicyMatch", "baseWeight": 25, "riskContribution": "Medium"},
+    {"signalName": "DLPWarned", "baseWeight": 18, "riskContribution": "Medium"},
+    {"signalName": "DLPBlocked", "baseWeight": 30, "riskContribution": "High"},
+    {"signalName": "DLPOverride", "baseWeight": 45, "riskContribution": "High"},
+    {"signalName": "SensitivityLabelChanged", "baseWeight": 18, "riskContribution": "Medium"},
+    {"signalName": "SensitivityLabelRemoved", "baseWeight": 35, "riskContribution": "High"},
+    {"signalName": "LabelDowngrade", "baseWeight": 40, "riskContribution": "High"},
+    {"signalName": "CopilotInteraction", "baseWeight": 8, "riskContribution": "Low"},
+    {"signalName": "SensitiveContentAccessed", "baseWeight": 25, "riskContribution": "Medium"},
+    {"signalName": "AIAppInteraction", "baseWeight": 45, "riskContribution": "High"},
+    {"signalName": "UnmanagedAppUpload", "baseWeight": 55, "riskContribution": "High"},
+    {"signalName": "FilePrinted", "baseWeight": 28, "riskContribution": "High"},
+    {"signalName": "FileCopiedToNetworkShare", "baseWeight": 38, "riskContribution": "High"},
+    {"signalName": "FileCopiedToUSB", "baseWeight": 50, "riskContribution": "High"},
+    {"signalName": "RiskySignIn", "baseWeight": 40, "riskContribution": "High"},
+    {"signalName": "GuestUserAdded", "baseWeight": 24, "riskContribution": "Medium"},
+    {"signalName": "ExternalUserAccessed", "baseWeight": 30, "riskContribution": "Medium"},
+    {"signalName": "MassDownloadActivity", "baseWeight": 48, "riskContribution": "High"},
+    {"signalName": "HRSignal", "baseWeight": 18, "riskContribution": "Contextual"},
+    {"signalName": "InsiderRiskSequence", "baseWeight": 60, "riskContribution": "High"}
+  ],
+  "riskModifiers": [
+    {"modifierId": "MOD-001", "name": "Highly Confidential content", "scoreImpact": 15, "appliesWhen": "SensitivityLabel contains Highly Confidential"},
+    {"modifierId": "MOD-002", "name": "Regulated financial data", "scoreImpact": 20, "appliesWhen": "SensitivityLabel contains Regulated Financial Data or file contains ACCT-FIC, AML-CASE, SAR-DRAFT, KYC-FIC"},
+    {"modifierId": "MOD-003", "name": "Legal privileged content", "scoreImpact": 20, "appliesWhen": "SensitivityLabel contains Legal Privileged or file contains LEGAL-FIC or PRIV-NOTE-FIC"},
+    {"modifierId": "MOD-004", "name": "HR restricted content", "scoreImpact": 18, "appliesWhen": "SensitivityLabel contains HR Restricted or file contains EMP or SAL-BAND-FIC"},
+    {"modifierId": "MOD-005", "name": "External recipient", "scoreImpact": 15, "appliesWhen": "TargetDomain is not internal or Recipient contains external test domain"},
+    {"modifierId": "MOD-006", "name": "Unmanaged app", "scoreImpact": 25, "appliesWhen": "IsManagedApp is false or Operation equals AIAppInteraction or UnmanagedAppUpload"},
+    {"modifierId": "MOD-007", "name": "After-hours sensitive activity", "scoreImpact": 10, "appliesWhen": "Sensitive event occurs outside normal persona work hours"},
+    {"modifierId": "MOD-008", "name": "Role-change context", "scoreImpact": 20, "appliesWhen": "HRSignal occurs within 72 hours before risky activity"},
+    {"modifierId": "MOD-009", "name": "Repeated behavior", "scoreImpact": 15, "appliesWhen": "Same user repeats same risky action three or more times in seven days"},
+    {"modifierId": "MOD-010", "name": "Security remediation present", "scoreImpact": -15, "appliesWhen": "User asks security for help, cancels action, or creates sanitized derivative before sharing"},
+    {"modifierId": "MOD-011", "name": "Approved business workflow", "scoreImpact": -10, "appliesWhen": "Activity occurs in approved restricted workspace with correct label and named-user sharing"}
+  ],
+  "correlationWindows": [
+    {"windowId": "WIN-001", "name": "Immediate Action Window", "duration": "15 minutes", "useFor": ["Label downgrade followed by share", "DLP warning followed by override", "Wrong attachment send"]},
+    {"windowId": "WIN-002", "name": "Operational Sequence Window", "duration": "4 hours", "useFor": ["Risky sign-in followed by file download", "Power BI export followed by email", "File download followed by print"]},
+    {"windowId": "WIN-003", "name": "Business Day Window", "duration": "1 business day", "useFor": ["External AI usage after file download", "Teams oversharing after document creation", "Guest access followed by sensitive file access"]},
+    {"windowId": "WIN-004", "name": "Insider Risk Context Window", "duration": "72 hours", "useFor": ["HR signal followed by mass download", "Repeated endpoint movement", "Multi-stage exfiltration-like chain"]},
+    {"windowId": "WIN-005", "name": "Long-Running Scenario Window", "duration": "5 business days", "useFor": ["Devon multi-day risk chain", "Regulatory response exposure", "Finance close risk sequence"]}
+  ],
+  "compositeRules": [
+    {
+      "ruleId": "RISK-RULE-001",
+      "name": "Label Downgrade Before Sharing",
+      "description": "A file label is downgraded or removed shortly before internal broad sharing or external sending.",
+      "requiredSignals": ["LabelDowngrade"],
+      "followedBySignals": ["ExternalEmailSent", "FileShared"],
+      "windowId": "WIN-001",
+      "baseCompositeScore": 70,
+      "confidence": "High",
+      "recommendedSeverity": "High",
+      "recommendedAction": "Review content, compare labels, validate whether sanitized derivative exists, and request user justification."
+    },
+    {
+      "ruleId": "RISK-RULE-002",
+      "name": "Sensitive Download Followed by External AI",
+      "description": "A user downloads or opens sensitive banking files and then uses external or unmanaged AI with related content.",
+      "requiredSignals": ["FileDownloaded", "AIAppInteraction"],
+      "optionalSignals": ["UnmanagedAppUpload", "DLPPolicyMatch", "SensitiveContentAccessed"],
+      "windowId": "WIN-003",
+      "baseCompositeScore": 82,
+      "confidence": "High",
+      "recommendedSeverity": "High",
+      "recommendedAction": "Review prompt content, identify source files, coach user on approved AI workflow, and consider blocking unmanaged AI app usage."
+    },
+    {
+      "ruleId": "RISK-RULE-003",
+      "name": "Risky Sign-In to Sensitive Download",
+      "description": "A risky identity event is followed by sensitive file access or download.",
+      "requiredSignals": ["RiskySignIn", "FileDownloaded"],
+      "optionalSignals": ["ConditionalAccessTriggered", "MFARequired", "AfterHoursSensitiveActivity"],
+      "windowId": "WIN-002",
+      "baseCompositeScore": 78,
+      "confidence": "Medium",
+      "recommendedSeverity": "High",
+      "recommendedAction": "Validate location, device, MFA result, business reason, and whether session should be revoked in real environments."
+    },
+    {
+      "ruleId": "RISK-RULE-004",
+      "name": "Endpoint Movement After Sensitive Download",
+      "description": "Sensitive file download is followed by print, USB copy, or network-share copy.",
+      "requiredSignals": ["FileDownloaded"],
+      "followedBySignals": ["FilePrinted", "FileCopiedToUSB", "FileCopiedToNetworkShare"],
+      "windowId": "WIN-002",
+      "baseCompositeScore": 80,
+      "confidence": "High",
+      "recommendedSeverity": "High",
+      "recommendedAction": "Review endpoint evidence, confirm device compliance, validate business need, and tune Endpoint DLP restrictions."
+    },
+    {
+      "ruleId": "RISK-RULE-005",
+      "name": "HR Context Followed by Mass Download",
+      "description": "A role-change or HR context signal is followed by mass download or endpoint movement.",
+      "requiredSignals": ["HRSignal", "MassDownloadActivity"],
+      "optionalSignals": ["FilePrinted", "FileCopiedToNetworkShare", "ExternalEmailSent", "DLPOverride"],
+      "windowId": "WIN-004",
+      "baseCompositeScore": 88,
+      "confidence": "High",
+      "recommendedSeverity": "Critical",
+      "recommendedAction": "Open HR-Legal-Security review, preserve evidence, avoid assumptions of intent, and review access scope."
+    },
+    {
+      "ruleId": "RISK-RULE-006",
+      "name": "Guest Added to Sensitive Collaboration Space",
+      "description": "A guest is added to a team or site that contains sensitive banking, legal, HR, or risk content.",
+      "requiredSignals": ["GuestUserAdded"],
+      "followedBySignals": ["FileAccessed", "TeamsFileShared", "ExternalUserAccessed"],
+      "windowId": "WIN-003",
+      "baseCompositeScore": 64,
+      "confidence": "Medium",
+      "recommendedSeverity": "Medium",
+      "recommendedAction": "Review guest permissions, remove access where needed, and create a sanitized collaboration space."
+    },
+    {
+      "ruleId": "RISK-RULE-007",
+      "name": "Copilot Surfaces Overexposed Sensitive Content",
+      "description": "Copilot interaction references sensitive files because permissions are broader than intended.",
+      "requiredSignals": ["CopilotInteraction", "SensitiveContentAccessed"],
+      "optionalSignals": ["FileReferencedByCopilot", "AccessReviewRequired"],
+      "windowId": "WIN-003",
+      "baseCompositeScore": 62,
+      "confidence": "Medium",
+      "recommendedSeverity": "Medium",
+      "recommendedAction": "Review source permissions, label coverage, and DSPM for AI exposure."
+    },
+    {
+      "ruleId": "RISK-RULE-008",
+      "name": "Multi-Stage Devon Risk Chain",
+      "description": "A multi-day sequence involving downloads, AI usage, external sharing, endpoint movement, and HR context for Devon Reyes.",
+      "requiredSignals": ["FileDownloaded", "AIAppInteraction", "DLPPolicyMatch", "FilePrinted", "InsiderRiskSequence"],
+      "optionalSignals": ["HRSignal", "FileCopiedToNetworkShare", "DLPOverride", "RiskySignIn", "SensitivityLabelChanged"],
+      "windowId": "WIN-005",
+      "baseCompositeScore": 95,
+      "confidence": "High",
+      "recommendedSeverity": "Critical",
+      "recommendedAction": "Conduct full investigation with Security, HR, Legal, and Platform teams; remediate access; document coaching or escalation outcome."
+    }
+  ],
+  "riskDecayModel": {
+    "description": "Synthetic risk events should decay over time unless repeated or correlated into a scenario.",
+    "decayRules": [
+      {"eventType": "Low risk isolated event", "halfLife": "3 days", "notes": "Example: normal file access or Teams message."},
+      {"eventType": "Medium risk event", "halfLife": "7 days", "notes": "Example: one sensitive download or internal broad share."},
+      {"eventType": "High risk event", "halfLife": "14 days", "notes": "Example: DLP override, external AI usage, endpoint movement."},
+      {"eventType": "Critical correlated sequence", "halfLife": "30 days", "notes": "Example: HR context plus mass download plus external movement."}
+    ],
+    "resetConditions": ["Repeated risky activity", "New DLP override", "New unmanaged AI upload", "New endpoint movement", "New external sharing after remediation"]
+  },
+  "severityBands": [
+    {"minScore": 0, "maxScore": 24, "severity": "Low", "recommendedResponse": "Log and monitor."},
+    {"minScore": 25, "maxScore": 49, "severity": "Medium", "recommendedResponse": "Review context and validate business purpose."},
+    {"minScore": 50, "maxScore": 79, "severity": "High", "recommendedResponse": "Open investigation and consider remediation."},
+    {"minScore": 80, "maxScore": 100, "severity": "Critical", "recommendedResponse": "Immediate security review with HR and Legal where applicable."}
+  ],
+  "scenarioConfidenceModel": {
+    "confidenceFactors": [
+      {"factor": "Required signals present", "impact": "Strongly increases confidence"},
+      {"factor": "Signals occur inside expected correlation window", "impact": "Increases confidence"},
+      {"factor": "Sensitive labels or regulated patterns present", "impact": "Increases severity and confidence"},
+      {"factor": "Endpoint movement present", "impact": "Increases confidence that data moved outside cloud-only controls"},
+      {"factor": "User asks for guidance or cancels action", "impact": "May lower severity but preserve event evidence"},
+      {"factor": "Business-approved workspace and named-user sharing", "impact": "Lowers severity"},
+      {"factor": "Repeated behavior after coaching", "impact": "Strongly increases confidence and severity"}
+    ],
+    "confidenceBands": [
+      {"band": "Low", "description": "Single event or weak context; monitor or use for coaching."},
+      {"band": "Medium", "description": "Multiple related signals, but intent and business context remain unclear."},
+      {"band": "High", "description": "Required signal chain present, timing aligns, and sensitive data or risky movement is confirmed."}
+    ]
+  },
+  "escalationThresholds": [
+    {"thresholdId": "ESC-TH-001", "condition": "Composite score >= 50", "action": "Create security review task."},
+    {"thresholdId": "ESC-TH-002", "condition": "Composite score >= 70 or DLPOverride present", "action": "Open investigation note and notify Security Manager."},
+    {"thresholdId": "ESC-TH-003", "condition": "Composite score >= 80 and endpoint movement present", "action": "Notify Endpoint Security and review device activity."},
+    {"thresholdId": "ESC-TH-004", "condition": "Composite score >= 80 and HRSignal present", "action": "Include HR and Legal in review."},
+    {"thresholdId": "ESC-TH-005", "condition": "UnmanagedAppUpload with regulated financial data", "action": "Notify Security, review app governance, and coach user."},
+    {"thresholdId": "ESC-TH-006", "condition": "Repeated risky behavior after documented coaching", "action": "Escalate to formal review with HR and Legal guidance."}
+  ],
+  "codexUsageGuidance": [
+    "Use baseSignalWeights and riskModifiers to compute synthetic event risk scores.",
+    "Use compositeRules to correlate multiple events into scenario-level risk sequences.",
+    "Use correlationWindows to determine whether events belong to the same risk chain.",
+    "Use riskDecayModel to keep dashboards realistic over time.",
+    "Use scenarioConfidenceModel to explain why a scenario is low, medium, or high confidence.",
+    "Use escalationThresholds to generate investigation, remediation, and coaching artifacts.",
+    "Never interpret synthetic scores as production-grade risk scoring."
+  ]
+}
