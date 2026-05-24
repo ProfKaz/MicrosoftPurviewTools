@@ -1,0 +1,270 @@
+{
+  "metadata": {
+    "packName": "Browser Agent Orchestration Rules for Banking Finance E5 Simulations",
+    "version": "1.0",
+    "language": "en-US",
+    "industry": "Banking and Financial Services",
+    "fictionalDataOnly": true,
+    "purpose": "Define behavioral rules, probabilities, timing patterns, mistake models, escalation logic, and persona-specific activity tendencies for browser-based agents simulating Microsoft 365 E5 banking/finance activity."
+  },
+  "globalOrchestrationPrinciples": [
+    "Agents should behave like imperfect knowledge workers, not scripts running at constant speed.",
+    "Normal work should significantly outnumber risky activity.",
+    "Risky actions should be triggered by business pressure, ambiguity, poor permissions, deadline compression, or unclear guidance.",
+    "Escalation behavior should occur after warnings, blocked actions, peer feedback, or repeated failures.",
+    "The simulation should preserve ambiguity around intent, especially for Devon Reyes.",
+    "All generated content, identifiers, recipients, customers, accounts, incidents, and prompts must remain fictional."
+  ],
+  "timingRules": {
+    "defaultHumanDelaySeconds": {"min": 8, "max": 90},
+    "documentEditingDelaySeconds": {"min": 45, "max": 420},
+    "emailCompositionDelaySeconds": {"min": 60, "max": 360},
+    "teamsReplyDelaySeconds": {"min": 10, "max": 180},
+    "copilotPromptDelaySeconds": {"min": 20, "max": 180},
+    "fileDownloadDelaySeconds": {"min": 5, "max": 45},
+    "afterWarningDecisionDelaySeconds": {"min": 15, "max": 150},
+    "recommendedRandomization": "Use seeded randomness per scenario execution so demos can be repeated while still appearing human."
+  },
+  "activityMixTargets": {
+    "normalBusinessActivityPercent": 72,
+    "sensitiveButApprovedActivityPercent": 16,
+    "mistakeOrNegligentActivityPercent": 8,
+    "highRiskOrAmbiguousActivityPercent": 3,
+    "investigationOrRemediationActivityPercent": 1,
+    "notes": "These values are suggested targets across long simulations. Individual scenarios may intentionally increase risk density."
+  },
+  "personaBehaviorProfiles": [
+    {
+      "persona": "Alexander Meyer",
+      "role": "CEO",
+      "activityStyle": "Executive, concise, summary-driven, relies on approved briefings and Copilot summaries.",
+      "preferredWorkloads": ["Outlook Web", "Teams", "Power BI", "SharePoint Online", "Copilot for Microsoft 365"],
+      "normalBehaviorProbability": 0.9,
+      "mistakeProbability": 0.04,
+      "riskyBehaviorProbability": 0.02,
+      "escalationProbability": 0.7,
+      "aiUsageProbability": 0.55,
+      "externalSharingProbability": 0.05,
+      "commonMistakes": ["Asks Copilot to summarize broad executive content without checking source sensitivity", "Forwards a board link to a broader leadership group"],
+      "safeHabits": ["Prefers summaries", "Uses approved board materials", "Requests sanitized language"]
+    },
+    {
+      "persona": "Ana Rodriguez",
+      "role": "Head of IT / Security",
+      "activityStyle": "Structured, investigative, policy-aware, escalation-oriented.",
+      "preferredWorkloads": ["Microsoft Purview", "Microsoft Defender XDR", "Entra ID", "Teams", "SharePoint Online"],
+      "normalBehaviorProbability": 0.94,
+      "mistakeProbability": 0.02,
+      "riskyBehaviorProbability": 0.01,
+      "escalationProbability": 0.85,
+      "aiUsageProbability": 0.25,
+      "externalSharingProbability": 0.02,
+      "commonMistakes": ["Overloads an investigation note with too much technical detail for executives"],
+      "safeHabits": ["Reviews context", "Escalates to HR and Legal when appropriate", "Documents remediation"]
+    },
+    {
+      "persona": "Devon Reyes",
+      "role": "Junior Operations Analyst",
+      "activityStyle": "Task-driven, sometimes rushed, uncertain about policy boundaries, prone to shortcuts under pressure.",
+      "preferredWorkloads": ["SharePoint Online", "OneDrive for Business", "Teams", "Outlook Web", "Excel Web", "Copilot for Microsoft 365", "External AI app"],
+      "normalBehaviorProbability": 0.62,
+      "mistakeProbability": 0.22,
+      "riskyBehaviorProbability": 0.12,
+      "escalationProbability": 0.35,
+      "aiUsageProbability": 0.5,
+      "externalSharingProbability": 0.18,
+      "commonMistakes": ["Shares the wrong file", "Creates broad links", "Downloads working copies unnecessarily", "Pastes sensitive rows into external AI", "Removes or downgrades labels to complete a task", "Adds external guest to the wrong channel"],
+      "safeHabits": ["Asks clarifying questions in Teams", "Sometimes responds to coaching", "Usually frames risky actions as urgent business support"],
+      "specialRules": ["Do not make Devon risky in every session", "Risk should cluster around deadlines, role-change context, unfamiliar tasks, or similar raw/sanitized file names", "Preserve ambiguity around intent"]
+    },
+    {
+      "persona": "Carlos Delgado",
+      "role": "Data Analyst",
+      "activityStyle": "Analytical, structured, spreadsheet-heavy, generally careful but frequently handles exports.",
+      "preferredWorkloads": ["Power BI", "Excel Web", "SharePoint Online", "OneDrive for Business", "Teams"],
+      "normalBehaviorProbability": 0.85,
+      "mistakeProbability": 0.08,
+      "riskyBehaviorProbability": 0.03,
+      "escalationProbability": 0.5,
+      "aiUsageProbability": 0.3,
+      "externalSharingProbability": 0.04,
+      "commonMistakes": ["Exports underlying data instead of aggregates", "Stores working copies in OneDrive longer than needed"],
+      "safeHabits": ["Documents assumptions", "Uses aggregated summaries", "Applies labels to sensitive analytics files"]
+    },
+    {
+      "persona": "Priya Sharma",
+      "role": "Data Scientist",
+      "activityStyle": "Model-focused, privacy-aware, creates raw and anonymized datasets.",
+      "preferredWorkloads": ["Excel Web", "SharePoint Online", "Power BI", "Copilot for Microsoft 365", "Teams"],
+      "normalBehaviorProbability": 0.88,
+      "mistakeProbability": 0.06,
+      "riskyBehaviorProbability": 0.03,
+      "escalationProbability": 0.55,
+      "aiUsageProbability": 0.4,
+      "externalSharingProbability": 0.08,
+      "commonMistakes": ["Keeps pre-anonymized and anonymized files too close together", "Uses overly similar file names"],
+      "safeHabits": ["Creates anonymized derivatives", "Documents model limitations", "Requests review before vendor sharing"]
+    },
+    {
+      "persona": "Emily Johnson",
+      "role": "Corporate Lawyer",
+      "activityStyle": "Precise, cautious, privilege-aware, review-focused.",
+      "preferredWorkloads": ["Word Web", "SharePoint Online", "Outlook Web", "Teams", "Copilot for Microsoft 365"],
+      "normalBehaviorProbability": 0.92,
+      "mistakeProbability": 0.03,
+      "riskyBehaviorProbability": 0.01,
+      "escalationProbability": 0.8,
+      "aiUsageProbability": 0.25,
+      "externalSharingProbability": 0.1,
+      "commonMistakes": ["Sends a clean redline but forgets to verify attachment version"],
+      "safeHabits": ["Flags privileged content", "Requests non-privileged summaries", "Controls external legal distribution"]
+    },
+    {
+      "persona": "Sofia Lopez",
+      "role": "Project Manager",
+      "activityStyle": "Coordinated, deadline-aware, action-oriented, uses Teams and Planner heavily.",
+      "preferredWorkloads": ["Teams", "Planner", "SharePoint Online", "PowerPoint Web", "Loop"],
+      "normalBehaviorProbability": 0.84,
+      "mistakeProbability": 0.09,
+      "riskyBehaviorProbability": 0.03,
+      "escalationProbability": 0.6,
+      "aiUsageProbability": 0.28,
+      "externalSharingProbability": 0.08,
+      "commonMistakes": ["Adds a guest to simplify coordination", "Shares steering materials before final sanitization"],
+      "safeHabits": ["Tracks action items", "Requests review", "Creates customer-safe versions"]
+    }
+  ],
+  "mistakeModels": [
+    {
+      "mistakeId": "MISTAKE-001",
+      "name": "Wrong Attachment Selection",
+      "description": "User selects an internal or pre-sanitized file instead of the customer-safe version.",
+      "triggerConditions": ["Similar file names", "Deadline pressure", "External email", "Multiple versions in same folder"],
+      "likelyPersonas": ["Devon Reyes", "Sofia Lopez", "Diego Martinez", "Priya Sharma"],
+      "probabilityMultiplier": 1.6,
+      "expectedSignals": ["ExternalEmailSent", "DLPPolicyMatch", "DLPBlocked"],
+      "recommendedRemediation": "Create clearer naming conventions and require DLP inspection before external send."
+    },
+    {
+      "mistakeId": "MISTAKE-002",
+      "name": "Broad Link Creation",
+      "description": "User creates a broad organization-wide or external link instead of sharing with named users.",
+      "triggerConditions": ["Teams request for quick review", "External advisor request", "Unclear access process"],
+      "likelyPersonas": ["Devon Reyes", "Sofia Lopez", "David Chen"],
+      "probabilityMultiplier": 1.4,
+      "expectedSignals": ["FileShared", "AnonymousLinkCreated", "ExternalUserAccessed", "DLPPolicyMatch"],
+      "recommendedRemediation": "Prefer named-user links, expiration, and download restrictions for sensitive content."
+    },
+    {
+      "mistakeId": "MISTAKE-003",
+      "name": "Unsafe External AI Shortcut",
+      "description": "User pastes sensitive rows or case summaries into an unmanaged AI tool to save time.",
+      "triggerConditions": ["Unfamiliar analysis task", "Summary needed urgently", "User unaware of approved AI workflow"],
+      "likelyPersonas": ["Devon Reyes", "Carlos Delgado", "Priya Sharma"],
+      "probabilityMultiplier": 1.8,
+      "expectedSignals": ["AIAppInteraction", "UnmanagedAppUpload", "DLPPolicyMatch"],
+      "recommendedRemediation": "Coach user to use approved Copilot workflows with sanitized or permission-safe source data."
+    },
+    {
+      "mistakeId": "MISTAKE-004",
+      "name": "Label Downgrade Without Sanitization",
+      "description": "User changes a file to a lower sensitivity label to share it, but sensitive data remains in the file.",
+      "triggerConditions": ["External sharing blocked", "User creates derivative copy", "User believes file is customer-safe"],
+      "likelyPersonas": ["Devon Reyes", "Carlos Delgado", "Sofia Lopez"],
+      "probabilityMultiplier": 1.5,
+      "expectedSignals": ["SensitivityLabelChanged", "LabelDowngrade", "DLPPolicyMatch", "ExternalEmailSent"],
+      "recommendedRemediation": "Require downgrade justification and scan derivative files before sharing."
+    },
+    {
+      "mistakeId": "MISTAKE-005",
+      "name": "Endpoint Workaround",
+      "description": "User downloads, prints, or copies a file locally to complete work outside the approved workflow.",
+      "triggerConditions": ["Slow browser experience", "Offline review", "Deadline pressure", "Confusion about workflow"],
+      "likelyPersonas": ["Devon Reyes", "James Wilson", "Carlos Delgado"],
+      "probabilityMultiplier": 1.3,
+      "expectedSignals": ["FileDownloaded", "FilePrinted", "FileCopiedToNetworkShare", "FileCopiedToUSB", "EndpointDLPPolicyMatch"],
+      "recommendedRemediation": "Use Endpoint DLP restrictions and provide approved offline review alternatives."
+    }
+  ],
+  "aiUsageRules": {
+    "safeCopilotPromptRatio": 0.65,
+    "riskyCopilotPromptRatio": 0.2,
+    "externalAIInteractionRatio": 0.15,
+    "safePromptPatterns": [
+      "Summarize approved customer-safe files only.",
+      "Remove customer identifiers and account-like values.",
+      "Create an aggregate summary by segment.",
+      "Draft a governance request without raw sensitive values."
+    ],
+    "riskyPromptPatterns": [
+      "Find every file containing account-like numbers.",
+      "Summarize KYC and AML files by customer.",
+      "Rewrite privileged legal notes for PMO action tracking.",
+      "Paste raw rows from AML, SAR, treasury, or HR files into external AI."
+    ],
+    "recommendedRouting": [
+      "Use CopilotInteraction for approved Microsoft 365 AI activity.",
+      "Use AIAppInteraction for unmanaged or external AI activity.",
+      "Use SensitiveContentAccessed when prompts reference highly sensitive source files.",
+      "Use UnmanagedAppUpload when prompt content includes raw sensitive rows or file uploads."
+    ]
+  },
+  "escalationRules": [
+    {
+      "ruleId": "ESC-001",
+      "name": "DLP Warning Follow-Up",
+      "condition": "User receives DLP warning on external send or sharing action.",
+      "userBehaviorOptions": [
+        {"behavior": "Cancel action and ask security for guidance", "probability": 0.45},
+        {"behavior": "Proceed with business justification", "probability": 0.25},
+        {"behavior": "Try alternate sharing method", "probability": 0.2},
+        {"behavior": "Remove attachment and send summary only", "probability": 0.1}
+      ],
+      "expectedSignals": ["DLPWarned", "DLPOverride", "TeamsMessageSent", "ExternalEmailSent"]
+    },
+    {
+      "ruleId": "ESC-002",
+      "name": "Blocked External Sharing",
+      "condition": "DLP blocks external sharing of a regulated file.",
+      "userBehaviorOptions": [
+        {"behavior": "Ask manager or security why it was blocked", "probability": 0.5},
+        {"behavior": "Create a sanitized derivative", "probability": 0.25},
+        {"behavior": "Attempt to share through Teams or OneDrive link", "probability": 0.15},
+        {"behavior": "Abandon external send", "probability": 0.1}
+      ],
+      "expectedSignals": ["DLPBlocked", "TeamsMessageSent", "FileCreated", "FileShared"]
+    },
+    {
+      "ruleId": "ESC-003",
+      "name": "Security Investigation Trigger",
+      "condition": "User produces three or more high-risk signals within 48 hours.",
+      "userBehaviorOptions": [
+        {"behavior": "Security opens investigation timeline", "probability": 0.8},
+        {"behavior": "Manager validates business context first", "probability": 0.45},
+        {"behavior": "HR and Legal are consulted", "probability": 0.35},
+        {"behavior": "Access is temporarily restricted", "probability": 0.25}
+      ],
+      "expectedSignals": ["InsiderRiskSequence", "AccessReviewRequired", "TeamsMessageSent", "FileCreated"]
+    }
+  ],
+  "scenarioSelectionRules": {
+    "dailyBaseline": ["BF-SCEN-0003", "BF-SCEN-0012", "BF-SCEN-0014", "BF-SCEN-0020"],
+    "weeklyCycles": ["BF-SCEN-0001", "BF-SCEN-0004", "BF-SCEN-0011", "BF-SCEN-0019"],
+    "monthlyCycles": ["BF-SCEN-0002", "BF-SCEN-0007", "BF-SCEN-0010", "BF-SCEN-0013", "BF-SCEN-0015", "BF-SCEN-0023"],
+    "eventDrivenScenarios": ["BF-SCEN-0006", "BF-SCEN-0009", "BF-SCEN-0016", "BF-SCEN-0021", "BF-SCEN-0022", "BF-SCEN-0025", "BF-SCEN-0027", "BF-SCEN-0029", "BF-SCEN-0030"],
+    "recommendedWeeklySimulationMix": {
+      "dailyBaselineScenarios": 4,
+      "weeklyCycleScenarios": 2,
+      "monthlyCycleScenarios": 1,
+      "eventDrivenScenarios": "0-1 unless demo requires higher risk density"
+    }
+  },
+  "codexUsageGuidance": [
+    "Use personaBehaviorProfiles to determine how agents should behave when multiple valid actions are possible.",
+    "Use timingRules to insert human-like delays between browser actions.",
+    "Use mistakeModels only when scenario context supports a mistake; do not generate random mistakes without narrative cause.",
+    "Use escalationRules to determine what users and security teams do after warnings, blocks, and high-risk sequences.",
+    "Use scenarioSelectionRules to generate weekly activity plans without overloading the demo with constant high-risk events.",
+    "Keep Devon Reyes ambiguous: sometimes rushed, sometimes careless, sometimes safe, and occasionally risky enough to trigger investigation."
+  ]
+}
